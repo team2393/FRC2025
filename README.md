@@ -5,9 +5,14 @@ Game manual: https://www.firstinspires.org/resource-library/frc/competition-manu
 
 Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "stable")
 
+ * The very first page, "Introduction", has links to Java learning resources.
+   See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software",
-   - "WPILib Installation Guide" for development tools
-   - "Installing the FRC Game Tools" for driver station
+   - "WPILib Installation Guide" for development tools is necessary for
+     anybody with any interest in programming
+   - "Installing the FRC Game Tools" for driver station is only necessary for
+     laptops that connect to the robot
+   - See "Basic Programming", "Git Version Control" for installing `git`
 
 Timeline
 --------
@@ -16,12 +21,12 @@ Timeline
    Last year, a preview was offered in https://github.com/wpilibsuite/2024Beta
    This year, there is little up-front information.
 
-   Start with the 2024 "WPILib Installation Guide" mentioned above.
-   Read the Software manual. Read all until "Advanced programming",
-   may skip the LabVIEW, python, C++ detail since we're using Java.
+   Start with the "WPILib Installation Guide" mentioned above.
+   Read the Software manual. Read all of it until "Advanced programming".
+   May skip the details about LabVIEW, python, C++ since we're using Java.
    Glance throught the Advanced programming section to at least know
-   what exists there for later study in more detail.
-
+   what's in there.
+   
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
    - Install 2025 version of WPILib, driver station, CTR and REV libraries
 
