@@ -1,7 +1,7 @@
 Team 2393 FRC Season 2025
 =========================
 
-Game manual: https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
+Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system come January
 
 Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "stable")
 
