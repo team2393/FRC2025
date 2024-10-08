@@ -18,9 +18,8 @@ Timeline
 --------
 
  * Now: Prepare for next season.
-   Last year, a preview was offered in https://github.com/wpilibsuite/2024Beta
-   This year, there is little up-front information.
-
+   Up-front information may appear on https://github.com/wpilibsuite/2025Beta
+   
    Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
    May skip the details about LabVIEW, python, C++ since we're using Java.
