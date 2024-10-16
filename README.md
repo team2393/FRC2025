@@ -19,6 +19,8 @@ Timeline
 
  * Now: Prepare for next season.
    Up-front information may appear on https://github.com/wpilibsuite/2025Beta
+   As of Oct. 16, WPILib and NI tools are available.
+   As soon as vendor libs are added, port swervebot to 2025 API.
    
    Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
