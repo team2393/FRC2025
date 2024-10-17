@@ -18,10 +18,12 @@ Timeline
 --------
 
  * Now: Prepare for next season.
-   Up-front information may appear on https://github.com/wpilibsuite/2025Beta
-   As of Oct. 16, WPILib and NI tools are available.
-   As soon as vendor libs are added, port swervebot to 2025 API.
-   
+   As of Oct. 17, https://github.com/wpilibsuite/2025Beta offers
+   WPILib, NI tools and some vendor libs.
+
+   - [X] Run Falcon and Pigeon with beta software
+   - [ ] Port swervebot to beta software
+
    Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
    May skip the details about LabVIEW, python, C++ since we're using Java.
