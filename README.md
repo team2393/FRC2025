@@ -1,7 +1,7 @@
 Team 2393 FRC Season 2025
 =========================
 
-Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system come January
+Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
 
 Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "stable")
 
@@ -9,29 +9,28 @@ Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "st
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software",
    - "WPILib Installation Guide" for development tools is necessary for
-     anybody with any interest in programming
-   - "Installing the FRC Game Tools" for driver station is only necessary for
-     laptops that connect to the robot
-   - See "Basic Programming", "Git Version Control" for installing `git`
- * Additional PID resources:
-   - https://trickingrockstothink.com/blog_posts/2019/10/19/tuning_pid.html
-   - https://trickingrockstothink.com/blog_posts/2019/10/26/controls_supp_arm.html
+     anybody with any interest in programming.
+     For now, use the https://github.com/wpilibsuite/2025Beta downloads.
+ * See "Basic Programming", "Git Version Control" for installing `git`
 
 Timeline
 --------
 
- * Now: Prepare for next season.
-   As of Oct. 17, https://github.com/wpilibsuite/2025Beta offers
-   WPILib, NI tools and some vendor libs.
+ * Now: Prepare for next season by using the 2025Beta release
 
    - [X] Run Falcon and Pigeon with beta software
    - [ ] Port swervebot to beta software
+   - [ ] Test any hardware that we'll likely use on the robot
 
    Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
    May skip the details about LabVIEW, python, C++ since we're using Java.
    Glance throught the Advanced programming section to at least know
    what's in there.
+
+   Additional PID resources:
+   - https://trickingrockstothink.com/blog_posts/2019/10/19/tuning_pid.html
+   - https://trickingrockstothink.com/blog_posts/2019/10/26/controls_supp_arm.html
    
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
    - Install 2025 version of WPILib, driver station, CTR and REV libraries
