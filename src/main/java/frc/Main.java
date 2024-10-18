@@ -15,6 +15,7 @@ public final class Main
     // RobotBase.startRobot(frc.tools.CommandRobotBase::new);
     RobotBase.startRobot(frc.demo.MotorPhoenix6DemoRobot::new);
     // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.swervebot.Driver(0)));
+    // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.swervebot.Rotator(0, 0)));
     // RobotBase.startRobot(frc.swervebot.SwerveBot::new);
   }
 }
