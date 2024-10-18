@@ -13,6 +13,9 @@ Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "st
    - "Installing the FRC Game Tools" for driver station is only necessary for
      laptops that connect to the robot
    - See "Basic Programming", "Git Version Control" for installing `git`
+ * Additional PID resources:
+   - https://trickingrockstothink.com/blog_posts/2019/10/19/tuning_pid.html
+   - https://trickingrockstothink.com/blog_posts/2019/10/26/controls_supp_arm.html
 
 Timeline
 --------
