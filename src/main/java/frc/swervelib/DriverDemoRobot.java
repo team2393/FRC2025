@@ -34,7 +34,7 @@ public class DriverDemoRobot extends CommandRobotBase
       driver.resetPosition();
     if (joystick.getAButton())
     { // Use joystick to control setpoint
-      double setpoint = -3.0 * joystick.getLeftY();
+      double setpoint = -1.0 * joystick.getLeftY();
       driver.setSpeed(setpoint);
       SmartDashboard.putNumber("Setpoint", setpoint);
     }
