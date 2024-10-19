@@ -5,7 +5,6 @@
 package frc;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.swervelib.SwerveModule;
 
 /** Java 'Main'. Modify this file to select which robot to run */
 public final class Main
@@ -22,14 +21,14 @@ public final class Main
     //   new frc.swervelib.SwerveModuleDemoRobot(
     //     new SwerveModule[]
     //     {
-    //       new SwerveModule(new frc.swervebot.Rotator(0,  -17), new frc.swervebot.Driver(0)),
-    //       new SwerveModule(new frc.swervebot.Rotator(1,  -89+180), new frc.swervebot.Driver(1)),
-    //       new SwerveModule(new frc.swervebot.Rotator(2,   20.8+180), new frc.swervebot.Driver(2)),
-    //       new SwerveModule(new frc.swervebot.Rotator(3, -106), new frc.swervebot.Driver(3))
+    //       new frc.swervelib.SwerveModule(new frc.swervebot.Rotator(0,  -17), new frc.swervebot.Driver(0)),
+    //       new frc.swervelib.SwerveModule(new frc.swervebot.Rotator(1,  -89+180), new frc.swervebot.Driver(1)),
+    //       new frc.swervelib.SwerveModule(new frc.swervebot.Rotator(2,   20.8+180), new frc.swervebot.Driver(2)),
+    //       new frc.swervelib.SwerveModule(new frc.swervebot.Rotator(3, -106), new frc.swervebot.Driver(3))
     //     }));
 
-    RobotBase.startRobot(frc.led.LEDRingDemoRobot::new);
+    // RobotBase.startRobot(frc.led.LEDRingDemoRobot::new);
 
-    // RobotBase.startRobot(frc.swervebot.SwerveBot::new);
+    RobotBase.startRobot(frc.swervebot.SwerveBot::new);
   }
 }
