@@ -12,6 +12,11 @@ Software manual: https://docs.wpilib.org/en/latest/
  * See "Step 2: Installing Software", "WPILib Installation Guide".
    For now, use the copy on https://github.com/wpilibsuite/2025Beta.
  * See "Basic Programming", "Git Version Control" for installing `git`
+ * Start "2025 WPILib VS Code". Invoke "View", "Command Palette...", "Git clone".
+   Enter the URL "https://github.com/team2393/FRC2025.git".
+   For a target location, create a folder "git" in your home directory
+   and place the git clone there. Select "Open" when then asked to open
+   what you just fetched from git.
 
 Timeline
 --------
