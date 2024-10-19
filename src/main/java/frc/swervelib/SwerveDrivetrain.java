@@ -44,11 +44,6 @@ abstract public class SwerveDrivetrain extends SubsystemBase
   /** Maximum rotational speed of this drivetrain */
   public static int MAX_ROTATION_DEG_PER_SEC = 90;
 
-  /** Don't rotate swerve module unless speed is at least this
-   *  to avoid spinning in place
-   */
-  public static double MINIMUM_SPEED_THRESHOLD = .05;
-
   /** Position on field */
   private final NetworkTableEntry nt_x = SmartDashboard.getEntry("X");
   private final NetworkTableEntry nt_y = SmartDashboard.getEntry("Y");
@@ -259,15 +254,8 @@ abstract public class SwerveDrivetrain extends SubsystemBase
       // Optimize module rotation
       states[i].optimize(modules[i].getAngle());
 
-      // TODO Abandon this?
-      // Actually moving? Then rotate as requested. Else stay put at current heading
-      if (Math.abs(states[i].speedMetersPerSecond) < MINIMUM_SPEED_THRESHOLD)
-          states[i] = new SwerveModuleState(0, modules[i].getAngle());
-
-      // TODO Cosine compensation: Reduce speed when off desired heading
-      // https://docs.wpilib.org/en/stable/docs/software/kinematics-and-odometry/swerve-drive-kinematics.html#cosine-compensation
-      // Rotation2d desired = states[i].angle;
-      // states[i].speedMetersPerSecond *= desired.minus(modules[i].getAngle()).getCos();
+      // Cosine compensation: Reduce speed when off desired heading
+      states[i].cosineScale(modules[i].getAngle());
     }
 
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_METERS_PER_SEC);
@@ -363,9 +351,12 @@ abstract public class SwerveDrivetrain extends SubsystemBase
         for (int i=0; i<modules.length; ++i)
         {
           states[i].optimize(modules[i].getAngle());
+          states[i].cosineScale(modules[i].getAngle());
+        }
+        SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_METERS_PER_SEC);
+        for (int i=0; i<modules.length; ++i)
           modules[i].drive(states[i].angle.getDegrees(),
                            states[i].speedMetersPerSecond);
-        }
         double vr = Math.toDegrees(kinematics.toChassisSpeeds(states).omegaRadiansPerSecond);
         simulated_heading += vr * TimedRobot.kDefaultPeriod;
     };
