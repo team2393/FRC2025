@@ -3,14 +3,12 @@ Team 2393 FRC Season 2025
 
 Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
 
-Software manual: https://docs.wpilib.org/en/latest/ (preview, eventually use "stable")
+Software manual: https://docs.wpilib.org/en/latest/
 
  * The very first page, "Introduction", has links to Java learning resources.
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
- * See "Step 2: Installing Software",
-   - "WPILib Installation Guide" for development tools is necessary for
-     anybody with any interest in programming.
-     For now, use the https://github.com/wpilibsuite/2025Beta downloads.
+ * See "Step 2: Installing Software", "WPILib Installation Guide".
+   For now, use the copy on https://github.com/wpilibsuite/2025Beta.
  * See "Basic Programming", "Git Version Control" for installing `git`
 
 Timeline
