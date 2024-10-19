@@ -15,6 +15,7 @@ public class HelloColors
         // Foreground color           30 .. 37
         // Background color           40 .. 47
         // Bold                       1
+        // Blink                      5
         // Combine several elements   ;
         // Back to normal             0
         // End of escape sequence     m
@@ -38,7 +39,7 @@ public class HelloColors
         TimeUnit.SECONDS.sleep(2);
         System.out.println("\033[32mNow,");
         TimeUnit.SECONDS.sleep(1);
-        System.out.println("      I'm using \033[31;42;1mJava!!\033[0m");
+        System.out.println("      I'm using \033[31;42;1;5mJava!!\033[0m");
         for (int i=0;  i<10; ++i)
         {
             TimeUnit.MILLISECONDS.sleep(300);
