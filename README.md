@@ -1,22 +1,24 @@
 Team 2393 FRC Season 2025
 =========================
 
- ![logo](logo.jpg)
+![logo](logo.jpg)
 
 Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
 
 Software manual: https://docs.wpilib.org/en/latest/
 
- * The very first page, "Introduction", has links to Java learning resources.
+ * The "Introduction" has links to Java learning resources.
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software", "WPILib Installation Guide".
    For now, use the copy on https://github.com/wpilibsuite/2025Beta.
  * See "Basic Programming", "Git Version Control" for installing `git`
  * Start "2025 WPILib VS Code". Invoke "View", "Command Palette...", "Git clone".
-   Enter the URL "https://github.com/team2393/FRC2025.git".
+   Enter the URL `https://github.com/team2393/FRC2025.git`.
    For a target location, create a folder "git" in your home directory
    and place the git clone there. Select "Open" when then asked to open
    what you just fetched from git.
+
+![servebot](swervebot.jpg)
 
 Timeline
 --------
@@ -51,5 +53,6 @@ Timeline
    - Drive practice
 
  * March, April: Competitions, https://frc-events.firstinspires.org/2025/Events/EventList
+
 
 
