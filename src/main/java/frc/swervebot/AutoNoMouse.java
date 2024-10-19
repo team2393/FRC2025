@@ -45,9 +45,25 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
-    { // Drive a 1.5 square using SwerveToPositionCommand & RotateToHeadingCommand
+    { // Drive a 1.5 square using just SwerveToPositionCommand
       SequentialCommandGroup auto = new SequentialCommandGroup();
       auto.setName("1.5m Square");
+      auto.addCommands(new VariableWaitCommand());
+
+      // SwerveToPositionCommand & RotateToHeadingCommand are always absolute,
+      // so reset position to zero
+      auto.addCommands(new ResetPositionCommand(drivetrain));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 1.5, 0.0));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 1.5, 1.5));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 0.0, 1.5));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 0.0, 0.0));
+
+      autos.add(auto);
+    }
+
+    { // Drive a 1.5 square using SwerveToPositionCommand & RotateToHeadingCommand
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("1.5m Square (rot)");
       auto.addCommands(new VariableWaitCommand());
 
       // SwerveToPositionCommand & RotateToHeadingCommand are always absolute,
@@ -81,7 +97,7 @@ public class AutoNoMouse
       auto.addCommands(drivetrain.followTrajectory(path, 180));
       auto.addCommands(new PrintCommand("Shoot!"));
       auto.addCommands(new WaitCommand(2));
-      // Pickup another ring form right behind
+      // Pickup another ring from right behind
       auto.addCommands(new PrintCommand("Open intake"));
       Trajectory path2 = createTrajectory(true, 1.44, 5.54, 0,
                                                 2.60, 5.54, 0);
