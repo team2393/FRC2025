@@ -21,6 +21,7 @@ abstract public class DriverBase extends SubsystemBase
   //Network table entries
   private final NetworkTableEntry nt_position;
   private final NetworkTableEntry nt_speed;
+  private final NetworkTableEntry nt_speed_sp;
   private final NetworkTableEntry nt_ks;
   private final NetworkTableEntry nt_kv;
   private final NetworkTableEntry nt_P;
@@ -46,6 +47,8 @@ abstract public class DriverBase extends SubsystemBase
     // Position and speed are specific to driver
     nt_position = SmartDashboard.getEntry("Position" + index);
     nt_speed = SmartDashboard.getEntry("Speed" + index);
+    nt_speed_sp = SmartDashboard.getEntry("SpeedSetp" + index);
+
     // Feed-forward and PID settings are the same for all drivers
     nt_ks = SmartDashboard.getEntry("Driver ks");
     nt_kv = SmartDashboard.getEntry("Driver kv");
@@ -96,6 +99,7 @@ abstract public class DriverBase extends SubsystemBase
   /** @param desired_speed Speed in m/s */
   public void setSpeed(double desired_speed)
   {
+    nt_speed_sp.setDouble(desired_speed);
     double feed_forward = nt_ks.getDouble(0.0) * Math.signum(desired_speed) + nt_kv.getDouble(0.0) * desired_speed;
     pid.setPID(nt_P.getDouble(0.0), nt_I.getDouble(0.0), nt_D.getDouble(0.0));
     double prop_correction =  pid.calculate(getSpeed(), desired_speed);

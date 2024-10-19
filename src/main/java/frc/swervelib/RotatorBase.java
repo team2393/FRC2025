@@ -21,6 +21,7 @@ abstract public class RotatorBase extends SubsystemBase
   private final NetworkTableEntry nt_D;
   private final NetworkTableEntry nt_max;
   private final NetworkTableEntry nt_angle;
+  private final NetworkTableEntry nt_angle_sp;
   private final PIDController pid = new PIDController(0,0,0);
   private double simulated_angle = 0.0;
 
@@ -38,6 +39,7 @@ abstract public class RotatorBase extends SubsystemBase
   {
     nt_offset = SmartDashboard.getEntry("Offset" + index);
     nt_angle = SmartDashboard.getEntry("Angle" + index);
+    nt_angle_sp = SmartDashboard.getEntry("AngleSetpt" + index);
     nt_ks = SmartDashboard.getEntry("Rotator ks");
     nt_P = SmartDashboard.getEntry("Rotator P");
     nt_I = SmartDashboard.getEntry("Rotator I");
@@ -71,6 +73,7 @@ abstract public class RotatorBase extends SubsystemBase
   /** @param desired Desired angle of serve module in degrees */
   public void setAngle(double desired)
   {
+    nt_angle_sp.setDouble(desired);
     // PID control, with error normalized to -180..180
     double angle = getRawDegrees() - nt_offset.getDouble(0.0);
     double error = Math.IEEEremainder(desired - angle, 360.0);
