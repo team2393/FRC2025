@@ -20,6 +20,7 @@ import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
+import frc.tools.AutoTools;
 // import frc.tools.AutoTools;
 import frc.tools.CommandRobotBase;
 
@@ -47,14 +48,6 @@ public class SwerveBot extends CommandRobotBase
     SwerveOI.rotation_slew = new SlewRateLimiter(90);
 
     SwerveOI.reset();
-
-    // ring.setDefaultCommand(
-    //   new RepeatCommand(
-    //     new SequentialCommandGroup(
-    //       new ParallelRaceGroup(new WaitCommand(10), new Comet(ring)),
-    //       new ParallelRaceGroup(new WaitCommand(10), new ColorPair(ring, Color.kDarkGreen, Color.kDarkGoldenrod))
-    //     )));
-
     ring.setDefaultCommand(
       new Comet(ring).withTimeout(10)
                      .andThen(
@@ -67,15 +60,15 @@ public class SwerveBot extends CommandRobotBase
 
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
 
-    // for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
-    //   autos.addOption(auto.getName(), auto);
-    // SmartDashboard.putData(autos);
+    for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
+      autos.addOption(auto.getName(), auto);
+    SmartDashboard.putData(autos);
   }
   
   @Override
   public void disabledPeriodic()
   {
-    // AutoTools.indicateStart(drivetrain, autos.getSelected());
+    AutoTools.indicateStart(drivetrain, autos.getSelected());
   }  
 
   @Override
