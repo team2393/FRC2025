@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
  */
 abstract public class DriverBase extends SubsystemBase
 {
-  // All drivers use the same network table entries for these settings
+  //Network table entries
   private final NetworkTableEntry nt_position;
   private final NetworkTableEntry nt_speed;
   private final NetworkTableEntry nt_ks;
@@ -43,8 +43,10 @@ abstract public class DriverBase extends SubsystemBase
    */
   public DriverBase(int index, double ks, double kv, double P, double I, double D)
   {
+    // Position and speed are specific to driver
     nt_position = SmartDashboard.getEntry("Position" + index);
     nt_speed = SmartDashboard.getEntry("Speed" + index);
+    // Feed-forward and PID settings are the same for all drivers
     nt_ks = SmartDashboard.getEntry("Driver ks");
     nt_kv = SmartDashboard.getEntry("Driver kv");
     nt_P = SmartDashboard.getEntry("Driver P");

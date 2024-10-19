@@ -13,16 +13,20 @@ public class SwerveModuleDemoRobot extends CommandRobotBase
   public SwerveModuleDemoRobot(SwerveModule... modules)
   {
     this.modules = modules;
+    SwerveOI.reset();
   }
 
   @Override
   public void teleopPeriodic()
   {
+    if (SwerveOI.resetDrivetrain().getAsBoolean())
+      for (SwerveModule module : modules)
+        module.resetPosition();
+
     double vx = SwerveOI.getForwardSpeed();
     double vy = SwerveOI.getLeftSpeed();
     double speed = Math.sqrt(vx*vx + vy*vy);
     double angle = Math.toDegrees(Math.atan2(vy, vx));
-
     for (SwerveModule module : modules)
       module.drive(angle, speed);
   }

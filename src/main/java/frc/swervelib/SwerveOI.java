@@ -71,7 +71,7 @@ public class SwerveOI
     return joystick.leftBumper();
   }
  
-  public static Trigger resetHeading()
+  public static Trigger resetDrivetrain()
   {
     return joystick.start();
   }
