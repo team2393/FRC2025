@@ -21,6 +21,7 @@ import frc.swervelib.RotateToHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveToPositionCommand;
 import frc.swervelib.VariableWaitCommand;
+import frc.tools.AutoTools;
 import frc.tools.SequenceWithStart;
 
 /** Auto-no-mouse routines */
@@ -110,6 +111,15 @@ public class AutoNoMouse
       auto.addCommands(new PrintCommand("Shoot!"));
       auto.addCommands(new WaitCommand(2));
       auto.addCommands(new PrintCommand("Done."));
+      autos.add(auto);
+    }
+
+    {
+      // Follow a Pathweaver path
+      SequentialCommandGroup auto = new SequenceWithStart("Circle", 0.15, 2.10, 0);
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 0.15, 2.10, 0));
+      auto.addCommands(AutoTools.followPathWeaver(drivetrain, "Circle", 180));
       autos.add(auto);
     }
 
