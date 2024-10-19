@@ -54,6 +54,7 @@ public class SwerveOI
       MAX_ROTATION_DEG_PER_SEC * filter(ALTERNATE ? -joystick.getLeftX() : -joystick.getRightX()));
   }
 
+  /** Reset slew limiters */
   public static void reset()
   {
     forward_slew.reset(0);
