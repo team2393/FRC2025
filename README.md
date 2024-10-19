@@ -23,12 +23,7 @@ Software manual: https://docs.wpilib.org/en/latest/
 Timeline
 --------
 
- * Now: Prepare for next season by using the 2025Beta release
-
-   - [X] Run Falcon and Pigeon with beta software
-   - [ ] Port swervebot to beta software
-   - [ ] Test any hardware that we'll likely use on the robot
-
+ * Now: 
    Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
    May skip the details about LabVIEW, python, C++ since we're using Java.
@@ -39,6 +34,12 @@ Timeline
    - https://trickingrockstothink.com/blog_posts/2019/10/19/tuning_pid.html
    - https://trickingrockstothink.com/blog_posts/2019/10/26/controls_supp_arm.html
    
+   Prepare for next season by using the 2025Beta release
+
+   - [X] Run Falcon and Pigeon with beta software
+   - [X] Port swervebot to beta software
+   - [ ] Test any hardware that we'll likely use on the robot
+
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
    - Install 2025 version of WPILib, driver station, CTR and REV libraries
 
