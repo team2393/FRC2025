@@ -66,15 +66,13 @@ public class SwerveBot extends CommandRobotBase
 
     SwerveOI.reset();
     ring.setDefaultCommand(
-      new Comet(ring).withTimeout(10)
-                     .andThen(
-                       new ColorPair(ring, Color.kDarkGreen, Color.kDarkGoldenrod).withTimeout(10)
-                                                                                  .andThen(
-                                                                                    new Rainbow(ring).withTimeout(10)
-                                                                                          )
-                             ).repeatedly()
-                          );
-
+      new RepeatCommand(
+        new SequentialCommandGroup(
+          new Comet(ring).withTimeout(5),
+          new ColorPair(ring, Color.kDarkGreen, Color.kDarkGoldenrod).withTimeout(5),
+          new Rainbow(ring).withTimeout(5)
+        )));
+          
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
 
     for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))

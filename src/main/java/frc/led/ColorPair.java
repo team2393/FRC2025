@@ -29,20 +29,17 @@ public class ColorPair extends Command
   @Override
   public void execute()
   {
-    // Step the 'active' LED every 200 ms
-    int active = (int) ((System.currentTimeMillis()  / 200) % LEDRing.N);
+    // Step the 'start' LED every 200 ms
+    int start = (int) ((System.currentTimeMillis()  / 200) % LEDRing.N);
 
-    // Half of the LEDs use one color
-    for (int i=0; i<LEDRing.N/2; ++i)
+    for (int i=0; i<LEDRing.N; ++i)
     {
-      ring.buffer.setLED(active, one);
-      active = (active+1) % LEDRing.N;
-    }
-    // .. and half the other color
-    for (int i=0; i<LEDRing.N/2; ++i)
-    {
-      ring.buffer.setLED(active, other);
-      active = (active+1) % LEDRing.N;
+      int index = (start + i) % LEDRing.N;
+      // First half of the LEDs use one color, rest the other
+      if (i < LEDRing.N/2)
+        ring.buffer.setLED(index, one);
+      else
+        ring.buffer.setLED(index, other);
     }
 
     ring.led.setData(ring.buffer);

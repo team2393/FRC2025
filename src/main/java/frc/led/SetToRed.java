@@ -13,7 +13,7 @@ public class SetToRed extends Command
 
   public SetToRed(LEDRing the_ring)
   {
-    ring  = the_ring; 
+    ring = the_ring; 
     addRequirements(ring);
   }
 

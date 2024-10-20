@@ -24,6 +24,7 @@ public class LEDRing extends SubsystemBase
     led.start();
   }
 
+  /** Clear LED buffer (doesn't set LED to use buffer, yet) */
   public void clear()
   {
     for (int i=0; i<N; ++i)
