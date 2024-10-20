@@ -9,6 +9,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.RepeatCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
+import frc.demo.DemoMechanism;
+import frc.demo.DemoMechanismArmCommand;
+import frc.demo.DemoMechanismLiftCommand;
+import frc.demo.DemoMechanismPokeCommand;
 import frc.led.ColorPair;
 import frc.led.Comet;
 import frc.led.Rainbow;
@@ -31,6 +38,19 @@ public class SwerveBot extends CommandRobotBase
   
   private final LEDRing ring = new LEDRing();
 
+  private final DemoMechanism mechanism = new DemoMechanism();
+  private final Command mechanism_demo =
+    new RepeatCommand(
+      new SequentialCommandGroup(
+        new DemoMechanismLiftCommand(mechanism, 0.25, 0.5, 3),
+        new DemoMechanismArmCommand(mechanism, -80, 0, 2),
+        new DemoMechanismPokeCommand(mechanism, true),
+        new WaitCommand(1.0),
+        new DemoMechanismPokeCommand(mechanism, false),
+        new DemoMechanismArmCommand(mechanism, 0, -80, 1),
+        new DemoMechanismLiftCommand(mechanism, 0.5, 0.25, 1),
+        new WaitCommand(1.0)));
+  
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
   @Override
@@ -78,7 +98,7 @@ public class SwerveBot extends CommandRobotBase
     SwerveOI.resetDrivetrain().onTrue(new ResetHeadingCommand(drivetrain));
     // SwerveOI.joystick.a().whileTrue(center_on_tag);
 
-    // gadgetcommand.schedule();
+    mechanism_demo.schedule();
   }
 
   @Override
