@@ -61,6 +61,11 @@ public class SwerveOI
     side_slew.reset(0);
     rotation_slew.reset(0);
   }
+   
+  public static Trigger resetDrivetrain()
+  {
+    return joystick.start();
+  }
 
   public static Trigger selectRelative()
   {
@@ -70,10 +75,5 @@ public class SwerveOI
   public static Trigger selectAbsolute()
   {
     return joystick.leftBumper();
-  }
- 
-  public static Trigger resetDrivetrain()
-  {
-    return joystick.start();
   }
 }

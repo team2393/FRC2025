@@ -4,7 +4,6 @@
 package frc.swervebot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
@@ -13,15 +12,13 @@ import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.led.ColorPair;
 import frc.led.Comet;
 import frc.led.Rainbow;
-import frc.robot.OperatorInterface;
 import frc.led.LEDRing;
-// import frc.swervelib.AbsoluteSwerveCommand;
+import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
 import frc.tools.AutoTools;
-// import frc.tools.AutoTools;
 import frc.tools.CommandRobotBase;
 
 /** Swerve demo robot */
@@ -29,7 +26,7 @@ public class SwerveBot extends CommandRobotBase
 {
   private final SwervebotDrivetrain drivetrain = new SwervebotDrivetrain();
   private final Command relswerve = new RelativeSwerveCommand(drivetrain);
-  // private final Command absswerve = new AbsoluteSwerveCommand(drivetrain);
+  private final Command absswerve = new AbsoluteSwerveCommand(drivetrain);
   // private final Command center_on_tag = new CenterOnAprilTag(drivetrain);
   
   private final LEDRing ring = new LEDRing();
@@ -76,9 +73,9 @@ public class SwerveBot extends CommandRobotBase
   {
     // Bind buttons to commands
     drivetrain.setDefaultCommand(relswerve);
-    // OperatorInterface.selectRelative().onTrue(relswerve);
-    // OperatorInterface.selectAbsolute().onTrue(absswerve);
-    OperatorInterface.resetHeading().onTrue(new ResetHeadingCommand(drivetrain));
+    SwerveOI.selectRelative().onTrue(relswerve);
+    SwerveOI.selectAbsolute().onTrue(absswerve);
+    SwerveOI.resetDrivetrain().onTrue(new ResetHeadingCommand(drivetrain));
     // SwerveOI.joystick.a().whileTrue(center_on_tag);
 
     // gadgetcommand.schedule();

@@ -6,20 +6,15 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-// TODO import frc.swervelib.SwerveOI;
+import frc.swervelib.SwerveOI;
 
 /** Operator Interface: Which stick or button does what? */
-public class OperatorInterface // TODO extends SwerveOI
+public class OperatorInterface extends SwerveOI
 {
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
   public static Trigger fire()
   {
     return joystick.y();
-  }
-
-  public static Trigger resetHeading()
-  {
-    return joystick.rightBumper();
   }
 }
