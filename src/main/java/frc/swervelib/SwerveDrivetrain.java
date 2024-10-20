@@ -251,11 +251,12 @@ abstract public class SwerveDrivetrain extends SubsystemBase
 
     for (int i=0; i<modules.length; ++i)
     {
+      Rotation2d current_angle = modules[i].getAngle();
       // Optimize module rotation
-      states[i].optimize(modules[i].getAngle());
+      states[i].optimize(current_angle);
 
       // Cosine compensation: Reduce speed when off desired heading
-      states[i].cosineScale(modules[i].getAngle());
+      states[i].cosineScale(current_angle);
     }
 
     SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_METERS_PER_SEC);
@@ -350,8 +351,9 @@ abstract public class SwerveDrivetrain extends SubsystemBase
     {
         for (int i=0; i<modules.length; ++i)
         {
-          states[i].optimize(modules[i].getAngle());
-          states[i].cosineScale(modules[i].getAngle());
+          Rotation2d current_angle = modules[i].getAngle();
+          states[i].optimize(current_angle);
+          states[i].cosineScale(current_angle);
         }
         SwerveDriveKinematics.desaturateWheelSpeeds(states, MAX_METERS_PER_SEC);
         for (int i=0; i<modules.length; ++i)
