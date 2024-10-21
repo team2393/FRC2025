@@ -18,6 +18,7 @@ import frc.demo.DemoMechanismLiftCommand;
 import frc.demo.DemoMechanismPokeCommand;
 import frc.led.ColorPair;
 import frc.led.Comet;
+import frc.led.Fill;
 import frc.led.Rainbow;
 import frc.led.LEDRing;
 import frc.swervelib.AbsoluteSwerveCommand;
@@ -68,6 +69,7 @@ public class SwerveBot extends CommandRobotBase
     ring.setDefaultCommand(
       new RepeatCommand(
         new SequentialCommandGroup(
+          new Fill(ring).withTimeout(5),
           new Comet(ring).withTimeout(5),
           new ColorPair(ring, Color.kDarkGreen, Color.kDarkGoldenrod).withTimeout(5),
           new Rainbow(ring).withTimeout(5)

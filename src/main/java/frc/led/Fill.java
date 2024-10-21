@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.led;
 
+import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** "Fill" the LED ring from the bottom
@@ -69,14 +71,18 @@ public class Fill extends Command
   {
     // Fill level, 0 to 5, advancing every 200 ms
     int level = (int) ((System.currentTimeMillis()  / 200) % (LEDRing.N/2));
-
+    
+    // Scale color from darker to brighter purple
+    Color color = new Color((int) MathUtil.interpolate(100, 255, level/5.0),
+                            (int) MathUtil.interpolate( 50, 100, level/5.0),
+                            (int) MathUtil.interpolate(100, 255, level/5.0));
     ring.clear();
-    for (int i=0; i<level; ++i)
+    for (int i=0; i<=level; ++i)
     {
       int right = 8 - i;
       int left = (9 + i) % LEDRing.N;
-      ring.buffer.setRGB(right, 255, 100, 255);
-      ring.buffer.setRGB(left,  255, 100, 255);
+      ring.buffer.setLED(right, color);
+      ring.buffer.setLED(left,  color);
     }
     ring.led.setData(ring.buffer);
   }  
