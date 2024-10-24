@@ -10,13 +10,20 @@ Software manual: https://docs.wpilib.org/en/latest/
  * The "Introduction" has links to Java learning resources.
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software", "WPILib Installation Guide".
-   For now, use the copy on https://github.com/wpilibsuite/2025Beta.
+   (For now, that uses https://github.com/wpilibsuite/2025Beta)
  * See "Basic Programming", "Git Version Control" for installing `git`
+
+Get robot code
+--------------
  * Start "2025 WPILib VS Code". Invoke "View", "Command Palette...", "Git clone".
    Enter the URL `https://github.com/team2393/FRC2025.git`.
    For a target location, create a folder "git" in your home directory
    and place the git clone there. Select "Open" when then asked to open
    what you just fetched from git.
+ * "View", "Command Palette", "WPILib: Simulate Robot Code"
+   * In simulation, use the menu "Network Tables",  "Smart Dashboard" to show "Field", "DemoMechanism" and "Selectable Chooser".
+   * Connect joystick and drive around in teleop
+   * Select auto option and run it in autonomous
 
 ![servebot](swervebot.jpg)
 
