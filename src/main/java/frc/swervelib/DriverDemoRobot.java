@@ -25,6 +25,7 @@ public class DriverDemoRobot extends CommandRobotBase
     SmartDashboard.setDefaultNumber("Setpoint1", 0.5);
     SmartDashboard.setDefaultNumber("Setpoint2", 1.5);
     SmartDashboard.setDefaultNumber("Voltage", 0.0);
+    driver.publishPID("PID");
   }
 
   @Override

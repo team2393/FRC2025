@@ -47,6 +47,8 @@ abstract public class RotatorBase extends SubsystemBase
     nt_max = SmartDashboard.getEntry("Rotator Max");
 
     pid.enableContinuousInput(-180, 180);
+    // pid.setIntegratorRange(-1, 1);
+    // pid.setIZone(...);
 
     nt_offset.setDefaultDouble(offset);
     nt_ks.setDefaultDouble(ks);
@@ -54,6 +56,12 @@ abstract public class RotatorBase extends SubsystemBase
     nt_I.setDefaultDouble(ki);
     nt_D.setDefaultDouble(kd);
     nt_max.setDefaultDouble(max);
+  }
+
+  /** @param name Name under which to publish PID on dashboard */
+  public void publishPID(String name)
+  {
+    SmartDashboard.putData(name, pid);
   }
 
   /** @return Angle without any offset correction [degrees] */

@@ -60,7 +60,14 @@ abstract public class DriverBase extends SubsystemBase
     nt_P.setDefaultDouble(P);
     nt_I.setDefaultDouble(I);
     nt_D.setDefaultDouble(D);
-    pid.setIntegratorRange(-1, 1);
+    // pid.setIntegratorRange(-1, 1);
+    // pid.setIZone(..);
+  }
+
+  /** @param name Name under which to publish PID on dashboard */
+  public void publishPID(String name)
+  {
+    SmartDashboard.putData(name, pid);
   }
 
   /** Reset position to zero */
@@ -95,7 +102,7 @@ abstract public class DriverBase extends SubsystemBase
       return simulated_position;
     return getRawPosition() - zero_position;
   }
-  
+
   /** @param desired_speed Speed in m/s */
   public void setSpeed(double desired_speed)
   {

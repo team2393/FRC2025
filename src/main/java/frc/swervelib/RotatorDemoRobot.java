@@ -25,6 +25,7 @@ public class RotatorDemoRobot extends CommandRobotBase
     SmartDashboard.setDefaultNumber("Period", 5.0);
     SmartDashboard.setDefaultNumber("Setpoint1", 0.0);
     SmartDashboard.setDefaultNumber("Setpoint2", 90.0);
+    rotator.publishPID("PID");
   }
 
   @Override
