@@ -73,9 +73,9 @@ public class Fill extends Command
     int level = (int) ((System.currentTimeMillis()  / 200) % (LEDRing.N/2));
     
     // Scale color from darker to brighter purple
-    Color color = new Color((int) MathUtil.interpolate(100, 255, level/5.0),
-                            (int) MathUtil.interpolate( 50, 100, level/5.0),
-                            (int) MathUtil.interpolate(100, 255, level/5.0));
+    Color color = new Color((int) MathUtil.interpolate(10, 200, level/5.0),
+                            (int) MathUtil.interpolate( 5, 100, level/5.0),
+                            (int) MathUtil.interpolate(10, 200, level/5.0));
     ring.clear();
     for (int i=0; i<=level; ++i)
     {
