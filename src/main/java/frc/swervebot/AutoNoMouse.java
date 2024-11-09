@@ -4,7 +4,6 @@
 package frc.swervebot;
 
 import static frc.tools.AutoTools.createTrajectory;
-import static frc.tools.AutoTools.followPathWeaver;
 
 import java.util.ArrayList;
 import java.util.List;
