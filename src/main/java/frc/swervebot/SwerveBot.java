@@ -54,11 +54,9 @@ public class SwerveBot extends CommandRobotBase
   
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
-  @Override
-  public void robotInit()
+  public SwerveBot()
   {
-    super.robotInit();
-
+    // Slower, smoother movement
     SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
     SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
     SwerveOI.forward_slew = new SlewRateLimiter(1.5);
@@ -66,6 +64,7 @@ public class SwerveBot extends CommandRobotBase
     SwerveOI.rotation_slew = new SlewRateLimiter(90);
 
     SwerveOI.reset();
+
     ring.setDefaultCommand(
       new RepeatCommand(
         new SequentialCommandGroup(

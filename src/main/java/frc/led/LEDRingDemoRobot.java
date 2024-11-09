@@ -15,10 +15,8 @@ public class LEDRingDemoRobot extends CommandRobotBase
 {
   private final LEDRing ring = new LEDRing();
 
-  @Override
-  public void robotInit()
+  public LEDRingDemoRobot()
   {
-    super.robotInit();
     ring.setDefaultCommand(new Comet(ring));
     // ring.setDefaultCommand(new ColorPair(ring, ));
   }

@@ -11,11 +11,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 /** Base class for a robot that uses Commands */
 public class CommandRobotBase extends TimedRobot
 {
-  /** Initialize robot.
-   * 
-   *  <p>Overriding code should call `super.robotInit()`
-   *  to show the class name.
-   */
+  /** Initialize robot */
   public CommandRobotBase()
   {
     // Display the actual class name of the derived class
