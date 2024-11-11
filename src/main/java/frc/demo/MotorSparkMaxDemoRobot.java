@@ -30,7 +30,11 @@ public class MotorSparkMaxDemoRobot extends CommandRobotBase
         // Some settings are only available via "...Configurator" class
         motor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast)
                                             .openLoopRampRate(0.1),
-                        ResetMode.kResetSafeParameters,
+                        // Suggested in https://github.com/wpilibsuite/2025Beta/discussions/27 :
+                        // 'Reset' to reset all but CAN ID, Motor Type, Idle Mode(!),
+                        // then apply what's specified: idle mode, ramp rate
+                        ResetMode.kNoResetSafeParameters,
+                        // Don't 'persist' because that is slow
                         PersistMode.kNoPersistParameters);
         
         // Others via methods
