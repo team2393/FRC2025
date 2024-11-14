@@ -11,7 +11,10 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 /** OI for serving */
 public class SwerveOI
 {
-  /** Alternate stick assignment? */
+  /** Alternate stick assignment?
+   *  Normal: Left stick to swerve, right stick to rotate
+   *  Alternate: Right stick to swerve, left to rotate
+   */
   public static final boolean ALTERNATE = false;
   
   public static final double MAX_METERS_PER_SEC = 1.0;
