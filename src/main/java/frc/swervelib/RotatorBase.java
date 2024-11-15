@@ -47,8 +47,9 @@ abstract public class RotatorBase extends SubsystemBase
     nt_max = SmartDashboard.getEntry("Rotator Max");
 
     pid.enableContinuousInput(-180, 180);
-    // pid.setIntegratorRange(-1, 1);
-    // pid.setIZone(...);
+    // Defaults: 1, inf
+    pid.setIntegratorRange(-1, 1);
+    pid.setIZone(Double.POSITIVE_INFINITY);
 
     nt_offset.setDefaultDouble(offset);
     nt_ks.setDefaultDouble(ks);
