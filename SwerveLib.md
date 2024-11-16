@@ -11,6 +11,10 @@ classDiagram
     Driver *-- SwerveModule
     Rotator *-- SwerveModule
     SwerveModule *-- SwerveDrivetrain : x4
+    StopCommand --> SwerveDrivetrain
+    RelativeSwerveCommand --> SwerveDrivetrain
+    SwerveToPositionCommand --> SwerveDrivetrain
+    RotateToHeadingCommand --> SwerveDrivetrain
     class DriverBase{
         -PIDController pid
         +setSpeed()
@@ -36,7 +40,18 @@ classDiagram
         -SwerveDriveKinematics kinematics
         -SwerveDrivePoseEstimator odometry
         +swerve(vx, vy, vrot)
-        +getPosition()
+        +getPosition() Pose2D
+        +followTrajectory(trajectory) SwerveCommand
+    }
+    class RelativeSwerveCommand{
+        -XBoxController joystick
+    }
+    class SwerveToPositionCommand{
+      -double x
+      -double y
+    }
+    class RotateToHeadingCommand{
+      -double heading
     }
 ```
 
