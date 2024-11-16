@@ -62,7 +62,7 @@ abstract public class DriverBase extends SubsystemBase
     nt_D.setDefaultDouble(D);
 
       // Defaults: 1, inf
-      pid.setIntegratorRange(-1, 1);
+      pid.setIntegratorRange(-10, 10);
       pid.setIZone(Double.POSITIVE_INFINITY);    
   }
 

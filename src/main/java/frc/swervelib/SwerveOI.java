@@ -15,11 +15,11 @@ public class SwerveOI
    *  Normal: Left stick to swerve, right stick to rotate
    *  Alternate: Right stick to swerve, left to rotate
    */
-  public static final boolean ALTERNATE = false;
+  public static boolean ALTERNATE = false;
   
-  public static final double MAX_METERS_PER_SEC = 1.0;
+  public static double MAX_METERS_PER_SEC = 1.0;
 
-  public static final double MAX_ROTATION_DEG_PER_SEC = 45.0;
+  public static double MAX_ROTATION_DEG_PER_SEC = 45.0;
 
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
