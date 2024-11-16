@@ -94,7 +94,7 @@ abstract public class DriverBase extends SubsystemBase
     return getRealSpeed();
   }
 
-  /** @param voltage Voltage to motor for rotating the swerve module */
+  /** @param voltage Voltage to motor for driving the swerve module */
   abstract public void setVoltage(double voltage);
 
   /** @return Get position in meters from last 'reset' */
