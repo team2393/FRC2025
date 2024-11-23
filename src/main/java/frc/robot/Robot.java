@@ -34,9 +34,8 @@ public class Robot extends CommandRobotBase
 
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
-
-    // for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
-    //   autos.addOption(auto.getName(), auto);
+    for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
+      autos.addOption(auto.getName(), auto);
     SmartDashboard.putData(autos);
   }
   
