@@ -61,9 +61,9 @@ abstract public class DriverBase extends SubsystemBase
     nt_I.setDefaultDouble(I);
     nt_D.setDefaultDouble(D);
 
-      // Defaults: 1, inf
+      // Defaults: 1, Double.POSITIVE_INFINITY
       pid.setIntegratorRange(-10, 10);
-      pid.setIZone(Double.POSITIVE_INFINITY);    
+      pid.setIZone(0.1);    
   }
 
   /** @param name Name under which to publish PID on dashboard */

@@ -3,10 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
+import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import frc.swervelib.RotatorBase;
@@ -14,8 +16,7 @@ import frc.swervelib.RotatorBase;
 /** SwerveBot Rotator using Kraken and CANcoder */
 public class Rotator extends RotatorBase
 {
-  // TODO Calibrate
-  private final double DEG_PER_TURN = 1.0;
+  private final double DEG_PER_TURN = 360.0;
   private final TalonFX motor;
   private final CANcoder encoder;
 
@@ -38,6 +39,9 @@ public class Rotator extends RotatorBase
 
     encoder = new CANcoder(encoder_id);
     encoder.clearStickyFaults();
+    CANcoderConfiguration configs = new CANcoderConfiguration();
+    configs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
+    encoder.getConfigurator().apply(configs);
   }
 
   @Override
