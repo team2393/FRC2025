@@ -9,11 +9,11 @@ import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveModule;
 
 /** SwerveDrivetrain with Rotator, Driver and gyro */
-public class SwervebotDrivetrain extends SwerveDrivetrain
+public class RobotDrivetrain extends SwerveDrivetrain
 {
   private final Pigeon2 gyro = new Pigeon2(0);
 
-  public SwervebotDrivetrain()
+  public RobotDrivetrain()
   {
     super(0.393, // TODO Measure size
           0.416,

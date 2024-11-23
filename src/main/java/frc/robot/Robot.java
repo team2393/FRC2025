@@ -18,7 +18,7 @@ import frc.tools.CommandRobotBase;
 /** FRC2025 robot */
 public class Robot extends CommandRobotBase
 {
-  private final SwervebotDrivetrain drivetrain = new SwervebotDrivetrain();
+  private final RobotDrivetrain drivetrain = new RobotDrivetrain();
   private final Command relswerve = new RelativeSwerveCommand(drivetrain);
     
   private final SendableChooser<Command> autos = new SendableChooser<>();
