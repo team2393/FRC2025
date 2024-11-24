@@ -4,6 +4,7 @@
 package frc.robot;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -12,6 +13,7 @@ import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
+import frc.swervelib.SwerveToPositionCommand;
 import frc.tools.AutoTools;
 import frc.tools.CommandRobotBase;
 
@@ -25,12 +27,14 @@ public class Robot extends CommandRobotBase
 
   public Robot()
   {
-    // Configure speed: Slower, smoother movement for practice?
+    // Configure speed: Slower, smoother movement for practice
     SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
     SwerveOI.forward_slew = new SlewRateLimiter(1.5);
     SwerveOI.side_slew = new SlewRateLimiter(1.5);
     SwerveOI.rotation_slew = new SlewRateLimiter(90);
+    AutoTools.config = new TrajectoryConfig(0.5, 1.0);
+    SwerveToPositionCommand.MAX_SPEED = 0.5;
 
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));

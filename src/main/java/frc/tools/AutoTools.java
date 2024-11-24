@@ -21,7 +21,7 @@ import frc.swervelib.SwerveDrivetrain;
 /** Auto-no-mouse routines */
 public class AutoTools
 {
-  // Run at up to 1.5m/s, accelerate by 1.0ms per second
+  /** Maximum speed [m/s] and acceleration [m/s/s] for automated trajectories */
   public static TrajectoryConfig config = new TrajectoryConfig(1.5, 1.0);
 
   /** Create trajectory from points
