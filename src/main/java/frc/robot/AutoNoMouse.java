@@ -46,6 +46,33 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
+    { // Triangle course with SwerveToPositionCommand
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("Trig Points");
+      auto.addCommands(new VariableWaitCommand());
+      // SwerveToPositionCommand is always absolute,
+      // so reset position to zero
+      auto.addCommands(new ResetPositionCommand(drivetrain));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 2.0, 0.0));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 1.0, 0.5));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 0.0, 0.0));
+      autos.add(auto);
+    }
+
+    { // Triangle course with trajectory
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("Trig Traj");
+      auto.addCommands(new VariableWaitCommand());
+      // Trajectory can be relative to current position
+      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+      Trajectory path = createTrajectory(true, 0.0, 0.0,   0.0,
+                                               2.0, 0.0,  45.0,
+                                               1.0, 0.5, 180.0,
+                                               0.0, 0.0, 180.0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      autos.add(auto);
+    }
+
     { // Drive a 1.5 square using SwerveToPositionCommand & RotateToHeadingCommand
       SequentialCommandGroup auto = new SequentialCommandGroup();
       auto.setName("1.5m Square (rot)");
