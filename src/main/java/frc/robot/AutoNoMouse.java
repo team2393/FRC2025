@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -48,28 +50,34 @@ public class AutoNoMouse
 
     { // Triangle course with SwerveToPositionCommand
       SequentialCommandGroup auto = new SequentialCommandGroup();
+      Timer timer = new Timer();
       auto.setName("Trig Points");
       auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new InstantCommand(() -> timer.restart()));
       // SwerveToPositionCommand is always absolute,
       // so reset position to zero
       auto.addCommands(new ResetPositionCommand(drivetrain));
       auto.addCommands(new SwerveToPositionCommand(drivetrain, 2.0, 0.0));
       auto.addCommands(new SwerveToPositionCommand(drivetrain, 1.0, 0.5));
       auto.addCommands(new SwerveToPositionCommand(drivetrain, 0.0, 0.0));
+      auto.addCommands(new InstantCommand(() -> System.out.printf("Time: %.1f sec\n", timer.get())));
       autos.add(auto);
     }
 
     { // Triangle course with trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
+      Timer timer = new Timer();
       auto.setName("Trig Traj");
       auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new InstantCommand(() -> timer.restart()));
       // Trajectory can be relative to current position
       auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
       Trajectory path = createTrajectory(true, 0.0, 0.0,   0.0,
-                                               2.0, 0.0,  45.0,
+                                               2.0, 0.0,  90.0,
                                                1.0, 0.5, 180.0,
                                                0.0, 0.0, 180.0);
       auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(new InstantCommand(() -> System.out.printf("Time: %.1f sec\n", timer.get())));
       autos.add(auto);
     }
 
