@@ -22,7 +22,7 @@ abstract public class RotatorBase extends SubsystemBase
   private final NetworkTableEntry nt_max;
   private final NetworkTableEntry nt_angle;
   private final NetworkTableEntry nt_angle_sp;
-  private final PIDController pid = new PIDController(0,0,0);
+  protected final PIDController pid = new PIDController(0,0,0);
   private double simulated_angle = 0.0;
 
   /** Construct Rotator
@@ -49,7 +49,7 @@ abstract public class RotatorBase extends SubsystemBase
     pid.enableContinuousInput(-180, 180);
     // Defaults: 1, inf
     pid.setIntegratorRange(-1, 1);
-    pid.setIZone(Double.POSITIVE_INFINITY);
+    pid.setIZone(5.0);
 
     nt_offset.setDefaultDouble(offset);
     nt_ks.setDefaultDouble(ks);

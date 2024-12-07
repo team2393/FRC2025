@@ -17,7 +17,7 @@ public class RobotDrivetrain extends SwerveDrivetrain
   {
     super(0.393, // TODO Measure size
           0.416,
-          new SwerveModule(new Rotator(0, RobotMap.FRONT_LEFT_ROTATE,  RobotMap.FRONT_LEFT_ANGLE,   -16),
+          new SwerveModule(new Rotator(0, RobotMap.FRONT_LEFT_ROTATE,  RobotMap.FRONT_LEFT_ANGLE,   -16), // TODO Set angle offsets
                            new Driver (0, RobotMap.FRONT_LEFT_DRIVE)),
           new SwerveModule(new Rotator(1, RobotMap.FRONT_RIGHT_ROTATE, RobotMap.FRONT_RIGHT_ANGLE,   89),
                            new Driver (1, RobotMap.FRONT_RIGHT_DRIVE)),

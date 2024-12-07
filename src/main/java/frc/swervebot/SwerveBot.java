@@ -28,6 +28,7 @@ import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
+import frc.swervelib.SwerveToPositionCommand;
 import frc.tools.AutoTools;
 import frc.tools.CommandRobotBase;
 
@@ -72,11 +73,13 @@ public class SwerveBot extends CommandRobotBase
   public SwerveBot()
   {
     // Slower, smoother movement
-    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
+    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.0;
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
     SwerveOI.forward_slew = new SlewRateLimiter(1.5);
     SwerveOI.side_slew = new SlewRateLimiter(1.5);
     SwerveOI.rotation_slew = new SlewRateLimiter(90);
+
+    SwerveToPositionCommand.MAX_SPEED = SwerveToPositionCommand.ACCEL = 1.0;
 
     SwerveOI.reset();
 

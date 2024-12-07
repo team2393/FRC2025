@@ -18,7 +18,7 @@ public class SwerveToPositionCommand extends Command
   public static double MAX_SPEED = 3.0;
 
   /** Max. acceleration */
-  public static final double ACCEL = 3.0;
+  public static double ACCEL = 3.0;
 
   private final SwerveDrivetrain drivetrain;
   private final double x, y;

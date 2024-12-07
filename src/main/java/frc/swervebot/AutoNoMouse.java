@@ -34,13 +34,48 @@ public class AutoNoMouse
 
     // Each auto is created within a { .. block .. } so we get local variables for 'path' and the like.
     // Each auto should start with a VariableWaitCommand to allow coordination with other teams
-    { // Drive forward 1.5 m using a (simple) trajectory
+    { // Drive forward 2.0 m using a (simple) trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
-      auto.setName("Forward 1.5m");
+      auto.setName("Forward 2.0m");
       auto.addCommands(new VariableWaitCommand());
       auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
-      Trajectory path = createTrajectory(true, 0, 0, 0,
-                                            1.50, 0, 0);
+      Trajectory path = createTrajectory(true, 0,   0, 0,
+                                               2.0, 0, 0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      autos.add(auto);
+    }
+
+    { // Drive inverted L
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("Inverted L");
+      auto.addCommands(new VariableWaitCommand());
+
+      // SwerveToPositionCommand & RotateToHeadingCommand are always absolute,
+      // so reset position to zero
+      auto.addCommands(new ResetPositionCommand(drivetrain));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 2.0, 0.0));
+      auto.addCommands(new RotateToHeadingCommand(drivetrain, 90));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 2.0, 2.5));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 2.0, 0.0));
+      auto.addCommands(new SwerveToPositionCommand(drivetrain, 0.0, 0.0));
+      auto.addCommands(new RotateToHeadingCommand(drivetrain, 0));
+
+      autos.add(auto);
+    }
+
+    { // Similar to Inv L, using trajectory
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("Inv L Traj");
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+      Trajectory path = createTrajectory(true, 0,   0,    0,
+                                               1.8, 0.15, 45,
+                                               2.0, 2.5, 90);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      // Driving 'backwards', note that headings are used in reverse
+      path =            createTrajectory(false, 2.0, 2.5, 90,
+                                               1.8, 0.15, 45,
+                                               0,   0,    0);
       auto.addCommands(drivetrain.followTrajectory(path, 0));
       autos.add(auto);
     }
