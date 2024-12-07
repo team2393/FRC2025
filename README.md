@@ -3,7 +3,7 @@ Team 2393 FRC Season 2025
 
 ![logo](logo.jpg)
 
-Game manual: Will be on https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
+Game manual: https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system (from Jan. 4, 2025 on)
 
 Software manual: https://docs.wpilib.org/en/latest/
 
@@ -51,12 +51,12 @@ Timeline
    - Install 2025 version of WPILib, driver station, CTR and REV libraries
 
  * Throughout January
-   - Program a drive base (last year's robot, swervebot, ...) with current software
+   - Program a drive base (swervebot, new swerve module test setup) with current software
    - Prepare autonomous moves
-   - Try to prepare software for other robot components as they are defined & designed
+   - Prepare software for other robot components as they are defined & designed
 
  * February
-   - Test software for other robot components
+   - Test software for all robot components
    - Update autonomouse moves to include picking up game pieces etc.
    - Drive practice
 
