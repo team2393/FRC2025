@@ -10,7 +10,6 @@ Software manual: https://docs.wpilib.org/en/latest/
  * The "Introduction" has links to Java learning resources.
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software", "WPILib Installation Guide".
-   (For now, that uses https://github.com/wpilibsuite/2025Beta)
  * See "Basic Programming", "Git Version Control" for installing `git`
 
 Get robot code
