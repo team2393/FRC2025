@@ -3,14 +3,13 @@ Team 2393 FRC Season 2025
 
 ![logo](logo.jpg)
 
-Game manual: https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system (from Jan. 4, 2025 on)
+Game manual: https://www.firstinspires.org/resource-library/frc/competition-manual-qa-system
 
-Software manual: https://docs.wpilib.org/en/latest/
+Software manual: https://docs.wpilib.org/en/stable/
 
  * The "Introduction" has links to Java learning resources.
    See also [Free Java Book](https://greenteapress.com/wp/think-java-2e/)
  * See "Step 2: Installing Software", "WPILib Installation Guide".
-   (For now, that uses https://github.com/wpilibsuite/2025Beta)
  * See "Basic Programming", "Git Version Control" for installing `git`
 
 Get robot code
@@ -30,8 +29,7 @@ Get robot code
 Timeline
 --------
 
- * Now: 
-   Start with the "WPILib Installation Guide" mentioned above.
+ * Start with the "WPILib Installation Guide" mentioned above.
    Read the Software manual. Read all of it until "Advanced programming".
    May skip the details about LabVIEW, python, C++ since we're using Java.
    Glance throught the Advanced programming section to at least know
@@ -45,20 +43,21 @@ Timeline
 
    - [X] Run Falcon and Pigeon with beta software
    - [X] Port swervebot to beta software
-   - [ ] Test any hardware that we'll likely use on the robot
 
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
-   - Install 2025 version of WPILib, driver station, CTR and REV libraries
+   - [ ] Install 2025 version of WPILib, driver station, CTR and REV libraries
+   - [X] Run swervebot to kickoff software
 
  * Throughout January
-   - Program a drive base (swervebot, new swerve module test setup) with current software
-   - Prepare autonomous moves
-   - Prepare software for other robot components as they are defined & designed
+   - [ ] Program drive base (swervebot, new swerve module test setup) with current software
+   - [ ] Prepare autonomous moves
+   - [ ] Test any hardware that we'll likely use on the robot
+   - [ ] Prepare software for other robot components as they are defined & designed
 
  * February
-   - Test software for all robot components
-   - Update autonomouse moves to include picking up game pieces etc.
-   - Drive practice
+   - [ ] Test software for all robot components
+   - [ ] Update autonomouse moves to include picking up game pieces etc.
+   - [ ] Drive practice
 
  * March, April: Competitions, https://frc-events.firstinspires.org/2025/Events/EventList
 
