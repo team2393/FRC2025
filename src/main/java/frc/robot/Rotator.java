@@ -8,12 +8,12 @@ import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import com.ctre.phoenix6.signals.SensorDirectionValue;
 
 import frc.swervelib.RotatorBase;
 
-/** SwerveBot Rotator using Kraken and CANcoder */
+/** Rotator using Kraken and CANcoder */
 public class Rotator extends RotatorBase
 {
   private final double DEG_PER_TURN = 360.0;
@@ -40,7 +40,10 @@ public class Rotator extends RotatorBase
     encoder = new CANcoder(encoder_id);
     encoder.clearStickyFaults();
     CANcoderConfiguration configs = new CANcoderConfiguration();
-    configs.MagnetSensor.AbsoluteSensorRange = AbsoluteSensorRangeValue.Signed_PlusMinusHalf;
+    // Default range: -0.5 .. 0.5 turns, CCW
+    configs.MagnetSensor.withAbsoluteSensorDiscontinuityPoint(0.5)
+                        .withMagnetOffset(0.0)
+                        .withSensorDirection(SensorDirectionValue.CounterClockwise_Positive);
     encoder.getConfigurator().apply(configs);
   }
 
