@@ -47,6 +47,8 @@ Timeline
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
    - [ ] Install 2025 version of WPILib, driver station, CTR and REV libraries
    - [X] Run swervebot to kickoff software
+   - [X] Configure new radio for usage similar to original radio (2.4 GHz, DIP #3), 
+         https://frc-radio.vivid-hosting.net/getting-started/usage/practicing-at-home
 
  * Throughout January
    - [ ] Program drive base (swervebot, new swerve module test setup) with current software
