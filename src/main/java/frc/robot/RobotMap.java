@@ -21,13 +21,17 @@ public class RobotMap
 
   // Kraken rotator motors: 40 Amp Fuse
   public static final int FRONT_LEFT_ROTATE  = 1;   // Port 9
-  public static final int FRONT_RIGHT_ROTATE = 2;  // Port 8
+  public static final int FRONT_RIGHT_ROTATE = 2;   // Port 8
   public static final int BACK_RIGHT_ROTATE  = 3;   // Port 7
   public static final int BACK_LEFT_ROTATE   = 4;   // Port 6
 
   // CANCoder angle sensors: 10 Amp Fuse
-  public static final int FRONT_LEFT_ANGLE  = 1;   // Port 3
-  public static final int FRONT_RIGHT_ANGLE = 2;   // Port 2
+  public static final int FRONT_LEFT_ANGLE  = 1;    // Port 3
+  public static final int FRONT_RIGHT_ANGLE = 2;    // Port 2
   public static final int BACK_RIGHT_ANGLE  = 3;    // Port 1
   public static final int BACK_LEFT_ANGLE   = 4;    // Port 0
+
+  // TODO Lift?
+  public static final int LIFT1_ID = 0;
+  public static final int LIFT2_ID = 0;
 }
