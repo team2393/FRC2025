@@ -12,7 +12,6 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
@@ -45,10 +44,10 @@ public class Lift extends SubsystemBase
 
   /** Motor controller with encoder */
   
-  private SparkMax primary_motor = new SparkMax(RobotMap.LIFT1_ID, MotorType.kBrushless);
+  private SparkMax primary_motor = new SparkMax(RobotMap.LIFT1, MotorType.kBrushless);
   
   /** Other motor */
-  private SparkMax secondary_motor = new SparkMax(RobotMap.LIFT2_ID, MotorType.kBrushless);
+  private SparkMax secondary_motor = new SparkMax(RobotMap.LIFT2, MotorType.kBrushless);
 
   /** Motor settings */
   private SparkBaseConfig primary_config, secondary_config; 

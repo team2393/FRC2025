@@ -35,6 +35,8 @@ import frc.tools.CommandRobotBase;
  * 
  * .. only apply ks when moving up, since motors need no get-going voltage
  *    to move down?
+ * .. is brake necessary, or is there always a holding voltage so brake
+ *    never active anyway?
  * .. then update to ProfiledPID?
  */
 public class LiftTestRobot extends CommandRobotBase

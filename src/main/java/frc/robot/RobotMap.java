@@ -32,6 +32,8 @@ public class RobotMap
   public static final int BACK_LEFT_ANGLE   = 4;    // Port 0
 
   // TODO Lift?
-  public static final int LIFT1_ID = 0;
-  public static final int LIFT2_ID = 0;
+  public static final int LIFT1 = 0;
+  public static final int LIFT2 = 0;
+  // TODO Arm?
+  public static final int ARM = 0;
 }
