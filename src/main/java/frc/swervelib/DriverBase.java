@@ -60,8 +60,10 @@ abstract public class DriverBase extends SubsystemBase
     nt_P.setDefaultDouble(P);
     nt_I.setDefaultDouble(I);
     nt_D.setDefaultDouble(D);
-    // pid.setIntegratorRange(-1, 1);
-    // pid.setIZone(..);
+
+      // Defaults: 1, Double.POSITIVE_INFINITY
+      pid.setIntegratorRange(-10, 10);
+      pid.setIZone(0.1);    
   }
 
   /** @param name Name under which to publish PID on dashboard */
@@ -92,7 +94,7 @@ abstract public class DriverBase extends SubsystemBase
     return getRealSpeed();
   }
 
-  /** @param voltage Voltage to motor for rotating the swerve module */
+  /** @param voltage Voltage to motor for driving the swerve module */
   abstract public void setVoltage(double voltage);
 
   /** @return Get position in meters from last 'reset' */

@@ -11,12 +11,17 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 /** OI for serving */
 public class SwerveOI
 {
-  /** Alternate stick assignment? */
-  public static final boolean ALTERNATE = false;
+  /** Alternate stick assignment?
+   *  Normal: Left stick to swerve, right stick to rotate
+   *  Alternate: Right stick to swerve, left to rotate
+   */
+  public static boolean ALTERNATE = false;
   
-  public static final double MAX_METERS_PER_SEC = 1.0;
+  /** Maximum speed for manual driving [m/s] */
+  public static double MAX_METERS_PER_SEC = 1.0;
 
-  public static final double MAX_ROTATION_DEG_PER_SEC = 45.0;
+  /** Maximum speed for manual turning [deg/s] */
+  public static double MAX_ROTATION_DEG_PER_SEC = 45.0;
 
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
@@ -27,10 +32,10 @@ public class SwerveOI
     return value * Math.abs(value);
   }
 
-  // Dampen moves, only accelerate/break by 10 m/s
-  public static SlewRateLimiter forward_slew = new SlewRateLimiter(10);
-  public static SlewRateLimiter side_slew = new SlewRateLimiter(10);
-  // .. and 360deg/sec
+  /** Dampen manual moves, only accelerate/break by ... m/s */
+  public static SlewRateLimiter forward_slew = new SlewRateLimiter(10),
+                                side_slew = new SlewRateLimiter(10);
+  /** Dampen manual rotation, only turn by ... deg/sec */
   public static SlewRateLimiter rotation_slew = new SlewRateLimiter(360);
 
   /** @return Forward/back speed [m/s] */

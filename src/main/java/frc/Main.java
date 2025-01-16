@@ -15,7 +15,11 @@ public final class Main
     // RobotBase.startRobot(frc.demo.FirstRobotDemo::new);
     // RobotBase.startRobot(frc.demo.MotorPhoenix6DemoRobot::new);
     // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.swervebot.Driver(0)));
+    // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.robot.Driver(0, 10)));
     // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.swervebot.Rotator(0, 0)));
+
+    // TODO: Swerve rotator
+    // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.robot.Rotator(0, 11, 11, 0.0)));
 
     // RobotBase.startRobot(() ->
     //   new frc.swervelib.SwerveModuleDemoRobot(
@@ -30,5 +34,6 @@ public final class Main
     // RobotBase.startRobot(frc.led.LEDRingDemoRobot::new);
 
     RobotBase.startRobot(frc.swervebot.SwerveBot::new);
+    // RobotBase.startRobot(frc.robot.Robot::new);
   }
 }
