@@ -135,32 +135,44 @@ public class AutoNoMouse
 
     { // Start with preloaded coral, drop, get another, drop, ...
       // like https://www.chiefdelphi.com/t/kitbot-4-coral-level-1-auto/479325
-      SequentialCommandGroup auto = new SequenceWithStart("CoralRun", 8.00, 2.4, 180);
+      SequentialCommandGroup auto = new SequenceWithStart("CoralRun", 8.02, 5.41, 180);
       auto.addCommands(new VariableWaitCommand());
-      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 8.00, 2.40, 180));
+      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 8.02, 5.41, 180));
       Timer timer = new Timer();
       auto.setName("CoralRun");
       auto.addCommands(new VariableWaitCommand());
       auto.addCommands(new InstantCommand(() -> timer.restart()));
-      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
       // Drive from start positon to 1st drop
-      Trajectory path = createTrajectory(true, 8.00, 2.40, 180.0,
-                                               5.35, 2.72, 120.0);
-      auto.addCommands(drivetrain.followTrajectory(path, 120));
+      Trajectory path = createTrajectory(true, 8.02, 5.41, 180.0,
+                                               6.12, 4.01, 180.0);
+      auto.addCommands(drivetrain.followTrajectory(path, 180));
       auto.addCommands(new PrintCommand("Drop pre-loaded coral"));
       auto.addCommands(new WaitCommand(1.0));
       // Pickup 2nd
       auto.addCommands(new PrintCommand("Open Intake"));
-      path = createTrajectory(true, 5.35, 2.72,  -60,
-                                    1.2,  0.95, -130);
-      auto.addCommands(drivetrain.followTrajectory(path, 52));
-      auto.addCommands(new WaitCommand(1.0));
+      path = createTrajectory(true, 6.12, 4.01,  -80,
+                                    5.8,  1.6,  -140,
+                                    1.09, 1.02, -170);
+      auto.addCommands(drivetrain.followTrajectory(path, 50));
       auto.addCommands(new PrintCommand("Close Intake"));
       // Drop 2nd
-      path = createTrajectory(true, 1.2, 0.95, 58,
-                                    3.6, 2.6,  58);
-      auto.addCommands(drivetrain.followTrajectory(path, 58));
+      path = createTrajectory(true, 1.09, 1.02, 20,
+                                    3.7, 2.6,  60);
+      auto.addCommands(drivetrain.followTrajectory(path, 60));
       auto.addCommands(new PrintCommand("Drop 2nd coral"));
+      auto.addCommands(new WaitCommand(1.0));
+      // Pickup 3rd
+      auto.addCommands(new PrintCommand("Open Intake"));
+      path = createTrajectory(true, 3.7, 2.6,  -120,
+                                    1.09, 1.02, -130);
+      auto.addCommands(drivetrain.followTrajectory(path, 50));
+      auto.addCommands(new PrintCommand("Close Intake"));
+      // Drop 3nd
+      path = createTrajectory(true, 1.09, 1.02, 20,
+                                    2.6,  2.2, 90,
+                                    2.8,  4.0, 45);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(new PrintCommand("Drop 3nd coral"));
       auto.addCommands(new WaitCommand(1.0));
 
       auto.addCommands(new InstantCommand(() -> System.out.printf("Time: %.1f sec\n", timer.get())));
