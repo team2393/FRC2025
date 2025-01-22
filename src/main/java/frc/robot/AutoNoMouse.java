@@ -105,34 +105,6 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
-    { // Blue Bottom: Move out, Shoot, Pickup, Shoot
-      SequentialCommandGroup auto = new SequenceWithStart("BBMSPS", 0.51, 2.38, 180);
-      auto.addCommands(new VariableWaitCommand());
-      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 0.51, 2.38, 180));
-      // Move out (back), then over to front of target
-      Trajectory path = createTrajectory(true, 0.51, 2.38,   0,
-                                               1.70, 3.50,  90,
-                                               1.44, 5.54, 120);
-      auto.addCommands(drivetrain.followTrajectory(path, 180));
-      auto.addCommands(new PrintCommand("Shoot!"));
-      auto.addCommands(new WaitCommand(2));
-      // Pickup another ring from right behind
-      auto.addCommands(new PrintCommand("Open intake"));
-      Trajectory path2 = createTrajectory(true, 1.44, 5.54, 0,
-                                                2.60, 5.54, 0);
-      auto.addCommands(drivetrain.followTrajectory(path2, 180));
-      auto.addCommands(new PrintCommand("Close intake"));
-      // Move forward to target and shoot
-      Trajectory path3 = createTrajectory(true, 2.60, 5.54, 180,
-                                                1.44, 5.54, 180);
-      auto.addCommands(drivetrain.followTrajectory(path3, 180));
-      auto.addCommands(new PrintCommand("Shoot!"));
-      auto.addCommands(new WaitCommand(2));
-      auto.addCommands(new PrintCommand("Done."));
-      autos.add(auto);
-    }
-
-
     { // Start with preloaded coral, drop, get another, drop, ...
       // like https://www.chiefdelphi.com/t/kitbot-4-coral-level-1-auto/479325
       SequentialCommandGroup auto = new SequenceWithStart("CoralRun", 8.02, 5.41, 180);
