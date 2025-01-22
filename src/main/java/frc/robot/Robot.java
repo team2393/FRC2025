@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
+import frc.swervelib.StopCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
 import frc.swervelib.SwerveToPositionCommand;
@@ -28,27 +29,32 @@ public class Robot extends CommandRobotBase
   public Robot()
   {
     // Configure speed: Slower, smoother movement for practice
-    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
+    // SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
+    // SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
+    // SwerveOI.forward_slew = new SlewRateLimiter(1.5);
+    // SwerveOI.side_slew = new SlewRateLimiter(1.5);
+    // SwerveOI.rotation_slew = new SlewRateLimiter(90);
+    // AutoTools.config = new TrajectoryConfig(0.5, 1.0);
+    // SwerveToPositionCommand.MAX_SPEED = 0.5;
+
+    // Configure speed: Faster
+    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 3.5;
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
-    SwerveOI.forward_slew = new SlewRateLimiter(1.5);
-    SwerveOI.side_slew = new SlewRateLimiter(1.5);
-    SwerveOI.rotation_slew = new SlewRateLimiter(90);
-    AutoTools.config = new TrajectoryConfig(0.5, 1.0);
-    SwerveToPositionCommand.MAX_SPEED = 0.5;
+    SwerveOI.forward_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);
+    SwerveOI.side_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);
+    SwerveOI.rotation_slew = new SlewRateLimiter(45);
+    AutoTools.config = new TrajectoryConfig(SwerveOI.MAX_METERS_PER_SEC, SwerveOI.MAX_METERS_PER_SEC);
+    SwerveToPositionCommand.MAX_SPEED = SwerveOI.MAX_METERS_PER_SEC;
 
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
     for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
       autos.addOption(auto.getName(), auto);
     SmartDashboard.putData(autos);
+    // Whenever something is selected, show its (optional) start position
+    autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
   }
   
-  @Override
-  public void disabledPeriodic()
-  {
-    AutoTools.indicateStart(drivetrain, autos.getSelected());
-  }  
-
   @Override
   public void teleopInit()
   {
@@ -61,6 +67,7 @@ public class Robot extends CommandRobotBase
   @Override
   public void autonomousInit()
   {
+    drivetrain.setDefaultCommand(new StopCommand(drivetrain));
     autos.getSelected().schedule();
   }
 }
