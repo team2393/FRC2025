@@ -3,13 +3,11 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTableEntry;
@@ -44,13 +42,10 @@ public class Lift extends SubsystemBase
 
   /** Motor controller with encoder */
   
-  private SparkMax primary_motor = new SparkMax(RobotMap.LIFT1, MotorType.kBrushless);
+  private TalonFX primary_motor = new TalonFX(RobotMap.LIFT1);
   
   /** Other motor */
-  private SparkMax secondary_motor = new SparkMax(RobotMap.LIFT2, MotorType.kBrushless);
-
-  /** Motor settings */
-  private SparkBaseConfig primary_config, secondary_config; 
+  private TalonFX secondary_motor = new TalonFX(RobotMap.LIFT2);
 
   /** Has position be calibrated? */
   private boolean calibrated = false;
@@ -69,27 +64,18 @@ public class Lift extends SubsystemBase
   public Lift()
   {
     // Primary motor is the one we control
-    primary_motor.clearFaults();
-    primary_config = new SparkMaxConfig().idleMode(IdleMode.kBrake)
-                                         .openLoopRampRate(0.1)
-                                         .inverted(false);
-    primary_motor.configure(primary_config,
-                            // Suggested in https://github.com/wpilibsuite/2025Beta/discussions/27 :
-                            // 'Reset' to reset all but CAN ID, Motor Type, Idle Mode(!),
-                            // then apply what's specified: idle mode, ramp rate
-                            ResetMode.kNoResetSafeParameters,
-                            // Don't 'persist' because that is slow
-                            PersistMode.kNoPersistParameters);
+    primary_motor.clearStickyFaults();
 
-    // Secondary motor is inverted, follows the primary
-    secondary_motor.clearFaults();
-    secondary_config = new SparkMaxConfig().idleMode(IdleMode.kBrake)
-                                           .openLoopRampRate(0.1)
-                                           .inverted(true)
-                                           .follow(primary_motor.getDeviceId());
-    secondary_motor.configure(secondary_config,
-                              ResetMode.kNoResetSafeParameters,
-                              PersistMode.kNoPersistParameters);
+    TalonFXConfiguration config = new TalonFXConfiguration()
+        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
+    primary_motor.getConfigurator().apply(config);    
+    primary_motor.setNeutralMode(NeutralModeValue.Brake);
+
+    // Secondary motor is inverted, follows the primary (but invert the direction)
+    secondary_motor.clearStickyFaults();
+    secondary_motor.getConfigurator().apply(config);    
+    secondary_motor.setNeutralMode(NeutralModeValue.Brake);
+    secondary_motor.setControl(new Follower(primary_motor.getDeviceID(), true));
 
     nt_height = SmartDashboard.getEntry("Lift Height");
     nt_kg = SmartDashboard.getEntry("Lift kg");
@@ -101,19 +87,9 @@ public class Lift extends SubsystemBase
 
   private void setBrake(boolean brake)
   {
-    IdleMode mode = brake ? IdleMode.kBrake : IdleMode.kCoast;
-    // TODO How to most efficiently configure brake?
-    // Check if motor(s) already use desired mode?
-    if (primary_motor.configAccessor.getIdleMode() == mode)
-        return;
-    primary_config.idleMode(mode);
-    secondary_config.idleMode(mode);
-    primary_motor.configure(primary_config,
-                            ResetMode.kNoResetSafeParameters,
-                            PersistMode.kNoPersistParameters);
-    secondary_motor.configure(secondary_config,
-                              ResetMode.kNoResetSafeParameters,
-                              PersistMode.kNoPersistParameters);
+    NeutralModeValue mode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
+    primary_motor.setNeutralMode(mode);
+    secondary_motor.setNeutralMode(mode);
   }
 
   @Override
@@ -123,7 +99,7 @@ public class Lift extends SubsystemBase
     if (! calibrated  &&  RobotState.isEnabled())
     {
       // Reset encoder zero/bottom position
-      bottom_offset = primary_motor.getEncoder().getPosition();
+      bottom_offset = primary_motor.getPosition().getValueAsDouble();
       calibrated = true;
       System.err.println("Calibrated lift bottom at " + bottom_offset + " revs");
     }
@@ -135,7 +111,7 @@ public class Lift extends SubsystemBase
   {
     if (RobotBase.isSimulation())
       return simulated_height;
-    return (primary_motor.getEncoder().getPosition() - bottom_offset) / REVS_PER_METER;
+    return (primary_motor.getPosition().getValueAsDouble() - bottom_offset) / REVS_PER_METER;
   }
 
   /** @param voltage Lift voltage, positive for "up" */
