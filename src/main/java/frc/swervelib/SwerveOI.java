@@ -66,17 +66,20 @@ public class SwerveOI
     side_slew.reset(0);
     rotation_slew.reset(0);
   }
-   
+  
+  /** Reset drivetrain: Zero X, Y, heading */
   public static Trigger resetDrivetrain()
   {
     return joystick.start();
   }
 
+  /** Select drive mode that's relative to robot */
   public static Trigger selectRelative()
   {
     return joystick.rightBumper();
   }
 
+  /** Select drivemode for absolute field coordinates */
   public static Trigger selectAbsolute()
   {
     return joystick.leftBumper();
