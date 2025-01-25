@@ -5,6 +5,7 @@
 package frc;
 
 import edu.wpi.first.wpilibj.RobotBase;
+import frc.robot.RobotMap;
 
 /** Java 'Main'. Modify this file to select which robot to run */
 public final class Main
@@ -18,8 +19,9 @@ public final class Main
     // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.swervebot.Rotator(0, 0)));
     
     // TODO: Robot drivetrain
-    // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.robot.Driver(0, 10)));
-    // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.robot.Rotator(0, 11, 11, 0.0)));
+    // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.robot.Driver(0, RobotMap.FRONT_LEFT_DRIVE)));
+    // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.robot.Rotator(0, RobotMap.FRONT_LEFT_ROTATE,
+                                                                                          //  RobotMap.FRONT_LEFT_ANGLE, 0.0)));
 
     // RobotBase.startRobot(() ->
     //   new frc.swervelib.SwerveModuleDemoRobot(

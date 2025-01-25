@@ -28,8 +28,7 @@ public class Rotator extends RotatorBase
    */
   public Rotator(int index, int motor_id, int encoder_id, double offset)
   {
-    // TODO Find PID settings
-    super(index, offset, 0.1, 0.4, 0.01, 0.01, 9.0);
+    super(index, offset, 0.0, 0.1, 0.0, 0.006, 9.0);
     motor = new TalonFX(motor_id);
     TalonFXConfiguration config = new TalonFXConfiguration()
         .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
@@ -56,6 +55,6 @@ public class Rotator extends RotatorBase
   @Override
   public void setVoltage(double voltage)
   {
-    motor.setVoltage(voltage);
+    motor.setVoltage(-voltage); // motor inverted
   }
 }

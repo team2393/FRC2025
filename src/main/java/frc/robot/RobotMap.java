@@ -29,7 +29,7 @@ public class RobotMap
   public static final int FRONT_LEFT_ANGLE  = 24;    // Port 15
   public static final int FRONT_RIGHT_ANGLE = 17;    // Port 15
   public static final int BACK_RIGHT_ANGLE  = 57;    // Port 15
-  public static final int BACK_LEFT_ANGLE   = 28;    // Port 15
+  public static final int BACK_LEFT_ANGLE   = 23;    // Port 15
 
   // TODO Lift?
   public static final int LIFT1 = 10;
