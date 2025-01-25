@@ -47,11 +47,14 @@ Timeline
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
    - [ ] Install 2025 version of WPILib, driver station, CTR and REV libraries
    - [X] Run swervebot to kickoff software
-   - [X] Configure new radio for usage similar to original radio (2.4 GHz, DIP #3), 
-         https://frc-radio.vivid-hosting.net/getting-started/usage/practicing-at-home
+   - [X] Configure new radio for usage similar to original radio:
+         * Connect via DS port and see http://radio.local
+         * Upgrade firmware https://frc-radio.vivid-hosting.net/overview/upgrading-firmware
+         * Configure SSIDadn 2.4 GHz password, enable 2.4 GHz wifi via DIP #3
 
  * Throughout January
-   - [ ] Program drive base (swervebot, new swerve module test setup) with current software
+   - [X] Program drive base (swervebot, new swerve module test setup) with current software
+   - [ ] Tune drive base
    - [ ] Prepare autonomous moves
    - [ ] Test any hardware that we'll likely use on the robot
    - [ ] Setup camera for April tag detection
@@ -64,7 +67,7 @@ Timeline
    - [ ] Update autonomouse moves to include picking up game pieces etc.
    - [ ] Drive practice
 
- * March, April: Competitions, https://frc-events.firstinspires.org/2025/Events/EventList
+ * April: Competition, https://frc-events.firstinspires.org/2025/Events/EventList
 
 
 
