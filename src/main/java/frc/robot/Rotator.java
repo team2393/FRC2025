@@ -4,10 +4,12 @@
 package frc.robot;
 
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
+import com.ctre.phoenix6.configs.MotorOutputConfigs;
 import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 
@@ -31,8 +33,9 @@ public class Rotator extends RotatorBase
     super(index, offset, 0.0, 0.1, 0.0, 0.006, 9.0);
     motor = new TalonFX(motor_id);
     TalonFXConfiguration config = new TalonFXConfiguration()
-        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
-    motor.getConfigurator().apply(config);    
+        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3))
+        .withMotorOutput(new MotorOutputConfigs().withInverted(InvertedValue.Clockwise_Positive));
+    motor.getConfigurator().apply(config);
     motor.clearStickyFaults();
     motor.setNeutralMode(NeutralModeValue.Coast);
 
@@ -55,6 +58,6 @@ public class Rotator extends RotatorBase
   @Override
   public void setVoltage(double voltage)
   {
-    motor.setVoltage(-voltage); // motor inverted
+    motor.setVoltage(voltage);
   }
 }
