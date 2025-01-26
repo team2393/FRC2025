@@ -45,12 +45,12 @@ Timeline
    - [X] Port swervebot to beta software
 
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
-   - [ ] Install 2025 version of WPILib, driver station, CTR and REV libraries
+   - [ ] Install 2025 version of WPILib, driver station, CTRE tools (Phoenix Tuner) on robots laptop
    - [X] Run swervebot to kickoff software
    - [X] Configure new radio for usage similar to original radio:
-         * Connect via DS port and see http://radio.local
-         * Upgrade firmware https://frc-radio.vivid-hosting.net/overview/upgrading-firmware
-         * Configure SSIDadn 2.4 GHz password, enable 2.4 GHz wifi via DIP #3
+     * Connect via DS port and see http://radio.local
+     * Upgrade firmware https://frc-radio.vivid-hosting.net/overview/upgrading-firmware
+     * Configure SSIDadn 2.4 GHz password, enable 2.4 GHz wifi via DIP #3
 
  * Throughout January
    - [X] Program drive base (swervebot, new swerve module test setup) with current software
