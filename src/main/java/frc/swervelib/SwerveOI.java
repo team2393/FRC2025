@@ -23,6 +23,11 @@ public class SwerveOI
   /** Maximum speed for manual turning [deg/s] */
   public static double MAX_ROTATION_DEG_PER_SEC = 45.0;
 
+  /** Assume XBox Controller
+   *  PS4 controller looks similar but has different axis
+   *  assignments (compare XboxController.Axis vs
+   *  PS4Controller.Axis) and needs to use CommandPS4Controller
+   */
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
   private static double filter(double value)
