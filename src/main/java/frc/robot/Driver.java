@@ -14,7 +14,7 @@ import frc.swervelib.DriverBase;
 public class Driver extends DriverBase
 {
   // Calibrate: Start with 1.0, then determine 'turns' for 1 m (better: 10 m)
-  private final static double METERS_PER_TURN = 1.0 / 22.3;
+  private final static double METERS_PER_TURN = 0.04677860840234989;
 
   private final TalonFX motor;
 
