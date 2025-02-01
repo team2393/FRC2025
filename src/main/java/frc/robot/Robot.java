@@ -38,7 +38,7 @@ public class Robot extends CommandRobotBase
     // SwerveToPositionCommand.MAX_SPEED = 0.5;
 
     // Configure speed: Faster
-    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 3.5;
+    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.0;
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
     SwerveOI.forward_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);
     SwerveOI.side_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);

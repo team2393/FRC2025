@@ -23,7 +23,7 @@ public class Driver extends DriverBase
    */
   public Driver(int index, int id)
   {
-    super(index, 0.1, 2.4, 2, 1.5, 0.001);
+    super(index, 0.05, 2.35, 2.0, 1.5, 0.001);
     motor = new TalonFX(id);
     TalonFXConfiguration config = new TalonFXConfiguration()
         .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
