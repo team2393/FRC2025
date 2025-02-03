@@ -14,7 +14,7 @@ import frc.swervelib.DriverBase;
 public class Driver extends DriverBase
 {
   // Calibrate: Start with 1.0, then determine 'turns' for 1 m (better: 10 m)
-  private final static double METERS_PER_TURN = 1.0 / 22.3;
+  private final static double METERS_PER_TURN = 0.04677860840234989;
 
   private final TalonFX motor;
 
@@ -23,7 +23,7 @@ public class Driver extends DriverBase
    */
   public Driver(int index, int id)
   {
-    super(index, 0.1, 2.4, 2, 1.5, 0.001);
+    super(index, 0.05, 2.35, 2.0, 1.5, 0.001);
     motor = new TalonFX(id);
     TalonFXConfiguration config = new TalonFXConfiguration()
         .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));

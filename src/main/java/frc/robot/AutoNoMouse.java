@@ -37,6 +37,26 @@ public class AutoNoMouse
     // Each auto is created within a { .. block .. } so we get local variables for 'path' and the like.
     // Each auto should start with a VariableWaitCommand to allow coordination with other teams
 
+    { // Drive forward and back 1.5 m using a (simple) trajectory
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("2(Forward & Back) 1.5m");
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+      Trajectory path = createTrajectory(true, 0, 0, 0,
+                                            1.50, 0, 0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      path = createTrajectory(true, 1.50, 0, 180,
+                                       0, 0, 180);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      path = createTrajectory(true, 0, 0, 0,
+                                 1.50, 0, 0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      path = createTrajectory(true, 1.50, 0, 180,
+                                       0, 0, 180);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      autos.add(auto);
+    }
+
     { // Drive forward 1.5 m using a (simple) trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
       auto.setName("Forward 1.5m");
