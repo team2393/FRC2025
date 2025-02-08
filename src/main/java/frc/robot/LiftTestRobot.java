@@ -42,9 +42,10 @@ import frc.tools.CommandRobotBase;
 public class LiftTestRobot extends CommandRobotBase
 {
   private final Lift lift = new Lift();
-
+  
   public LiftTestRobot()
   {
+    new Visualization(lift);
     SmartDashboard.setDefaultNumber("Setpoint1", 0.0);
     SmartDashboard.setDefaultNumber("Setpoint2", 0.0);
   }
