@@ -44,16 +44,19 @@ public class AutoNoMouse
       auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
       Trajectory path = createTrajectory(true, 0, 0, 0,
                                             1.50, 0, 0);
-      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
+
+      auto.addCommands(new WaitCommand(5));
+
       path = createTrajectory(true, 1.50, 0, 180,
                                        0, 0, 180);
-      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
       path = createTrajectory(true, 0, 0, 0,
                                  1.50, 0, 0);
-      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
       path = createTrajectory(true, 1.50, 0, 180,
                                        0, 0, 180);
-      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
       autos.add(auto);
     }
 
