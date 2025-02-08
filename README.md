@@ -52,7 +52,7 @@ Timeline
      * Upgrade firmware https://frc-radio.vivid-hosting.net/overview/upgrading-firmware
      * Configure SSIDadn 2.4 GHz password, enable 2.4 GHz wifi via DIP #3
 
- * Throughout January
+ * Throughout January & February
    - [X] Program drive base (swervebot, new swerve module test setup) with current software
    - [ ] Tune drive base
    - [ ] Prepare autonomous moves
@@ -62,12 +62,12 @@ Timeline
    - [ ] Attempt command to swerve & rotate such that heading of robot is perpendicular to tag
    - [ ] Prepare software for other robot components as they are defined & designed
 
- * February
+ * March
    - [ ] Test software for all robot components
    - [ ] Update autonomouse moves to include picking up game pieces etc.
    - [ ] Drive practice
 
- * April: Competition, https://frc-events.firstinspires.org/2025/Events/EventList
+ * April 2-5: Competition, https://frc-events.firstinspires.org/2025/Events/EventList
 
 
 
