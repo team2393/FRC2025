@@ -173,6 +173,29 @@ public class AutoNoMouse
       auto.addCommands(new InstantCommand(() -> System.out.printf("Time: %.1f sec\n", timer.get())));
       autos.add(auto);
     }
+    {
+      SequentialCommandGroup auto = new SequenceWithStart("CoralRunRed", 9.355, 1.3, 0);
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 9.355, 1.3, 0));
+
+      Trajectory path = createTrajectory(true, 9.355, 1.3, 0,
+                                                                11.55, 4, 0 );
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      System.out.println("Drop Coral"
+                          + "\n Open Intake");
+      path = createTrajectory(true, 11.55,6,0,
+                                                16,7.1, 25);
+      auto.addCommands(drivetrain.followTrajectory(path, 25));
+      
+      autos.add(auto); 
+    }
+    {
+      SequentialCommandGroup auto = new SequenceWithStart("CoralRunCircle", 9.5, 2.9, 0);
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain, 9.5, 2.9, 0));
+      auto.addCommands(AutoTools.followPathWeaver(drivetrain, "CoralCircle", 0));
+      autos.add(auto);
+    }
 
     return autos;
   }
