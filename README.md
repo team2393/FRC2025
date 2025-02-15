@@ -66,6 +66,7 @@ Timeline
    - [ ] Test software for all robot components
    - [ ] Update autonomouse moves to include picking up game pieces etc.
    - [ ] Drive practice
+   - [ ] March 30: STEM Dinner
 
  * April 2-5: Competition, https://frc-events.firstinspires.org/2025/Events/EventList
 
