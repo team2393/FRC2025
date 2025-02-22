@@ -26,6 +26,7 @@ public class CameraHelper
 {
   private final AprilTagFieldLayout tags;
   private final PhotonCamera camera;
+  private final Transform3d robotToCam;
   private final PhotonPoseEstimator estimator;
     
   public CameraHelper ()
@@ -36,7 +37,7 @@ public class CameraHelper
     camera = new PhotonCamera("default");
     // Where is the camera mounted relative to the center of the robot?
     // Example: mounted facing forward, half a meter forward of center, half a meter up from center.
-    Transform3d robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0));
+    robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0));
 
     // Prepare estimator
     // TODO Which strategy?
@@ -66,7 +67,10 @@ public class CameraHelper
       // Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
       // if (tag_pose.isEmpty())
       //   continue;
-      // Pose2d position = tag_pose.get().transformBy(target.bestCameraToTarget.inverse()).toPose2d();
+      // Pose2d position = tag_pose.get()
+      //                           .transformBy(target.bestCameraToTarget.inverse())
+      //                           .transformBy(robotToCam.inverse())
+      //                           .toPose2d();
       // drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
     }
   }  
