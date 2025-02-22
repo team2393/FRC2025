@@ -26,6 +26,9 @@ public class Robot extends CommandRobotBase
     
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
+  // TODO Use camera?
+  // private final CameraHelper camera_helper = new CameraHelper();
+
   public Robot()
   {
     // Configure speed: Slower, smoother movement for practice
@@ -55,6 +58,13 @@ public class Robot extends CommandRobotBase
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
   }
   
+  @Override
+  public void robotPeriodic()
+  {
+    super.robotPeriodic();
+    // TODO Update camera?
+    // camera_helper.updatePosition(drivetrain);
+  }
   @Override
   public void teleopInit()
   {
