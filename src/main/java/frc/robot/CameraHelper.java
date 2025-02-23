@@ -19,6 +19,7 @@ import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
+import edu.wpi.first.net.PortForwarder;
 import frc.swervelib.SwerveDrivetrain;
 
 /** Helper for using a camera */
@@ -34,7 +35,11 @@ public class CameraHelper
     // TODO pick correct field
     tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
     // TODO Configure camera name and position
-    camera = new PhotonCamera("default");
+    camera = new PhotonCamera("photonvision");
+
+    // TODO: Allow access to the camera from a computer when tethered to the USB port on the roboRIO
+    // PortForwarder.add(5800, "photonvision.local", 5800);
+
     // Where is the camera mounted relative to the center of the robot?
     // Example: mounted facing forward, half a meter forward of center, half a meter up from center.
     robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0));
