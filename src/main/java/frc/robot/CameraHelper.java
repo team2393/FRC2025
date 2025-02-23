@@ -44,6 +44,7 @@ public class CameraHelper
     estimator = new PhotonPoseEstimator(tags, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, robotToCam);
   }
 
+  /** Call periodically to update drivetrain with camera info */
   public void updatePosition(SwerveDrivetrain drivetrain)
   {
     if (! camera.isConnected())
@@ -54,9 +55,10 @@ public class CameraHelper
     for (PhotonPipelineResult info : camera.getAllUnreadResults())
     {
       // Option 1: Trust the estimator
-      estimator.update(info)
-               .ifPresent(estimate ->
-                 drivetrain.updateLocationFromCamera(estimate.estimatedPose.toPose2d(), estimate.timestampSeconds));
+      Optional<EstimatedRobotPose> estimate = estimator.update(info);
+      if (estimate.isPresent())
+        drivetrain.updateLocationFromCamera(estimate.get().estimatedPose.toPose2d(),
+                                            estimate.get().timestampSeconds);
 
       // Option 2: Check the result outself...
       // PhotonTrackedTarget target = info.getBestTarget();
@@ -67,6 +69,7 @@ public class CameraHelper
       // Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
       // if (tag_pose.isEmpty())
       //   continue;
+      // // Transform from tag to camera, then from camera to center of robot
       // Pose2d position = tag_pose.get()
       //                           .transformBy(target.bestCameraToTarget.inverse())
       //                           .transformBy(robotToCam.inverse())
