@@ -16,13 +16,13 @@ import frc.tools.CommandRobotBase;
  *   (Can't do that for integrated motor/controller? Then remove a gear?)
  * - After bootup, briefly enable teleop. This first enablement
  *   should zero the height reading.
- * - Calibrate height encoder, set REVS_PER_METER and MAX_HEIGHT.
- * - Connect power wires for primary motor.
  * - Enable teleop. Check if moving 'up' with positive voltage
  *   indeed moves primary motor 'up'.
  *   If not, switch motor inversion.
  * - Connect secondary motor to speed controller and check that it moves
  *   in correct direction with primary. If not, update its inversion setting.
+ * - Calibrate height encoder, set REVS_PER_METER and MAX_HEIGHT.
+ * - Connect power wires for primary motor.
  * 
  * Auto-no-mouse:
  * - Start with "Setpoint" = 0.0, assert that motors are not powered.
