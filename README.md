@@ -45,7 +45,7 @@ Timeline
    - [X] Port swervebot to beta software
 
  * January 4: Kickoff, https://www.firstinspires.org/robotics/frc/kickoff, https://www.tnfirst.org/frc-events
-   - [ ] Install 2025 version of WPILib, driver station, CTRE tools (Phoenix Tuner) on robots laptop
+   - [X] Install 2025 version of WPILib, driver station, CTRE tools (Phoenix Tuner) on robots laptop
    - [X] Run swervebot to kickoff software
    - [X] Configure new radio for usage similar to original radio:
      * Connect via DS port and see http://radio.local
