@@ -55,9 +55,11 @@ Timeline
  * Throughout January & February
    - [X] Program drive base (swervebot, new swerve module test setup) with current software
    - [ ] Tune drive base
+   - [ ] Lift
    - [ ] Prepare autonomous moves
    - [ ] Test any hardware that we'll likely use on the robot
    - [ ] Setup camera for April tag detection
+   - [ ] If camera reports position, try CameraHelper to sync odometry
    - [ ] Create command that rotates to april tag
    - [ ] Attempt command to swerve & rotate such that heading of robot is perpendicular to tag
    - [ ] Prepare software for other robot components as they are defined & designed
