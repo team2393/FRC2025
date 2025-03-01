@@ -26,6 +26,8 @@ public class Robot extends CommandRobotBase
     
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
+  // private final Intake intake = new Intake();
+
   // TODO Use camera?
   // private final CameraHelper camera_helper = new CameraHelper();
 
@@ -56,6 +58,9 @@ public class Robot extends CommandRobotBase
     SmartDashboard.putData(autos);
     // Whenever something is selected, show its (optional) start position
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
+
+    // OperatorInterface.intake().onTrue(new IntakeCommand(intake));
+    // OperatorInterface.eject().onTrue(new EjectCommand(intake));
   }
   
   @Override

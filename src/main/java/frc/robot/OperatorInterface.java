@@ -13,8 +13,13 @@ public class OperatorInterface extends SwerveOI
 {
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
-  public static Trigger fire()
+  public static Trigger intake()
   {
-    return joystick.y();
+    return joystick.a();
+  }
+
+  public static Trigger eject()
+  {
+    return joystick.b();
   }
 }

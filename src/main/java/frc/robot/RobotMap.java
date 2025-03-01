@@ -34,6 +34,12 @@ public class RobotMap
   // TODO Lift?
   public static final int LIFT1 = 9;
   public static final int LIFT2 = 10;
+  // TODO Intake?
+  public static final int INTAKE = 11;
   // TODO Arm?
   public static final int ARM = 12;
+
+  // DIGITAL IO
+  // TODO Sensor?
+  public static final int INTAKE_SENSOR = 0;
 }
