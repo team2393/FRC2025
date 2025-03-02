@@ -30,10 +30,11 @@ public class Robot extends CommandRobotBase
 
   // private final Intake intake = new Intake();
 
+  // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
   // TODO Use camera?
-  // private final CameraHelper camera_helper = new CameraHelper();
+  // private final CameraHelper camera_helper = new CameraHelper(tags);
 
   public Robot()
   {

@@ -5,7 +5,6 @@
 package frc;
 
 import edu.wpi.first.wpilibj.RobotBase;
-import frc.robot.RobotMap;
 
 /** Java 'Main'. Modify this file to select which robot to run */
 public final class Main
