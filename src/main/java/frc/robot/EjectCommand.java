@@ -1,17 +1,22 @@
 package frc.robot;
 
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class EjectCommand extends Command
 {
-    private Intake intake;
-    private Timer timer;
+    private final Intake intake;
+    private final Timer timer;
+    private final NetworkTableEntry nt_speed;
 
     public EjectCommand(Intake intake)
     {
         this.intake = intake;
         this.timer = new Timer();
+        nt_speed = SmartDashboard.getEntry("Eject Voltage");
+        nt_speed.setDefaultDouble(-3);
         addRequirements(intake);
     }
 
@@ -25,7 +30,7 @@ public class EjectCommand extends Command
     public void execute()
     {
         System.out.println("ejecting...");
-        intake.setVoltage(-3);
+        intake.setVoltage(nt_speed.getDouble(-3));
     }
 
     @Override
