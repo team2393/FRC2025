@@ -60,8 +60,7 @@ Timeline
    - [ ] Test any hardware that we'll likely use on the robot
    - [ ] Setup camera for April tag detection
    - [ ] If camera reports position, try CameraHelper to sync odometry
-   - [ ] Create command that rotates to april tag
-   - [ ] Attempt command to swerve & rotate such that heading of robot is perpendicular to tag
+   - [X] Attempt command to swerve & rotate such that heading of robot is perpendicular to tag
    - [ ] Prepare software for other robot components as they are defined & designed
 
  * March
@@ -73,4 +72,20 @@ Timeline
  * April 2-5: Competition, https://frc-events.firstinspires.org/2025/Events/EventList
 
 
+PhotonVision Camera
+-------------------
 
+Image Raspberry Pi with PhotonVision. Bootup with HDMI monitor connected to observe initial self-configuration. Reboot on robot network and navigate web browser on Laptop to http://photonvision.local:5800
+
+Settings, Networking
+
+ * Set Team Number to 2393.
+ * Change IP Assignment Mode from DHCP to Static, set
+   address to `10.23.93.12`. (Static `10.TE.AM.6-19` are general purpose. `10.TE.AM.11` is often used for camera, leave that for Limelight)
+ * Leave "Hostname" as `photonvision`,
+   or update CameraHelper to custom name. 
+ * Press SAVE
+
+From now on, access camera via http://10.23.93.12:5800
+
+For more, see https://docs.photonvision.org/en/latest/docs/description.html
