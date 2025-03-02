@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
+import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -27,6 +29,8 @@ public class Robot extends CommandRobotBase
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
   // private final Intake intake = new Intake();
+
+  private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
   // TODO Use camera?
   // private final CameraHelper camera_helper = new CameraHelper();
@@ -61,6 +65,9 @@ public class Robot extends CommandRobotBase
 
     // OperatorInterface.intake().onTrue(new IntakeCommand(intake));
     // OperatorInterface.eject().onTrue(new EjectCommand(intake));
+
+    GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
+    OperatorInterface.auto_position().whileTrue(go.createCommand(drivetrain));
   }
   
   @Override

@@ -22,4 +22,9 @@ public class OperatorInterface extends SwerveOI
   {
     return joystick.b();
   }
+
+  public static Trigger auto_position()
+  {
+    return joystick.y();
+  }
 }
