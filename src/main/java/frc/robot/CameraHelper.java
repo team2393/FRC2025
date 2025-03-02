@@ -14,7 +14,6 @@ import org.photonvision.targeting.PhotonPipelineResult;
 import org.photonvision.targeting.PhotonTrackedTarget;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
-import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
@@ -32,10 +31,9 @@ public class CameraHelper
   private final Transform3d robotToCam;
   private final PhotonPoseEstimator estimator;
     
-  public CameraHelper ()
+  public CameraHelper (AprilTagFieldLayout tags)
   {
-    // TODO pick correct field
-    tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+    this.tags = tags;
     // TODO Configure camera name and position
     camera = new PhotonCamera("photonvision");
 
