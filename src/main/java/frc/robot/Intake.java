@@ -1,6 +1,9 @@
 package frc.robot;
 
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
@@ -16,6 +19,12 @@ public class Intake extends SubsystemBase
     public Intake()
     {
         motor = new TalonFX(RobotMap.INTAKE);
+        TalonFXConfiguration config = new TalonFXConfiguration()
+            .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
+        motor.getConfigurator().apply(config);    
+        motor.clearStickyFaults();
+        motor.setNeutralMode(NeutralModeValue.Brake);
+
         sensor = new DigitalInput(RobotMap.INTAKE_SENSOR);
         nt_gamepiece = SmartDashboard.getEntry("Gamepiece");
     }
