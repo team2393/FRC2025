@@ -10,6 +10,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.RobotState;
@@ -32,11 +33,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Lift extends SubsystemBase
 {
   /** Height encoder calibration */
-  private static final double REVS_PER_METER =  1.0; // TODO 41.35 / Units.inchesToMeters(28);
+  private static final double REVS_PER_METER =  49.84 / Units.inchesToMeters(40);
 
   /** Maximum permitted height */
-  public static final double MAX_HEIGHT = 0.75; // TODO
-
+  public static final double MAX_HEIGHT = 1.4;
   /** Height below which we let the lift settle on its own */
   private static final double SETTLE_THRESHOLD = 0.03;
 
@@ -57,7 +57,7 @@ public class Lift extends SubsystemBase
   private NetworkTableEntry nt_height, nt_kg, nt_ks;
 
   /** PID */
-  private PIDController pid = new PIDController(20, 0, 0);
+  private PIDController pid = new PIDController(15, 1, 0);
 
   private double simulated_height = 0.0;
   
@@ -80,8 +80,9 @@ public class Lift extends SubsystemBase
     nt_height = SmartDashboard.getEntry("Lift Height");
     nt_kg = SmartDashboard.getEntry("Lift kg");
     nt_ks = SmartDashboard.getEntry("Lift ks");
-    nt_kg.setDefaultDouble(0.3);
-    nt_ks.setDefaultDouble(0.06);
+    nt_kg.setDefaultDouble(0.14);
+    nt_ks.setDefaultDouble(0.0);
+    pid.setIZone(0.05);
     SmartDashboard.putData("Lift PID", pid);
   }
 
@@ -111,13 +112,13 @@ public class Lift extends SubsystemBase
   {
     if (RobotBase.isSimulation())
       return simulated_height;
-    return (primary_motor.getPosition().getValueAsDouble() - bottom_offset) / REVS_PER_METER;
+    return -(primary_motor.getPosition().getValueAsDouble() - bottom_offset) / REVS_PER_METER;
   }
 
   /** @param voltage Lift voltage, positive for "up" */
   public void setVoltage(double voltage)
   {
-    primary_motor.setVoltage(voltage);
+    primary_motor.setVoltage(-voltage);
   }
 
   public void setHeight(double desired_height)

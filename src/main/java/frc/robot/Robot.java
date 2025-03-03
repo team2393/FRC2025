@@ -7,6 +7,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -28,10 +29,13 @@ public class Robot extends CommandRobotBase
     
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
+  private final Lift lift = new Lift();
+
   // private final Intake intake = new Intake();
 
   // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+  private NetworkTableEntry nt_lift_setpoint;
 
   // TODO Use camera?
   // private final CameraHelper camera_helper = new CameraHelper(tags);
@@ -69,12 +73,18 @@ public class Robot extends CommandRobotBase
 
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
     OperatorInterface.auto_position().whileTrue(go.createCommand(drivetrain));
+
+    // Smart Dashboard for lift
+    nt_lift_setpoint = SmartDashboard.getEntry("lift setpoint");
+    nt_lift_setpoint.setDefaultDouble(0.00);
   }
   
   @Override
   public void robotPeriodic()
   {
     super.robotPeriodic();
+
+    lift.setHeight(nt_lift_setpoint.getDouble(0.00));
     // TODO Update camera?
     // camera_helper.updatePosition(drivetrain);
   }
