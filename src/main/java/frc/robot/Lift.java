@@ -88,9 +88,10 @@ public class Lift extends SubsystemBase
 
   private void setBrake(boolean brake)
   {
-    NeutralModeValue mode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
-    primary_motor.setNeutralMode(mode);
-    secondary_motor.setNeutralMode(mode);
+    // TODO Runtime changes cause all motors to stutter
+    // NeutralModeValue mode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
+    // primary_motor.setNeutralMode(mode);
+    // secondary_motor.setNeutralMode(mode);
   }
 
   @Override
