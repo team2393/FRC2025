@@ -18,6 +18,7 @@ import frc.swervelib.StopCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveOI;
 import frc.swervelib.SwerveToPositionCommand;
+import frc.tools.ApplyAdjustableSettingCommand;
 import frc.tools.AutoTools;
 import frc.tools.CommandRobotBase;
 
@@ -38,7 +39,7 @@ public class Robot extends CommandRobotBase
   private NetworkTableEntry nt_lift_setpoint;
 
   // TODO Use camera?
-  // private final CameraHelper camera_helper = new CameraHelper(tags);
+  private final CameraHelper camera_helper = new CameraHelper(tags);
 
   public Robot()
   {
@@ -75,8 +76,16 @@ public class Robot extends CommandRobotBase
     OperatorInterface.auto_position().whileTrue(go.createCommand(drivetrain));
 
     // Smart Dashboard for lift
-    nt_lift_setpoint = SmartDashboard.getEntry("lift setpoint");
-    nt_lift_setpoint.setDefaultDouble(0.00);
+    nt_lift_setpoint = SmartDashboard.getEntry("Lift Setpoint");
+    nt_lift_setpoint.setDefaultDouble(0.0);
+
+    // Commands that move lift to several adjustable positions
+    // TODO Bind to buttonboard:
+    // OperatorInterface.lift_low().onTrue(new ApplyAdjustableSettingCommand)
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.0, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.3, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.6, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.2, "Lift Setpoint"));
   }
   
   @Override
@@ -86,7 +95,7 @@ public class Robot extends CommandRobotBase
 
     lift.setHeight(nt_lift_setpoint.getDouble(0.00));
     // TODO Update camera?
-    // camera_helper.updatePosition(drivetrain);
+    camera_helper.updatePosition(drivetrain);
   }
   @Override
   public void teleopInit()
