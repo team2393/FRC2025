@@ -35,7 +35,7 @@ public class CameraHelper
   {
     this.tags = tags;
     // TODO Configure camera name and position
-    camera = new PhotonCamera("photonvision");
+    camera = new PhotonCamera("Insta360_Link_2C");
 
     // TODO: Allow access to the camera from a computer when tethered to the USB port on the roboRIO
     // PortForwarder.add(5800, "photonvision.local", 5800);
@@ -52,34 +52,45 @@ public class CameraHelper
   /** Call periodically to update drivetrain with camera info */
   public void updatePosition(SwerveDrivetrain drivetrain)
   {
-    if (! camera.isConnected())
+    if (! camera.isConnected()){
+      System.out.println("Camera is disconnected!!!");
       return;
+    }
+      
     
     // PoseStrategy.CLOSEST_TO_REFERENCE_POSE needs to know where we think we are...
     estimator.setReferencePose(drivetrain.getPose());
     for (PhotonPipelineResult info : camera.getAllUnreadResults())
     {
       // Option 1: Trust the estimator
-      Optional<EstimatedRobotPose> estimate = estimator.update(info);
-      if (estimate.isPresent())
-        drivetrain.updateLocationFromCamera(estimate.get().estimatedPose.toPose2d(),
-                                            estimate.get().timestampSeconds);
-
+      // Optional<EstimatedRobotPose> estimate = estimator.update(info);
+      // if (estimate.isPresent())`
+      //   drivetrain.updateLocationFromCamera(estimate.get().estimatedPose.toPose2d(),
+      //                                       estimate.get().timestampSeconds);
       // Option 2: Check the result outself...
-      // PhotonTrackedTarget target = info.getBestTarget();
-      // // How far is the target?
-      // if (target.bestCameraToTarget.getTranslation().getNorm() > 1.0)
-      //   continue;
-      // // Where is that tag on the field?
-      // Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
-      // if (tag_pose.isEmpty())
-      //   continue;
-      // // Transform from tag to camera, then from camera to center of robot
-      // Pose2d position = tag_pose.get()
-      //                           .transformBy(target.bestCameraToTarget.inverse())
-      //                           .transformBy(robotToCam.inverse())
-      //                           .toPose2d();
-      // drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
+      
+      // Do we have a target?; If you dont have a target and remove this check, driver station will disable tele-op.
+      if(info.hasTargets() == false){
+        System.out.println("We dont have a target.");
+        return;
+      }
+        
+      PhotonTrackedTarget target = info.getBestTarget();
+      // How far is the target?
+      if (target.bestCameraToTarget.getTranslation().getNorm() > 1.0)
+        continue;
+      // Where is that tag on the field?
+      Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
+      if (tag_pose.isEmpty())
+        continue;
+      // Transform from tag to camera, then from camera to center of robot
+
+      // TODO Fix -> Currently, robot is mirrored on SmartDashboard by 180 degrees.
+      Pose2d position = tag_pose.get()
+                                .transformBy(target.bestCameraToTarget.inverse()) 
+                                .transformBy(robotToCam.inverse())// remove this inverse
+                                .toPose2d();
+      drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
     }
   }  
 }

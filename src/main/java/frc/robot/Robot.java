@@ -38,7 +38,7 @@ public class Robot extends CommandRobotBase
   private NetworkTableEntry nt_lift_setpoint;
 
   // TODO Use camera?
-  // private final CameraHelper camera_helper = new CameraHelper(tags);
+  private final CameraHelper camera_helper = new CameraHelper(tags);
 
   public Robot()
   {
@@ -86,7 +86,7 @@ public class Robot extends CommandRobotBase
 
     lift.setHeight(nt_lift_setpoint.getDouble(0.00));
     // TODO Update camera?
-    // camera_helper.updatePosition(drivetrain);
+    camera_helper.updatePosition(drivetrain);
   }
   @Override
   public void teleopInit()
