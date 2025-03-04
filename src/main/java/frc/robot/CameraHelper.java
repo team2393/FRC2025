@@ -17,6 +17,7 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -41,8 +42,8 @@ public class CameraHelper
     // PortForwarder.add(5800, "photonvision.local", 5800);
 
     // Where is the camera mounted relative to the center of the robot?
-    // Example: mounted facing forward, half a meter forward of center, half a meter up from center.
-    robotToCam = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0,0,0));
+    // Example: mounted facing forward, 30cm forward of center, 10cm up from floor.
+    robotToCam = new Transform3d(new Translation3d(0.3, -0.16, 0.1), new Rotation3d(0,0,0));
 
     // Prepare estimator
     // TODO Which strategy?
@@ -53,7 +54,7 @@ public class CameraHelper
   public void updatePosition(SwerveDrivetrain drivetrain)
   {
     if (! camera.isConnected()){
-      System.out.println("Camera is disconnected!!!");
+      // System.out.println("Camera is disconnected!!!");
       return;
     }
       
@@ -83,13 +84,18 @@ public class CameraHelper
       Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
       if (tag_pose.isEmpty())
         continue;
+      
+      // System.out.println(target.bestCameraToTarget);
       // Transform from tag to camera, then from camera to center of robot
-
-      // TODO Fix -> Currently, robot is mirrored on SmartDashboard by 180 degrees.
       Pose2d position = tag_pose.get()
                                 .transformBy(target.bestCameraToTarget.inverse()) 
-                                .transformBy(robotToCam.inverse())// remove this inverse
+                                // .transformBy(robotToCam.inverse())
                                 .toPose2d();
+
+      // So far, robot is mirrored on SmartDashboard by 180 degrees.
+      position = new Pose2d(position.getX(), position.getY(),
+                            Rotation2d.fromDegrees(position.getRotation().getDegrees()+180));
+      // System.out.println(position);
       drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
     }
   }  
