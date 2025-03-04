@@ -47,6 +47,8 @@ public class Lift extends SubsystemBase
   /** Other motor */
   private TalonFX secondary_motor = new TalonFX(RobotMap.LIFT2);
 
+  private boolean brake_state = true;
+
   /** Has position be calibrated? */
   private boolean calibrated = false;
 
@@ -88,10 +90,14 @@ public class Lift extends SubsystemBase
 
   private void setBrake(boolean brake)
   {
-    // TODO Runtime changes cause all motors to stutter
-    // NeutralModeValue mode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
-    // primary_motor.setNeutralMode(mode);
-    // secondary_motor.setNeutralMode(mode);
+    // Runtime changes cause all motors to stutter, so only update when necessary
+    if (brake != brake_state)
+    {
+      NeutralModeValue mode = brake ? NeutralModeValue.Brake : NeutralModeValue.Coast;
+      primary_motor.setNeutralMode(mode);
+      secondary_motor.setNeutralMode(mode);
+      brake_state = brake;
+    }
   }
 
   @Override

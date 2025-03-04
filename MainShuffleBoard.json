@@ -258,6 +258,84 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "11,5": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Lift Height",
+              "_title": "Lift Height",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,6": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Lift Setpoint",
+              "_title": "Lift Setpoint",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,7": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Lift Park",
+              "_title": "Park",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,6": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Lift Low",
+              "_title": "/SmartDashboard/Lift Low",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,5": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Lift Mid",
+              "_title": "Mid",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "13,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Command",
+              "_source0": "network_table:///SmartDashboard/Lift High",
+              "_title": "High",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -494,9 +572,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -5.0,
-    "y": 177.5,
-    "width": 1069.0,
-    "height": 690.0
+    "x": -4.800000190734863,
+    "y": 132.0,
+    "width": 1069.5999755859375,
+    "height": 690.4000244140625
   }
 }
