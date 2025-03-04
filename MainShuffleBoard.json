@@ -267,7 +267,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Height",
-              "_title": "Lift Height",
+              "_title": "/SmartDashboard/Lift Height",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -280,7 +280,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Setpoint",
-              "_title": "Lift Setpoint",
+              "_title": "/SmartDashboard/Lift Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -293,7 +293,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift Park",
-              "_title": "Park",
+              "_title": "/SmartDashboard/Lift Park",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -319,7 +319,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift Mid",
-              "_title": "Mid",
+              "_title": "/SmartDashboard/Lift Mid",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -332,7 +332,20 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift High",
-              "_title": "High",
+              "_title": "/SmartDashboard/Lift High",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "11,7": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Lift Mid Setpoint",
+              "_title": "/SmartDashboard/Lift Mid Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
