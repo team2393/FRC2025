@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
 import frc.swervelib.StopCommand;
@@ -26,8 +27,8 @@ import frc.tools.CommandRobotBase;
 public class Robot extends CommandRobotBase
 {
   private final RobotDrivetrain drivetrain = new RobotDrivetrain();
-  private final Command relswerve = new RelativeSwerveCommand(drivetrain);
-    
+  // private final Command relswerve = new RelativeSwerveCommand(drivetrain);
+  private final Command absswerve = new AbsoluteSwerveCommand(drivetrain);
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
   private final Lift lift = new Lift();
@@ -39,7 +40,11 @@ public class Robot extends CommandRobotBase
   private NetworkTableEntry nt_lift_setpoint;
 
   // TODO Use camera?
-  private final CameraHelper camera_helper = new CameraHelper(tags);
+  // private final CameraHelper camera_helper = new CameraHelper(tags);
+  private final CameraHelperTest[] cameras = {
+    new CameraHelperTest(tags, "Insta360_Link_2C", 0.3, -0.16, 0.1),
+    new CameraHelperTest(tags, "Arducam", 0,0,0)
+  };
 
   public Robot()
   {
@@ -95,14 +100,18 @@ public class Robot extends CommandRobotBase
 
     lift.setHeight(nt_lift_setpoint.getDouble(0.00));
     // TODO Update camera?
-    camera_helper.updatePosition(drivetrain);
+    for (CameraHelperTest camera_helper : cameras){
+      camera_helper.updatePosition(drivetrain);
+    }
   }
   @Override
   public void teleopInit()
   {
     // Bind buttons to commands
-    drivetrain.setDefaultCommand(relswerve);
-    SwerveOI.selectRelative().onTrue(relswerve);
+    // drivetrain.setDefaultCommand(relswerve);
+    // SwerveOI.selectRelative().onTrue(relswerve);
+    drivetrain.setDefaultCommand(absswerve);
+    SwerveOI.selectAbsolute().onTrue(absswerve);
     SwerveOI.resetDrivetrain().onTrue(new ResetHeadingCommand(drivetrain));
   }
 

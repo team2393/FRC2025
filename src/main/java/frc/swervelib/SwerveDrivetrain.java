@@ -66,7 +66,7 @@ abstract public class SwerveDrivetrain extends SubsystemBase
   private final SwerveModule[] modules;
 
   /** Zero offset for gyro in degrees */
-  private double zero_heading = 0.0;
+  private double zero_heading = 7.45;
 
   /** Simulated gyro angle in degrees */
   private double simulated_heading = 0.0;
