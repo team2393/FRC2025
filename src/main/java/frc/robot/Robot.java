@@ -27,7 +27,7 @@ import frc.tools.CommandRobotBase;
 public class Robot extends CommandRobotBase
 {
   private final RobotDrivetrain drivetrain = new RobotDrivetrain();
-  // private final Command relswerve = new RelativeSwerveCommand(drivetrain);
+  private final Command relswerve = new RelativeSwerveCommand(drivetrain);
   private final Command absswerve = new AbsoluteSwerveCommand(drivetrain);
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
@@ -108,9 +108,9 @@ public class Robot extends CommandRobotBase
   public void teleopInit()
   {
     // Bind buttons to commands
-    // drivetrain.setDefaultCommand(relswerve);
-    // SwerveOI.selectRelative().onTrue(relswerve);
-    drivetrain.setDefaultCommand(absswerve);
+    drivetrain.setDefaultCommand(relswerve);
+    // drivetrain.setDefaultCommand(absswerve);
+    SwerveOI.selectRelative().onTrue(relswerve);
     SwerveOI.selectAbsolute().onTrue(absswerve);
     SwerveOI.resetDrivetrain().onTrue(new ResetHeadingCommand(drivetrain));
   }
