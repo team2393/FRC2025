@@ -3,6 +3,8 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.swervelib;
 
+import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
@@ -26,6 +28,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 
@@ -346,6 +349,8 @@ abstract public class SwerveDrivetrain extends SubsystemBase
     // which starts out as 0, 0, 0 but may be updated
     Supplier<Pose2d> pose_getter = () -> getPose().relativeTo(trajectory_origin);
 
+    // Track last state of each swerve module
+    AtomicReference<List<SwerveModuleState>> last_states = new AtomicReference<>();
     // Called by SwerveControllerCommand to tell us what modules should do
     Consumer<SwerveModuleState[]> module_setter = states ->
     {
@@ -361,6 +366,7 @@ abstract public class SwerveDrivetrain extends SubsystemBase
                            states[i].speedMetersPerSecond);
         double vr = Math.toDegrees(kinematics.toChassisSpeeds(states).omegaRadiansPerSecond);
         simulated_heading += vr * TimedRobot.kDefaultPeriod;
+        last_states.set(List.of(states));
     };
 
     // Called by SwerveControllerCommand to check at what angle we want to be
@@ -372,6 +378,14 @@ abstract public class SwerveDrivetrain extends SubsystemBase
                                                                     desiredRotation, module_setter);
     if (require_drivetrain)
       follower.addRequirements(this);
-    return follower;
+    Command print_last_states = new InstantCommand(() ->
+    {
+      System.out.println("Last swerve states:");
+      for (var state : last_states.get())
+        System.out.println(state);
+    });
+    Command do_stop = new InstantCommand(this::stop);
+    return follower.andThen(do_stop)
+                   .andThen(print_last_states);
   }
 }
