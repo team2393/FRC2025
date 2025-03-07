@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
@@ -27,7 +28,7 @@ public class IntakeCommand extends Command
     @Override
     public boolean isFinished()
     {
-        return intake.hasGamePiece();
+        return intake.hasGamePiece()  &&  RobotBase.isSimulation();
     }
 
     @Override
