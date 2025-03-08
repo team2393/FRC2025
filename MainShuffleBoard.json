@@ -349,6 +349,36 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "15,5": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Left Camera",
+              "_title": "SmartDashboard/Left Camera",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "15,4": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///SmartDashboard/Front Camera",
+              "_title": "SmartDashboard/Front Camera",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
           }
         }
       }
@@ -587,7 +617,7 @@
   "windowGeometry": {
     "x": -4.800000190734863,
     "y": 132.0,
-    "width": 1069.5999755859375,
+    "width": 1352.0,
     "height": 690.4000244140625
   }
 }

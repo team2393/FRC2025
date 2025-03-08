@@ -22,6 +22,8 @@ import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.net.PortForwarder;
+import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.swervelib.SwerveDrivetrain;
 
 /** Helper for using a camera */
@@ -31,14 +33,19 @@ public class CameraHelper
   private final PhotonCamera camera;
   private final Transform3d robotToCam;
   private final PhotonPoseEstimator estimator;
+  private final NetworkTableEntry nt_flag;
+  private int successes = 0;
  
-  public CameraHelper(AprilTagFieldLayout tags, String camera_name,
+  public CameraHelper(AprilTagFieldLayout tags, String model_name,
+                      String camera_name,
                       double pos_x, double pos_y, double pos_z,
                       double heading)
   {
 
     this.tags = tags;
-    camera = new PhotonCamera(camera_name);
+    camera = new PhotonCamera(model_name);
+
+    nt_flag = SmartDashboard.getEntry(camera_name);
 
     // TODO: Allow access to the camera from a computer when tethered to the USB port on the roboRIO
     // PortForwarder.add(5800, "photonvision.local", 5800);
@@ -56,9 +63,13 @@ public class CameraHelper
   /** Call periodically to update drivetrain with camera info */
   public void updatePosition(SwerveDrivetrain drivetrain)
   {
+    --successes;
+    if (successes < 0)
+      successes = 0;
     if (! camera.isConnected())
     {
       // System.out.println("Camera " + camera.getName() + " is disconnected!!!");
+      nt_flag.setBoolean(successes > 0);
       return;
     }
       
@@ -78,7 +89,7 @@ public class CameraHelper
       if (! info.hasTargets())
       {
         // System.out.println("No target for " +camera.getName());
-        return;
+        break;
       }
         
       PhotonTrackedTarget target = info.getBestTarget();
@@ -103,6 +114,8 @@ public class CameraHelper
 
       // For operation, smoothly update location with camera info
       drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
+      successes = 50; // 1 second
     }
+    nt_flag.setBoolean(successes > 0);
   }   
 }
