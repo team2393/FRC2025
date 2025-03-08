@@ -56,13 +56,11 @@ Timeline
    - [X] Program drive base (swervebot, new swerve module test setup) with current software
    - [X] Tune drive base
    - [X] Lift is functional, but brake for now always on
-   - [ ] Support Lift's brake again.
-         Send 'config'without blocking?
-         Only update config when brake mode needs to change?
+   - [X] Support Lift's brake again. Only update config when brake mode needs to change
    - [ ] Prepare autonomous moves
    - [ ] Test any hardware that we'll likely use on the robot
-   - [ ] Setup camera for April tag detection
-   - [ ] If camera reports position, try CameraHelper to sync odometry
+   - [X] Setup 2 cameras for April tag detection
+   - [X] If camera reports position, try CameraHelper to sync odometry
    - [X] Attempt command to swerve & rotate such that heading of robot is perpendicular to tag
    - [ ] Prepare software for other robot components as they are defined & designed
 
