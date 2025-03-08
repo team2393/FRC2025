@@ -32,31 +32,22 @@ public class Robot extends CommandRobotBase
   private final SendableChooser<Command> autos = new SendableChooser<>();
 
   private final Lift lift = new Lift();
+  private NetworkTableEntry nt_lift_setpoint;
 
   // private final Intake intake = new Intake();
 
   // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
-  private NetworkTableEntry nt_lift_setpoint;
 
-  // TODO Use camera?
-  // private final CameraHelper camera_helper = new CameraHelper(tags);
-  private final CameraHelperTest[] cameras = {
-    new CameraHelperTest(tags, "Insta360_Link_2C", 0.3, -0.16, 0.1),
-    new CameraHelperTest(tags, "Arducam", 0,0,0)
+  // TODO List all cameras in correct location
+  private final CameraHelper cameras[] =
+  {
+    new CameraHelper(tags, "Insta360_Link_2C", 0.3, -0.16, 0.1, 0.0),
+    new CameraHelper(tags, "Arducam",            0,  0.30, 0,  90.0)
   };
 
   public Robot()
   {
-    // Configure speed: Slower, smoother movement for practice
-    // SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.5;
-    // SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
-    // SwerveOI.forward_slew = new SlewRateLimiter(1.5);
-    // SwerveOI.side_slew = new SlewRateLimiter(1.5);
-    // SwerveOI.rotation_slew = new SlewRateLimiter(90);
-    // AutoTools.config = new TrajectoryConfig(0.5, 1.0);
-    // SwerveToPositionCommand.MAX_SPEED = 0.5;
-
     // Configure speed: Faster
     SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.0;
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
@@ -98,11 +89,12 @@ public class Robot extends CommandRobotBase
   {
     super.robotPeriodic();
 
+    // Set lift height from network table
     lift.setHeight(nt_lift_setpoint.getDouble(0.00));
-    // TODO Update camera?
-    for (CameraHelperTest camera_helper : cameras){
+
+    // Update position from cameras
+    for (CameraHelper camera_helper : cameras)
       camera_helper.updatePosition(drivetrain);
-    }
   }
   @Override
   public void teleopInit()

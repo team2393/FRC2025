@@ -31,19 +31,22 @@ public class CameraHelper
   private final PhotonCamera camera;
   private final Transform3d robotToCam;
   private final PhotonPoseEstimator estimator;
-    
-  public CameraHelper (AprilTagFieldLayout tags)
+ 
+  public CameraHelper(AprilTagFieldLayout tags, String camera_name,
+                      double pos_x, double pos_y, double pos_z,
+                      double heading)
   {
+
     this.tags = tags;
-    // TODO Configure camera name and position
-    camera = new PhotonCamera("Insta360_Link_2C");
+    camera = new PhotonCamera(camera_name);
 
     // TODO: Allow access to the camera from a computer when tethered to the USB port on the roboRIO
     // PortForwarder.add(5800, "photonvision.local", 5800);
 
     // Where is the camera mounted relative to the center of the robot?
     // Example: mounted facing forward, 30cm forward of center, 10cm up from floor.
-    robotToCam = new Transform3d(new Translation3d(0.3, -0.16, 0.1), new Rotation3d(0,0,0));
+    robotToCam = new Transform3d(new Translation3d(pos_x, pos_y, pos_z),
+                                 new Rotation3d(0, 0, heading));
 
     // Prepare estimator
     // TODO Which strategy?
@@ -53,8 +56,9 @@ public class CameraHelper
   /** Call periodically to update drivetrain with camera info */
   public void updatePosition(SwerveDrivetrain drivetrain)
   {
-    if (! camera.isConnected()){
-      // System.out.println("Camera is disconnected!!!");
+    if (! camera.isConnected())
+    {
+      // System.out.println("Camera " + camera.getName() + " is disconnected!!!");
       return;
     }
       
@@ -71,8 +75,9 @@ public class CameraHelper
       // Option 2: Check the result outself...
       
       // Do we have a target?; If you dont have a target and remove this check, driver station will disable tele-op.
-      if(info.hasTargets() == false){
-        System.out.println("We dont have a target.");
+      if (! info.hasTargets())
+      {
+        // System.out.println("No target for " +camera.getName());
         return;
       }
         
@@ -91,12 +96,19 @@ public class CameraHelper
                                 .transformBy(target.bestCameraToTarget.inverse()) 
                                 // .transformBy(robotToCam.inverse())
                                 .toPose2d();
-
       // So far, robot is mirrored on SmartDashboard by 180 degrees.
       position = new Pose2d(position.getX(), position.getY(),
                             Rotation2d.fromDegrees(position.getRotation().getDegrees()+180));
       // System.out.println(position);
-      drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
+
+      // TODO Once all cameras test fine, use updateLocationFromCamera()
+      // For tests, force odometry to camera reading
+      drivetrain.setOdometry(position.getX(), position.getY(), position.getRotation().getDegrees());
+
+      // For operation, smoothly update location with camera info
+      // drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
     }
   }  
+  
+ 
 }
