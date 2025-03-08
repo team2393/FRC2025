@@ -54,7 +54,7 @@ Timeline
 
  * Throughout January & February
    - [X] Program drive base (swervebot, new swerve module test setup) with current software
-   - [ ] Tune drive base
+   - [X] Tune drive base
    - [X] Lift is functional, but brake for now always on
    - [ ] Support Lift's brake again.
          Send 'config'without blocking?
