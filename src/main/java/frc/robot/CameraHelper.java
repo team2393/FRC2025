@@ -46,7 +46,7 @@ public class CameraHelper
     // Where is the camera mounted relative to the center of the robot?
     // Example: mounted facing forward, 30cm forward of center, 10cm up from floor.
     robotToCam = new Transform3d(new Translation3d(pos_x, pos_y, pos_z),
-                                 new Rotation3d(0, 0, heading));
+                                 new Rotation3d(Rotation2d.fromDegrees(heading)));
 
     // Prepare estimator
     // TODO Which strategy?

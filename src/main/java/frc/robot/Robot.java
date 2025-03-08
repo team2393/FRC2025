@@ -43,7 +43,7 @@ public class Robot extends CommandRobotBase
   private final CameraHelper cameras[] =
   {
     new CameraHelper(tags, "Insta360_Link_2C", 0.28, -0.16, 0.4, 0.0),
-    // new CameraHelper(tags, "Arducam",            0,  0.30, 0,  90.0)
+    new CameraHelper(tags, "Arducam",            0,  0.30, 0,  90.0)
   };
 
   public Robot()
