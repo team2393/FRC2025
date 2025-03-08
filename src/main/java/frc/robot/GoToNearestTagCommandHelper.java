@@ -102,7 +102,7 @@ public class GoToNearestTagCommandHelper
     // .. but rotate 180 to face the tag, not point away from the tag
     dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));
     // .. and move back a little to stand in front of the tag
-    dest = dest.transformBy(new Transform2d(-1.1, 0, Rotation2d.fromDegrees(0)));
+    dest = dest.transformBy(new Transform2d(-0.7, 0, Rotation2d.fromDegrees(0)));
     // TODO Move a little based on a network table entry
     //      that selects the left or right column of reef spots
 

@@ -83,7 +83,7 @@ public class CameraHelper
         
       PhotonTrackedTarget target = info.getBestTarget();
       // How far is the target?
-      if (target.bestCameraToTarget.getTranslation().getNorm() > 1.0)
+      if (target.bestCameraToTarget.getTranslation().getNorm() > 2.0)
         continue;
       // Where is that tag on the field?
       Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
@@ -92,23 +92,17 @@ public class CameraHelper
       
       // System.out.println(target.bestCameraToTarget);
       // Transform from tag to camera, then from camera to center of robot
-      Pose2d position = tag_pose.get()
-                                .transformBy(target.bestCameraToTarget.inverse()) 
-                                // .transformBy(robotToCam.inverse())
-                                .toPose2d();
-      // So far, robot is mirrored on SmartDashboard by 180 degrees.
-      position = new Pose2d(position.getX(), position.getY(),
-                            Rotation2d.fromDegrees(position.getRotation().getDegrees()+180));
-      // System.out.println(position);
+      Pose3d pose = tag_pose.get();
+      pose = pose.transformBy(target.bestCameraToTarget.inverse());
+      pose = pose.transformBy(robotToCam.inverse());
+      Pose2d position = pose.toPose2d();
+      System.out.println(target.getFiducialId() + " @ " + tag_pose + " -> " + position);
 
-      // TODO Once all cameras test fine, use updateLocationFromCamera()
       // For tests, force odometry to camera reading
-      drivetrain.setOdometry(position.getX(), position.getY(), position.getRotation().getDegrees());
+      // drivetrain.setOdometry(position.getX(), position.getY(), position.getRotation().getDegrees());
 
       // For operation, smoothly update location with camera info
-      // drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
+      drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
     }
-  }  
-  
- 
+  }   
 }
