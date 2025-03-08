@@ -46,7 +46,7 @@ public class AutoNoMouse
                                             1.50, 0, 0);
       auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
 
-      auto.addCommands(new WaitCommand(5));
+      auto.addCommands(new WaitCommand(2));
 
       path = createTrajectory(true, 1.50, 0, 180,
                                        0, 0, 180);

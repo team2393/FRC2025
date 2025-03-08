@@ -350,7 +350,7 @@ abstract public class SwerveDrivetrain extends SubsystemBase
     Supplier<Pose2d> pose_getter = () -> getPose().relativeTo(trajectory_origin);
 
     // Track last state of each swerve module
-    AtomicReference<List<SwerveModuleState>> last_states = new AtomicReference<>();
+    AtomicReference<List<String>> last_states = new AtomicReference<>();
     // Called by SwerveControllerCommand to tell us what modules should do
     Consumer<SwerveModuleState[]> module_setter = states ->
     {
@@ -366,7 +366,10 @@ abstract public class SwerveDrivetrain extends SubsystemBase
                            states[i].speedMetersPerSecond);
         double vr = Math.toDegrees(kinematics.toChassisSpeeds(states).omegaRadiansPerSecond);
         simulated_heading += vr * TimedRobot.kDefaultPeriod;
-        last_states.set(List.of(states));
+        last_states.set(List.of(states)
+                            .stream()
+                            .map(s -> String.format("%f m/s @ %f deg", s.speedMetersPerSecond, s.angle.getDegrees()))
+                            .toList());
     };
 
     // Called by SwerveControllerCommand to check at what angle we want to be
@@ -380,9 +383,11 @@ abstract public class SwerveDrivetrain extends SubsystemBase
       follower.addRequirements(this);
     Command print_last_states = new InstantCommand(() ->
     {
-      System.out.println("Last swerve states:");
-      for (var state : last_states.get())
-        System.out.println(state);
+      System.out.println("Last swerve states vs. actual heading:");
+      for (int i=0; i<last_states.get().size(); ++i)
+        System.out.println(last_states.get().get(i) + " vs. " + modules[i].getAngle().getDegrees());
+      var pose = getPose();
+      System.out.println("Position: X=" + pose.getX() + ", Y=" + pose.getY());
     });
     Command do_stop = new InstantCommand(this::stop);
     return follower.andThen(do_stop)

@@ -42,14 +42,14 @@ public class Robot extends CommandRobotBase
   // TODO List all cameras in correct location
   private final CameraHelper cameras[] =
   {
-    new CameraHelper(tags, "Insta360_Link_2C", 0.3, -0.16, 0.1, 0.0),
-    new CameraHelper(tags, "Arducam",            0,  0.30, 0,  90.0)
+    // new CameraHelper(tags, "Insta360_Link_2C", 0.3, -0.16, 0.1, 0.0),
+    // new CameraHelper(tags, "Arducam",            0,  0.30, 0,  90.0)
   };
 
   public Robot()
   {
-    // Configure speed: Faster
-    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 1.0;
+    // Configure speed
+    SwerveOI.MAX_METERS_PER_SEC = SwerveDrivetrain.MAX_METERS_PER_SEC = 3.0; // 1 .. 3
     SwerveOI.MAX_ROTATION_DEG_PER_SEC = SwerveDrivetrain.MAX_ROTATION_DEG_PER_SEC = 45;
     SwerveOI.forward_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);
     SwerveOI.side_slew = new SlewRateLimiter(SwerveOI.MAX_METERS_PER_SEC);
