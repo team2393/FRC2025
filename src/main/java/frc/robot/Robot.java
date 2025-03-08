@@ -11,7 +11,9 @@ import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
@@ -65,9 +67,13 @@ public class Robot extends CommandRobotBase
     // Whenever something is selected, show its (optional) start position
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
 
+    // TODO Bind intake to buttons
     // OperatorInterface.intake().onTrue(new IntakeCommand(intake));
-    // OperatorInterface.eject().onTrue(new EjectCommand(intake));
-
+    // Command eject_and_down = new EjectCommand(intake)
+    //                 .andThen(new WaitCommand(1.0))
+    //                 .andThen(new InstantCommand(() -> SmartDashboard.putNumber("Lift Setpoint", 0)));
+    // OperatorInterface.eject().onTrue(eject_and_down);
+    
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
     OperatorInterface.auto_position().whileTrue(go.createCommand(drivetrain));
 
@@ -96,6 +102,7 @@ public class Robot extends CommandRobotBase
     for (CameraHelper camera_helper : cameras)
       camera_helper.updatePosition(drivetrain);
   }
+
   @Override
   public void teleopInit()
   {
