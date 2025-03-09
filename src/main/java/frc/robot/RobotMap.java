@@ -31,11 +31,13 @@ public class RobotMap
   public static final int BACK_RIGHT_ANGLE  = 23;    // Port 15
   public static final int BACK_LEFT_ANGLE   = 24;    // Port 15
 
-  // TODO Lift?
+  // Lift Kraken motors
   public static final int LIFT1 = 9;
   public static final int LIFT2 = 10;
+
   // TODO Intake?
   public static final int INTAKE = 11;
+
   // TODO Arm?
   public static final int ARM = 12;
 
