@@ -17,7 +17,7 @@ public final class Main
     // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.swervebot.Driver(0)));
     // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.swervebot.Rotator(0, 0)));
     
-    // TODO: Robot drivetrain
+    // Robot drivetrain
     // RobotBase.startRobot(() -> new frc.swervelib.DriverDemoRobot(new frc.robot.Driver(0, RobotMap.FRONT_LEFT_DRIVE)));
     // RobotBase.startRobot(() -> new frc.swervelib.RotatorDemoRobot(new frc.robot.Rotator(0, RobotMap.FRONT_LEFT_ROTATE,
                                                                                           //  RobotMap.FRONT_LEFT_ANGLE, 0.0)));
