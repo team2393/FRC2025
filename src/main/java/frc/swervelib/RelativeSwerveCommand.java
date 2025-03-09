@@ -36,7 +36,7 @@ public class RelativeSwerveCommand extends Command
 
   public void execute()
   {
-    Translation2d axis = // TODO center == null
+    Translation2d axis = // center == null
                        //?
                         SwerveDrivetrain.CENTER
                        //: center.determineCenter();
