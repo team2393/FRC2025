@@ -103,7 +103,7 @@ public class GoToNearestTagCommandHelper
     dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));
     // .. and move back a little to stand in front of the tag
     dest = dest.transformBy(new Transform2d(-0.7, 0, Rotation2d.fromDegrees(0)));
-    // TODO Move a little based on a network table entry
+    // TODO Move a little based on a network table entry or buttonboard switch
     //      that selects the left or right column of reef spots
 
     System.out.println("Destination: " + dest);
@@ -122,28 +122,35 @@ public class GoToNearestTagCommandHelper
 
     // What's the difference in X and Y from robot to destination?
     double dx = destination.getX() - robot_pose.getX();
-    double dy = destination.getX() - robot_pose.getY();
+    double dy = destination.getY() - robot_pose.getY();
     
     // Distance, angle relative to the current robot heading
     double distance = Math.hypot(dx, dy);
     double heading = Math.toDegrees(Math.atan2(dy, dx)) - robot_pose.getRotation().getDegrees();
+    // System.out.println("Threshold: " + distance + " @ " + heading);
 
-    try    
-    { // Try to create a trajectory
-      Trajectory traj = AutoTools.createTrajectory(true,
-                                                   robot_pose.getX(),  robot_pose.getY(),  heading,
-                                                   destination.getX(), destination.getY(), heading);
-      return drivetrain.followTrajectory(traj, destination.getRotation().getDegrees());
-    }
-    catch (Exception ex)
+    SequentialCommandGroup sequence = new SequentialCommandGroup();
+    // Trajectory fails for short distances but is more efficient
+    // for long path, so start with that when far away
+    if (distance > 2.0)
     {
-      ex.printStackTrace();
+      try
+      { // Try to create a trajectory
+        Trajectory traj = AutoTools.createTrajectory(true,
+                                                    robot_pose.getX(),  robot_pose.getY(),  heading,
+                                                    destination.getX(), destination.getY(), heading);
+        sequence.addCommands(drivetrain.followTrajectory(traj, destination.getRotation().getDegrees()));
+      }
+      catch (Exception ex)
+      {
+        // For close-in moves this tends to fail...
+        ex.printStackTrace();
+      }
     }
-    // For close-in moves this tends to fail...
-    System.out.println("Trajectory for distance of " + distance + "m failed, doing this in steps");
-    return new SequentialCommandGroup(
-      new SwerveToPositionCommand(drivetrain, destination.getX(), destination.getY()),
-      new RotateToHeadingCommand(drivetrain, destination.getRotation().getDegrees()));
+    // May have trajectory. Follow up with rotation & swerve to exact destination
+    sequence.addCommands(new RotateToHeadingCommand(drivetrain, destination.getRotation().getDegrees()));
+    sequence.addCommands(new SwerveToPositionCommand(drivetrain, destination.getX(), destination.getY()));
+    return sequence;
   }
 
   /** @param drivetrain .. to use for driving
