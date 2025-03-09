@@ -75,7 +75,8 @@ public class Robot extends CommandRobotBase
     // OperatorInterface.eject().onTrue(eject_and_down);
     
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
-    OperatorInterface.auto_position().whileTrue(go.createCommand(drivetrain));
+    OperatorInterface.auto_position_left().whileTrue(go.createCommand(drivetrain, false));
+    OperatorInterface.auto_position_right().whileTrue(go.createCommand(drivetrain, true));
 
     // Smart Dashboard for lift
     nt_lift_setpoint = SmartDashboard.getEntry("Lift Setpoint");

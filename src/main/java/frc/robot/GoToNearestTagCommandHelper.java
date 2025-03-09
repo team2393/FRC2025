@@ -93,32 +93,35 @@ public class GoToNearestTagCommandHelper
   }
 
   /** @param target_tag An april tag to which we want to drive
+   *  @param right_column Align with right column? Otherwise left 
    *  @return Our desired location relative to that tag
    */
-  private Pose2d computeDestination(AprilTag target_tag)
+  private Pose2d computeDestination(AprilTag target_tag, boolean right_column)
   {
     // Destination is fundamentally the tag
     Pose2d dest = target_tag.pose.toPose2d();
     // .. but rotate 180 to face the tag, not point away from the tag
     dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));
-    // .. and move back a little to stand in front of the tag
-    dest = dest.transformBy(new Transform2d(-0.7, 0, Rotation2d.fromDegrees(0)));
-    // TODO Move a little based on a network table entry or buttonboard switch
-    //      that selects the left or right column of reef spots
-
+    // .. and move back in X a little to stand in front of the tag.
+    // Move a little in Y to select the left or right column of reef branches
+    dest = dest.transformBy(new Transform2d(-0.7,
+                                            // "pipes ..are .. ~33 cm.. apart (center to center)"
+                                            right_column ? -0.33/2 : +0.33/2,
+                                            Rotation2d.fromDegrees(0)));
     System.out.println("Destination: " + dest);
     return dest;
   }
 
   /** Dynamically create the commands to drive to the nearest reef tag
    *  @param drivetrain .. to use for driving
+   *  @param right_column Align with right column? Otherwise left 
    *  @return Command(s) to drive there
    */
-  private Command findTagAndComputeCommands(SwerveDrivetrain drivetrain)
+  private Command findTagAndComputeCommands(SwerveDrivetrain drivetrain, boolean right_column)
   {
     Pose2d robot_pose = drivetrain.getPose();
     AprilTag tag = findNearestReefTag(robot_pose);
-    Pose2d destination = computeDestination(tag);
+    Pose2d destination = computeDestination(tag, right_column);
 
     // What's the difference in X and Y from robot to destination?
     double dx = destination.getX() - robot_pose.getX();
@@ -127,7 +130,7 @@ public class GoToNearestTagCommandHelper
     // Distance, angle relative to the current robot heading
     double distance = Math.hypot(dx, dy);
     double heading = Math.toDegrees(Math.atan2(dy, dx)) - robot_pose.getRotation().getDegrees();
-    // System.out.println("Threshold: " + distance + " @ " + heading);
+    System.out.println("Threshold: " + distance + " @ " + heading);
 
     SequentialCommandGroup sequence = new SequentialCommandGroup();
     // Trajectory fails for short distances but is more efficient
@@ -154,11 +157,12 @@ public class GoToNearestTagCommandHelper
   }
 
   /** @param drivetrain .. to use for driving
+   *  @param right_column Align with right column? Otherwise left 
    *  @return Deferred command that when invoked will dynamically compute the actual commands
    */
-  public Command createCommand(SwerveDrivetrain drivetrain)
+  public Command createCommand(SwerveDrivetrain drivetrain, boolean right_column)
   {
-    return new DeferredCommand(() -> findTagAndComputeCommands(drivetrain),
+    return new DeferredCommand(() -> findTagAndComputeCommands(drivetrain, right_column),
                                Set.of(drivetrain));
   }
 
@@ -170,6 +174,6 @@ public class GoToNearestTagCommandHelper
 
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded));
     AprilTag tag = go.findNearestReefTag(robot_pose);
-    go.computeDestination(tag);
+    go.computeDestination(tag, true);
   }
 }

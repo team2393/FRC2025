@@ -23,8 +23,15 @@ public class OperatorInterface extends SwerveOI
     return joystick.b();
   }
 
-  public static Trigger auto_position()
+  /** @return Is left trigger active? */
+  public static Trigger auto_position_left()
   {
-    return joystick.y();
+    return joystick.leftTrigger();
+  }
+
+  /** @return Is right trigger active? */
+  public static Trigger auto_position_right()
+  {
+    return joystick.rightTrigger();
   }
 }
