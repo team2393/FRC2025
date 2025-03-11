@@ -131,19 +131,6 @@
               }
             }
           },
-          "9,4": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Text View",
-              "_source0": "network_table:///SmartDashboard/Pressure",
-              "_title": "Pressure",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "9,0": {
             "size": [
               2,
@@ -220,45 +207,6 @@
               }
             }
           },
-          "9,2": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Low",
-              "_title": "SmartDashboard/Low",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "9,1": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/High",
-              "_title": "SmartDashboard/High",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
-          "9,3": {
-            "size": [
-              2,
-              1
-            ],
-            "content": {
-              "_type": "Command",
-              "_source0": "network_table:///SmartDashboard/Pass",
-              "_title": "/SmartDashboard/Pass",
-              "_glyph": 148,
-              "_showGlyph": false
-            }
-          },
           "11,5": {
             "size": [
               2,
@@ -267,7 +215,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Height",
-              "_title": "/SmartDashboard/Lift Height",
+              "_title": "Lift Height",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -280,7 +228,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Setpoint",
-              "_title": "/SmartDashboard/Lift Setpoint",
+              "_title": "Lift Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -293,7 +241,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift Park",
-              "_title": "/SmartDashboard/Lift Park",
+              "_title": "Lift Park",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -306,7 +254,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift Low",
-              "_title": "/SmartDashboard/Lift Low",
+              "_title": "Lift Low",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -319,7 +267,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift Mid",
-              "_title": "/SmartDashboard/Lift Mid",
+              "_title": "Lift Mid",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -332,7 +280,7 @@
             "content": {
               "_type": "Command",
               "_source0": "network_table:///SmartDashboard/Lift High",
-              "_title": "/SmartDashboard/Lift High",
+              "_title": "Lift High",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -345,7 +293,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Mid Setpoint",
-              "_title": "/SmartDashboard/Lift Mid Setpoint",
+              "_title": "Lift Mid Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -388,7 +336,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Eject Voltage",
-              "_title": "/SmartDashboard/Eject Voltage",
+              "_title": "Eject Voltage",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -401,7 +349,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift High Setpoint",
-              "_title": "/SmartDashboard/Lift High Setpoint",
+              "_title": "Lift High Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -414,7 +362,7 @@
             "content": {
               "_type": "Text View",
               "_source0": "network_table:///SmartDashboard/Lift Low Setpoint",
-              "_title": "/SmartDashboard/Lift Low Setpoint",
+              "_title": "Lift Low Setpoint",
               "_glyph": 148,
               "_showGlyph": false
             }
@@ -654,8 +602,8 @@
     }
   ],
   "windowGeometry": {
-    "x": -4.800000190734863,
-    "y": 132.0,
+    "x": -10.399999618530273,
+    "y": 144.0,
     "width": 1352.0,
     "height": 690.4000244140625
   }
