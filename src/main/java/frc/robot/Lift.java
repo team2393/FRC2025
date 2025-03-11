@@ -36,7 +36,7 @@ public class Lift extends SubsystemBase
   private static final double REVS_PER_METER =  49.84 / Units.inchesToMeters(40);
 
   /** Maximum permitted height */
-  public static final double MAX_HEIGHT = 1.4;
+  public static final double MAX_HEIGHT = 1.5;
   /** Height below which we let the lift settle on its own */
   private static final double SETTLE_THRESHOLD = 0.03;
 

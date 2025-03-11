@@ -88,10 +88,10 @@ public class Robot extends CommandRobotBase
     // Commands that move lift to several adjustable positions
     // TODO Bind to buttonboard:
     // OperatorInterface.lift_low().onTrue(new ApplyAdjustableSettingCommand)
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.0, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.3, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.6, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.2, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
   }
   
   @Override

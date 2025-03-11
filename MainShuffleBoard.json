@@ -337,7 +337,7 @@
               "_showGlyph": false
             }
           },
-          "11,7": {
+          "15,5": {
             "size": [
               2,
               1
@@ -350,7 +350,7 @@
               "_showGlyph": false
             }
           },
-          "15,5": {
+          "15,3": {
             "size": [
               1,
               1
@@ -365,7 +365,7 @@
               "Colors/Color when false": "#8B0000FF"
             }
           },
-          "15,4": {
+          "15,2": {
             "size": [
               1,
               1
@@ -378,6 +378,45 @@
               "_showGlyph": false,
               "Colors/Color when true": "#7CFC00FF",
               "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "17,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Eject Voltage",
+              "_title": "/SmartDashboard/Eject Voltage",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "15,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Lift High Setpoint",
+              "_title": "/SmartDashboard/Lift High Setpoint",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "15,6": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/Lift Low Setpoint",
+              "_title": "/SmartDashboard/Lift Low Setpoint",
+              "_glyph": 148,
+              "_showGlyph": false
             }
           }
         }
