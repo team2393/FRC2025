@@ -36,7 +36,7 @@ public class Robot extends CommandRobotBase
   private final Lift lift = new Lift();
   private NetworkTableEntry nt_lift_setpoint;
 
-  // private final Intake intake = new Intake();
+  private final Intake intake = new Intake();
 
   // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
@@ -68,7 +68,10 @@ public class Robot extends CommandRobotBase
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
 
     // TODO Bind intake to buttons
+    OperatorInterface.eject().onTrue(new EjectCommand(intake));
+    // TODO Once there's a gamepiece sensor
     // OperatorInterface.intake().onTrue(new IntakeCommand(intake));
+    // TODO Eventually, automate intake & moving lift down
     // Command eject_and_down = new EjectCommand(intake)
     //                 .andThen(new WaitCommand(1.0))
     //                 .andThen(new InstantCommand(() -> SmartDashboard.putNumber("Lift Setpoint", 0)));

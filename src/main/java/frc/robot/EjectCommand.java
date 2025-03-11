@@ -29,7 +29,6 @@ public class EjectCommand extends Command
     @Override
     public void execute()
     {
-        System.out.println("ejecting...");
         intake.setVoltage(nt_speed.getDouble(-3));
     }
 
@@ -42,7 +41,6 @@ public class EjectCommand extends Command
     @Override
     public void end(boolean interrupted)
     {
-        System.out.println("finished ejecting");
         intake.setVoltage(0);
     }
 }
