@@ -40,6 +40,9 @@ public class Lift extends SubsystemBase
   /** Height below which we let the lift settle on its own */
   private static final double SETTLE_THRESHOLD = 0.03;
 
+  /** Voltage limit to restrict speed */
+  private static final double VOLTAGE_LIMIT = 5.0;
+
   /** Motor controller with encoder */
   
   private TalonFX primary_motor = new TalonFX(RobotMap.LIFT1);
@@ -68,8 +71,9 @@ public class Lift extends SubsystemBase
     // Primary motor is the one we control
     primary_motor.clearStickyFaults();
 
+    // Restrict ramp to limit acceleration
     TalonFXConfiguration config = new TalonFXConfiguration()
-        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
+        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.6));
     primary_motor.getConfigurator().apply(config);    
     primary_motor.setNeutralMode(NeutralModeValue.Brake);
 
@@ -175,6 +179,10 @@ public class Lift extends SubsystemBase
     double voltage = nt_kg.getDouble(0.0)
                    + nt_ks.getDouble(0.0) * Math.signum(error)
                    + pid.calculate(height, desired_height);
+    if (voltage > VOLTAGE_LIMIT)
+      voltage = VOLTAGE_LIMIT;
+    else if (voltage < -VOLTAGE_LIMIT)
+      voltage = -VOLTAGE_LIMIT;
     setVoltage(voltage);
   }
 }
