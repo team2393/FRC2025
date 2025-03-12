@@ -107,7 +107,7 @@ public class CameraHelper
       pose = pose.transformBy(target.bestCameraToTarget.inverse());
       pose = pose.transformBy(robotToCam.inverse());
       Pose2d position = pose.toPose2d();
-      System.out.println(target.getFiducialId() + " @ " + tag_pose + " -> " + position);
+      // System.out.println(target.getFiducialId() + " @ " + tag_pose + " -> " + position);
 
       // For tests, force odometry to camera reading
       // drivetrain.setOdometry(position.getX(), position.getY(), position.getRotation().getDegrees());
