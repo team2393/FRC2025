@@ -68,9 +68,9 @@ public class Robot extends CommandRobotBase
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
 
     // TODO Bind intake to buttons
-    OperatorInterface.eject().onTrue(new EjectCommand(intake));
+    OperatorInterface.eject().whileTrue(new EjectCommand(intake));
     // TODO Once there's a gamepiece sensor
-    // OperatorInterface.intake().onTrue(new IntakeCommand(intake));
+    // OperatorInterface.intake().onTrue(new IntakeCommand(intake)); // do whileTrue for testing
     // TODO Eventually, automate intake & moving lift down
     // Command eject_and_down = new EjectCommand(intake)
     //                 .andThen(new WaitCommand(1.0))
@@ -89,6 +89,7 @@ public class Robot extends CommandRobotBase
     // TODO Bind to buttonboard:
     // OperatorInterface.lift_low().onTrue(new ApplyAdjustableSettingCommand)
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint"));
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint"));
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
