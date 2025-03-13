@@ -10,6 +10,8 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -63,6 +65,9 @@ public class Lift extends SubsystemBase
 
   /** PID */
   private PIDController pid = new PIDController(15, 1, 0);
+  // TODO Use ProfiledPIDController instead of plain PIDController
+  // private ProfiledPIDController pid = new ProfiledPIDController(15, 1, 0,
+  //                                           new Constraints(MAX_HEIGHT/2,MAX_HEIGHT/2)); 
 
   private double simulated_height = 0.0;
   
@@ -112,6 +117,8 @@ public class Lift extends SubsystemBase
     {
       // Reset encoder zero/bottom position
       bottom_offset = primary_motor.getPosition().getValueAsDouble();
+      // TODO Reset ProfiledPIDController
+      // pid.reset(0);
       calibrated = true;
       System.err.println("Calibrated lift bottom at " + bottom_offset + " revs");
     }
