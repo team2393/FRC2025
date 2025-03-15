@@ -15,26 +15,24 @@ public class IntakeCommand extends Command
         this.intake = intake;
         addRequirements(intake);
         nt_speed = SmartDashboard.getEntry("Intake Voltage");
-        nt_speed.setDefaultDouble(5);
+        nt_speed.setDefaultDouble(2.5);
     }
 
     @Override
     public void execute()
     {
-        System.out.println("intaking...");
-        intake.setVoltage(nt_speed.getDouble(5));
+        intake.setVoltage(nt_speed.getDouble(2.5));
     }
 
     @Override
     public boolean isFinished()
     {
-        return intake.hasGamePiece()  &&  RobotBase.isSimulation();
+        return intake.hasGamePiece()  ||  RobotBase.isSimulation();
     }
 
     @Override
     public void end(boolean interrupted)
     {
-        System.out.println("finished intaking.");
         intake.setVoltage(0);
     }
 }

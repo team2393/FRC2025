@@ -40,6 +40,6 @@ public class Intake extends SubsystemBase
     public void setVoltage(double voltage)
     {
         // Positive voltage for intaking
-        motor.setVoltage(voltage);
+        motor.setVoltage(-voltage);
     }
 }

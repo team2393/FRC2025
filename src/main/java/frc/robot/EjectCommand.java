@@ -16,7 +16,7 @@ public class EjectCommand extends Command
         this.intake = intake;
         this.timer = new Timer();
         nt_speed = SmartDashboard.getEntry("Eject Voltage");
-        nt_speed.setDefaultDouble(-3);
+        nt_speed.setDefaultDouble(3);
         addRequirements(intake);
     }
 
@@ -29,7 +29,7 @@ public class EjectCommand extends Command
     @Override
     public void execute()
     {
-        intake.setVoltage(nt_speed.getDouble(-3));
+        intake.setVoltage(nt_speed.getDouble(3));
     }
 
     @Override
