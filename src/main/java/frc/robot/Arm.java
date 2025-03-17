@@ -3,36 +3,31 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.SparkAbsoluteEncoder;
-import com.revrobotics.spark.SparkBase.PersistMode;
-import com.revrobotics.spark.SparkBase.ResetMode;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs;
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
+import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Shooter Arm: Motor to rotate shooter up/down
- * 
- *  REV Through Bore encoder connected to Spark Max via
- *  Absolute Encoder Adapter    REV-11-3326 
+ *  REV Through Bore encoder 
  */
 public class Arm extends SubsystemBase
 {
-  private SparkMax motor = new SparkMax(RobotMap.ARM, MotorType.kBrushless);
+  private TalonFX motor = new TalonFX(RobotMap.ARM);
+
   /** Through Bore Encoder to measure angle.
    *  'A'/'S' switch on side of encoder must be in 'A' position.
-   *  Absolute readout can use (white, red, black) into DI,
-   *  but we have it plugged into the motor's SparkMax
+   *  Absolute readout (white, red, black) into DI,
    */
-  private final SparkAbsoluteEncoder encoder = motor.getAbsoluteEncoder();
-  // private final DutyCycleEncoder encoder = new DutyCycleEncoder(RobotMap.ARM_ENCODER);
+  private final DutyCycleEncoder encoder = new DutyCycleEncoder(RobotMap.ARM_ENCODER);
 
   /** Zero degrees = arm horizontally out */
   private final static double ZERO_OFFSET = 0;
@@ -45,12 +40,13 @@ public class Arm extends SubsystemBase
   
   public Arm()
   {
-    motor.clearFaults();
-    motor.configure(new SparkMaxConfig().idleMode(IdleMode.kCoast)
-                                        .openLoopRampRate(0.1)
-                                        .inverted(false),
-                    ResetMode.kNoResetSafeParameters,
-                    PersistMode.kNoPersistParameters);
+    TalonFXConfiguration config = new TalonFXConfiguration()
+        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.6));
+    motor.getConfigurator().apply(config);    
+    motor.setNeutralMode(NeutralModeValue.Brake);
+
+    // TODO: Better?
+    // encoder.setAssumedFrequency(975.6);
 
     reset();
 
@@ -69,7 +65,9 @@ public class Arm extends SubsystemBase
 
   public double getAngle()
   {
-    return -encoder.getPosition()*360 - ZERO_OFFSET;
+    if (encoder.isConnected())
+      return -encoder.get()*360 - ZERO_OFFSET;
+    return 0.0;
   }
 
   public void setAngle(double degrees)

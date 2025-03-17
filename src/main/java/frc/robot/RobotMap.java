@@ -44,4 +44,5 @@ public class RobotMap
   // DIGITAL IO
   // TODO Sensor?
   public static final int INTAKE_SENSOR = 0;
+  public static final int ARM_ENCODER = 1;
 }
