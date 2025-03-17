@@ -35,15 +35,15 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Lift extends SubsystemBase
 {
   /** Height encoder calibration */
-  private static final double REVS_PER_METER =  1.0; // TODO  49.84 / Units.inchesToMeters(40);
+  private static final double REVS_PER_METER =  9.87 / 0.344;
 
   /** Maximum permitted height */
-  public static final double MAX_HEIGHT = Double.MAX_VALUE; // TODO  1.5;
+  public static final double MAX_HEIGHT = 1.5;
   /** Height below which we let the lift settle on its own */
-  private static final double SETTLE_THRESHOLD = 0.03;
+  private static final double SETTLE_THRESHOLD = 0.02;
 
   /** Voltage limit to restrict speed */
-  private static final double VOLTAGE_LIMIT = 5.0;
+  private static final double VOLTAGE_LIMIT = 10.0;
 
   /** Motor controller with encoder */
   
@@ -64,10 +64,9 @@ public class Lift extends SubsystemBase
   private NetworkTableEntry nt_height, nt_kg, nt_ks;
 
   /** PID */
-  private PIDController pid = new PIDController(15, 1, 0);
-  // TODO Use ProfiledPIDController instead of plain PIDController
-  // private ProfiledPIDController pid = new ProfiledPIDController(15, 1, 0,
-  //                                           new Constraints(MAX_HEIGHT/2,MAX_HEIGHT/2)); 
+  // private PIDController pid = new PIDController(17, 10, 0);
+  private ProfiledPIDController pid = new ProfiledPIDController(17, 10, 0,
+                                            new Constraints(MAX_HEIGHT/2,MAX_HEIGHT/2)); 
 
   private double simulated_height = 0.0;
   
@@ -91,9 +90,9 @@ public class Lift extends SubsystemBase
     nt_height = SmartDashboard.getEntry("Lift Height");
     nt_kg = SmartDashboard.getEntry("Lift kg");
     nt_ks = SmartDashboard.getEntry("Lift ks");
-    nt_kg.setDefaultDouble(0.14);
+    nt_kg.setDefaultDouble(0.3);
     nt_ks.setDefaultDouble(0.0);
-    pid.setIZone(0.05);
+    pid.setIZone(0.03);
     SmartDashboard.putData("Lift PID", pid);
   }
 
@@ -117,8 +116,7 @@ public class Lift extends SubsystemBase
     {
       // Reset encoder zero/bottom position
       bottom_offset = primary_motor.getPosition().getValueAsDouble();
-      // TODO Reset ProfiledPIDController
-      // pid.reset(0);
+      pid.reset(0);
       calibrated = true;
       System.err.println("Calibrated lift bottom at " + bottom_offset + " revs");
     }
