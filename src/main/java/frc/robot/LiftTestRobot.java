@@ -53,7 +53,7 @@ public class LiftTestRobot extends CommandRobotBase
   @Override
   public void teleopPeriodic()
   {
-    // For 'up', send position voltage
+    // For 'up', send positive voltage
     double voltage = -3.0 * OperatorInterface.joystick.getRightY();
     if (lift.getHeight() >= Lift.MAX_HEIGHT   &&  voltage > 0)
       voltage = 0;

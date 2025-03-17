@@ -35,10 +35,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Lift extends SubsystemBase
 {
   /** Height encoder calibration */
-  private static final double REVS_PER_METER =  49.84 / Units.inchesToMeters(40);
+  private static final double REVS_PER_METER =  1.0; // TODO  49.84 / Units.inchesToMeters(40);
 
   /** Maximum permitted height */
-  public static final double MAX_HEIGHT = 1.5;
+  public static final double MAX_HEIGHT = Double.MAX_VALUE; // TODO  1.5;
   /** Height below which we let the lift settle on its own */
   private static final double SETTLE_THRESHOLD = 0.03;
 
