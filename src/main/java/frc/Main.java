@@ -36,6 +36,7 @@ public final class Main
 
     // RobotBase.startRobot(frc.swervebot.SwerveBot::new);
     // RobotBase.startRobot(frc.robot.LiftTestRobot::new);
+    // RobotBase.startRobot(frc.robot.ArmTestRobot::new);
     RobotBase.startRobot(frc.robot.Robot::new);
   }
 }
