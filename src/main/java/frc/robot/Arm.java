@@ -63,11 +63,11 @@ public class Arm extends SubsystemBase
     pid.reset(getAngle());
   }
 
-  /** @return 0..360 degrees */
+  /** @return -180..180 degrees */
   public double getAngle()
   {
     if (encoder.isConnected())
-      return -encoder.get()*360 - ZERO_OFFSET;
+      return Math.IEEEremainder(encoder.get()*360.0 - ZERO_OFFSET, 360.0);
     return 0.0;
   }
 
