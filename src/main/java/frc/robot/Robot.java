@@ -69,8 +69,7 @@ public class Robot extends CommandRobotBase
 
     // TODO Bind intake to buttons
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
-    // TODO Once there's a gamepiece sensor
-    // OperatorInterface.intake().onTrue(new IntakeCommand(intake)); // do whileTrue for testing
+    OperatorInterface.intake().onTrue(new IntakeCommand(intake));
     // TODO Eventually, automate intake & moving lift down
     // Command eject_and_down = new EjectCommand(intake)
     //                 .andThen(new WaitCommand(1.0))

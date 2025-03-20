@@ -29,12 +29,15 @@ public class Intake extends SubsystemBase
         nt_gamepiece = SmartDashboard.getEntry("Gamepiece");
     }
 
+    @Override
+    public void periodic()
+    {
+        nt_gamepiece.setBoolean(hasGamePiece());
+    }
+
     public boolean hasGamePiece()
     {
-        // TODO: Check polarity
-        boolean have_gamepiece = sensor.get();
-        nt_gamepiece.setBoolean(have_gamepiece);
-        return have_gamepiece;
+        return !sensor.get();
     }
 
     public void setVoltage(double voltage)
