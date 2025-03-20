@@ -299,7 +299,7 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///SmartDashboard/Gamepiece",
-              "_title": "Gamepiece",
+              "_title": "SmartDashboard/Gamepiece",
               "_glyph": 148,
               "_showGlyph": false,
               "Colors/Color when true": "#7CFC00FF",

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
+import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
@@ -67,14 +68,21 @@ public class Robot extends CommandRobotBase
     // Whenever something is selected, show its (optional) start position
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
 
+    // Commands that move lift to several adjustable positions
+    // TODO Bind to buttonboard?
+    Command park = new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint");
+    SmartDashboard.putData(park);
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
+    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
+
     // TODO Bind intake to buttons
+    // TODO onTrue to eject? whileTrue means driver may let go too early and drop gamepiece
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
-    OperatorInterface.intake().onTrue(new IntakeCommand(intake));
-    // TODO Eventually, automate intake & moving lift down
-    // Command eject_and_down = new EjectCommand(intake)
-    //                 .andThen(new WaitCommand(1.0))
-    //                 .andThen(new InstantCommand(() -> SmartDashboard.putNumber("Lift Setpoint", 0)));
-    // OperatorInterface.eject().onTrue(eject_and_down);
+    // Assert lift is parked to take in
+    OperatorInterface.intake().onTrue(new ScheduleCommand(park)
+                             .andThen(new IntakeCommand(intake)));
     
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
     OperatorInterface.auto_position_left().whileTrue(go.createCommand(drivetrain, false));
@@ -84,14 +92,6 @@ public class Robot extends CommandRobotBase
     nt_lift_setpoint = SmartDashboard.getEntry("Lift Setpoint");
     nt_lift_setpoint.setDefaultDouble(0.0);
 
-    // Commands that move lift to several adjustable positions
-    // TODO Bind to buttonboard:
-    // OperatorInterface.lift_low().onTrue(new ApplyAdjustableSettingCommand)
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
   }
   
   @Override
