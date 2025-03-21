@@ -3,13 +3,13 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import edu.wpi.first.apriltag.AprilTag;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -24,8 +24,9 @@ import frc.tools.AutoTools;
 
 /** Helper for creating command that drives to the nearest useful tag
  * 
- *  Compares robot location to all 'reef' tags,
+ *  Compares robot location to all 'tags of interest',
  *  finds the closest one,
+ *  tweaks destination a little for reef vs. pickup station,
  *  creates trajectory to get there.
  * 
  *  Does not directly use the camera,
@@ -34,61 +35,48 @@ import frc.tools.AutoTools;
  */
 public class GoToNearestTagCommandHelper
 {
+  // Reef tag IDs
+  private static final Set<Integer> reef_tags = Set.of( 6,  7,  8,  9, 10, 11,  // red reef
+                                                       17, 18, 19, 20, 21, 22); // blue reef
+  // Pickup station tag IDs
+  private static final Set<Integer> pickup_tags = Set.of( 1,  2,  // red pickup
+                                                         12, 13); // blue pickup
+  // All the tags of interest
+  private static final Set<Integer> tags_of_interest = new HashSet<>();
+  static
+  {
+    tags_of_interest.addAll(pickup_tags);
+    tags_of_interest.addAll(reef_tags);
+  }
+
+  // Info about all the tags on the field
   private final AprilTagFieldLayout tags;
-  private final Translation2d blue_reef_center, red_reef_center;
   
   /** @param tags Information about all the april tags on the field */
   public GoToNearestTagCommandHelper(AprilTagFieldLayout tags)
   {
     this.tags = tags;
-
-    // Get reef centers.
-    // Tags 18 and 21 are around the blue reef,
-    // tags 7 and 10 are around the red reef.
-    Pose3d p1 = tags.getTagPose(18).get();
-    Pose3d p2 = tags.getTagPose(21).get();
-    blue_reef_center = new Translation2d((p1.getX() + p2.getX())/2,
-                                         (p1.getY() + p2.getY())/2);
-    // System.out.println("Blue reef: " + blue_reef_center);
-
-    p1 = tags.getTagPose(7).get();
-    p2 = tags.getTagPose(10).get();
-    red_reef_center = new Translation2d((p1.getX() + p2.getX())/2,
-                                        (p1.getY() + p2.getY())/2);
-    // System.out.println("Red reef: " + red_reef_center);
   }
 
   /** @param robot_pose Current robot position
-   *  @return Nearest 'reef' april tag
+   *  @return Nearest tag of interest
    */
-  private AprilTag findNearestReefTag(Pose2d robot_pose)
+  private AprilTag findNearestTag(Pose2d robot_pose)
   {
     double nearest = Double.MAX_VALUE;
     AprilTag nearest_tag = null;
     for (AprilTag tag : tags.getTags())
-    {
-      // Is this a reef tag, i.e.: Within ~1m from center of a reef?
-      Translation2d tag_pos = tag.pose.toPose2d().getTranslation();
-      double reef_distance = Math.min(tag_pos.getDistance(blue_reef_center),
-                                      tag_pos.getDistance(red_reef_center));
-      // System.out.printf("#%2d: X=%5.2f, Y=%5.2f, %5.2f from reef\n",
-      //                   tag.ID,
-      //                   tag_pos.getX(),
-      //                   tag_pos.getY(),
-      //                   reef_distance);
-      if (reef_distance > 0.9)
-        continue;
-
-      // It's a reef tag! Find the nearest one
-      double tag_distance =  tag_pos.getDistance(robot_pose.getTranslation());
-      if (tag_distance < nearest)
-      {
-        nearest = tag_distance;
-        nearest_tag = tag;
+      if (tags_of_interest.contains(tag.ID))
+      { // It's a tag of interest! Find the nearest one
+        Translation2d tag_pos = tag.pose.toPose2d().getTranslation();
+        double tag_distance =  tag_pos.getDistance(robot_pose.getTranslation());
+        if (tag_distance < nearest)
+        {
+          nearest = tag_distance;
+          nearest_tag = tag;
+        }
       }
-    }
-
-    System.out.println("Nearest reef tag: " + nearest_tag);
+    System.out.println("Nearest tag: " + nearest_tag);
     return nearest_tag;
   }
 
@@ -100,14 +88,25 @@ public class GoToNearestTagCommandHelper
   {
     // Destination is fundamentally the tag
     Pose2d dest = target_tag.pose.toPose2d();
-    // .. but rotate 180 to face the tag, not point away from the tag
-    dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));
-    // .. and move back in X a little to stand in front of the tag.
-    // Move a little in Y to select the left or right column of reef branches
-    dest = dest.transformBy(new Transform2d(-0.7,
-                                            // "pipes ..are .. ~33 cm.. apart (center to center)"
-                                            right_column ? -0.33/2 : +0.33/2,
-                                            Rotation2d.fromDegrees(0)));
+    // Adjust for reef vs. pickup station
+    if (reef_tags.contains(target_tag.ID))
+    { // Rotate 180 to face the tag, not point away from the tag
+      dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));
+      
+      // .. and move back in X a little to stand in front of the tag.
+      // Move a little in Y to select the left or right column of reef branches
+      dest = dest.transformBy(new Transform2d(-0.7,
+                                              // "pipes ..are .. ~33 cm.. apart (center to center)"
+                                              right_column ? -0.33/2 : +0.33/2,
+                                              Rotation2d.fromDegrees(0)));
+    }
+    else
+    { // Keep back of robot to loading station, 
+      // move in X a little to stand in front & center of the tag.
+      dest = dest.transformBy(new Transform2d(0.5,
+                                              0,
+                                              Rotation2d.fromDegrees(0)));
+    }
     System.out.println("Destination: " + dest);
     return dest;
   }
@@ -120,17 +119,17 @@ public class GoToNearestTagCommandHelper
   private Command findTagAndComputeCommands(SwerveDrivetrain drivetrain, boolean right_column)
   {
     Pose2d robot_pose = drivetrain.getPose();
-    AprilTag tag = findNearestReefTag(robot_pose);
+    AprilTag tag = findNearestTag(robot_pose);
     Pose2d destination = computeDestination(tag, right_column);
 
     // What's the difference in X and Y from robot to destination?
     double dx = destination.getX() - robot_pose.getX();
     double dy = destination.getY() - robot_pose.getY();
     
-    // Distance, angle relative to the current robot heading
+    // Distance and angle relative to the current robot heading
     double distance = Math.hypot(dx, dy);
     double heading = Math.toDegrees(Math.atan2(dy, dx)) - robot_pose.getRotation().getDegrees();
-    System.out.println("Threshold: " + distance + " @ " + heading);
+    // System.out.println("Threshold: " + distance + " @ " + heading);
 
     SequentialCommandGroup sequence = new SequentialCommandGroup();
     // Trajectory fails for short distances but is more efficient
@@ -145,8 +144,7 @@ public class GoToNearestTagCommandHelper
         sequence.addCommands(drivetrain.followTrajectory(traj, destination.getRotation().getDegrees()));
       }
       catch (Exception ex)
-      {
-        // For close-in moves this tends to fail...
+      { // For close-in moves this tends to fail...
         ex.printStackTrace();
       }
     }
@@ -173,7 +171,7 @@ public class GoToNearestTagCommandHelper
     Pose2d robot_pose = new Pose2d(4.07-0.5, 3.31-0.5, Rotation2d.fromDegrees(10));
 
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded));
-    AprilTag tag = go.findNearestReefTag(robot_pose);
+    AprilTag tag = go.findNearestTag(robot_pose);
     go.computeDestination(tag, true);
   }
 }
