@@ -13,16 +13,16 @@ public class OperatorInterface extends SwerveOI
 {
   public static final CommandXboxController joystick = new CommandXboxController(0);
 
-  /** @return X trigger */
+  /** @return b trigger */
   public static Trigger intake()
   {
-    return joystick.x();
+    return joystick.b();
   }
 
-  /** @return B trigger */
+  /** @return a trigger */
   public static Trigger eject()
   {
-    return joystick.b();
+    return joystick.a();
   }
 
   /** @return Is left trigger active? */
