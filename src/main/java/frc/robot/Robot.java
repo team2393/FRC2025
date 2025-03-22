@@ -76,10 +76,23 @@ public class Robot extends CommandRobotBase
     // TODO Bind to buttonboard?
     Command park = new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint");
     SmartDashboard.putData(park);
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
-    SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
+    OperatorInterface.park().onTrue(park);
+
+    Command lowest = new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint");
+    SmartDashboard.putData(lowest);
+    OperatorInterface.lowestLift().onTrue(lowest);
+    
+    Command low = new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint");
+    SmartDashboard.putData(low);
+    OperatorInterface.lowLift().onTrue(low);
+
+    Command mid = new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"); 
+    SmartDashboard.putData(mid);
+    OperatorInterface.middleLift().onTrue(mid);
+
+    Command high = new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint");
+    SmartDashboard.putData(high);
+    OperatorInterface.highLift().onTrue(high);
 
     // onTrue to eject? whileTrue means driver may let go too early and drop gamepiece
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
