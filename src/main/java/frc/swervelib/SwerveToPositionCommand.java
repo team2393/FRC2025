@@ -13,10 +13,10 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class SwerveToPositionCommand extends Command
 {
   /** Proportional gain for distance control */
-  private static final double P = 2.0;
+  private static final double P = 3.0;
 
   /** Max. speed */
-  public static double MAX_SPEED = 3.0;
+  public static double MAX_SPEED = 2.0;
 
   /** Max. acceleration */
   public static double ACCEL = 3.0;
@@ -102,8 +102,8 @@ public class SwerveToPositionCommand extends Command
   @Override
   public boolean isFinished()
   {
-    // Within 5 cm?
-    return distance < 0.02;
+    // Within ... cm?
+    return distance < 0.01;
   }
 
   @Override

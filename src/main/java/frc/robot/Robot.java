@@ -45,7 +45,7 @@ public class Robot extends CommandRobotBase
   // List all cameras in correct location
   private final CameraHelper cameras[] =
   {
-    new CameraHelper(tags, "front", "Front Camera", 0.3, -0.09, 0.31, 0.0),
+    new CameraHelper(tags, "front", "Front Camera", 0.3, -0.03, 0.27, 0.0),
   };
 
   public Robot()

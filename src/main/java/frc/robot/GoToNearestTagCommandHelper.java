@@ -97,7 +97,7 @@ public class GoToNearestTagCommandHelper
       // Move a little in Y to select the left or right column of reef branches
       dest = dest.transformBy(new Transform2d(-0.3,
                                               // "pipes ..are .. ~33 cm.. apart (center to center)"
-                                              right_column ? -0.33/2 : +0.33/2,
+                                              right_column ? -0.35/2-0.08 : +0.35/2-0.08,
                                               Rotation2d.fromDegrees(0)));
     }
     else
