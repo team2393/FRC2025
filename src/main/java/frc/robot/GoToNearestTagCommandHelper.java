@@ -150,7 +150,9 @@ public class GoToNearestTagCommandHelper
     }
     // May have trajectory. Follow up with rotation & swerve to exact destination
     sequence.addCommands(new RotateToHeadingCommand(drivetrain, destination.getRotation().getDegrees()));
-    sequence.addCommands(new SwerveToPositionCommand(drivetrain, destination.getX(), destination.getY()));
+    sequence.addCommands(new SwerveToPositionCommand(drivetrain, destination.getX(),
+                                                                 destination.getY(),
+                                                                 destination.getRotation().getDegrees()));
     return sequence;
   }
 

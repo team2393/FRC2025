@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class RotateToHeadingCommand extends Command
 {
   /** Proportional gain for angle control */
-  private static final double P = 10.0;
+  public static final double P = 10.0;
 
   /** Max. rotational speed [deg/sec] */
   public static double MAX_SPEED = 120;
