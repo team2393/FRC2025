@@ -25,7 +25,7 @@ import frc.swervelib.RotateToHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveToPositionCommand;
 import frc.swervelib.VariableWaitCommand;
-\import frc.tools.AutoTools;
+import frc.tools.AutoTools;
 import frc.tools.SequenceWithStart;
 
 /** Auto-no-mouse routines */
