@@ -45,7 +45,7 @@ public class Robot extends CommandRobotBase
   // List all cameras in correct location
   private final CameraHelper cameras[] =
   {
-    new CameraHelper(tags, "front", "Front Camera", 0.3, -0.03, 0.27, 0.0),
+    new CameraHelper(tags, "front", "Front Camera", 0.3, -0.03, 0.27, 0.0, -10.0),
   };
 
   public Robot()
@@ -73,7 +73,6 @@ public class Robot extends CommandRobotBase
     autos.onChange(selected -> AutoTools.indicateStart(drivetrain, selected));
 
     // Commands that move lift to several adjustable positions
-    // TODO Bind to buttonboard?
     Command park = new ApplyAdjustableSettingCommand("Lift Park", "Lift Park Setpoint", 0.00, "Lift Setpoint");
     SmartDashboard.putData(park);
     OperatorInterface.park().onTrue(park);

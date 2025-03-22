@@ -17,7 +17,6 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout;
 // import edu.wpi.first.apriltag.AprilTagPoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
-import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
 import edu.wpi.first.math.geometry.Translation3d;
@@ -36,16 +35,25 @@ public class CameraHelper
   private final NetworkTableEntry nt_flag;
   private int successes = 0;
  
-  public CameraHelper(AprilTagFieldLayout tags, String model_name,
-                      String camera_name,
+  /** @param tags Field info
+   *  @param camera_name Camera name ("front") in photonvision network tablee ntries
+   *  @param status_name Name used to show status on dashboard
+   *  @param pos_x Camera pos. relative to center of robot, X
+   *  @param pos_y Y
+   *  @param pos_z Z
+   *  @param heading Camera heading (yaw)
+   *  @param pitch Camera down/up tilt
+   */
+  public CameraHelper(AprilTagFieldLayout tags, String camera_name,
+                      String status_name,
                       double pos_x, double pos_y, double pos_z,
-                      double heading)
+                      double heading,
+                      double pitch)
   {
-
     this.tags = tags;
-    camera = new PhotonCamera(model_name);
+    camera = new PhotonCamera(camera_name);
 
-    nt_flag = SmartDashboard.getEntry(camera_name);
+    nt_flag = SmartDashboard.getEntry(status_name);
 
     // TODO: Allow access to the camera from a computer when tethered to the USB port on the roboRIO
     // PortForwarder.add(5800, "photonvision.local", 5800);
@@ -53,7 +61,9 @@ public class CameraHelper
     // Where is the camera mounted relative to the center of the robot?
     // Example: mounted facing forward, 30cm forward of center, 10cm up from floor.
     robotToCam = new Transform3d(new Translation3d(pos_x, pos_y, pos_z),
-                                 new Rotation3d(Rotation2d.fromDegrees(heading)));
+                                 new Rotation3d(0,
+                                                Math.toRadians(pitch),
+                                                Math.toRadians(heading)));
 
     // Prepare estimator
     // Which strategy?
