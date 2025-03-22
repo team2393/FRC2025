@@ -114,7 +114,7 @@ public class Robot extends CommandRobotBase
   public void teleopInit()
   {
     // Bind buttons to commands
-    drivetrain.setDefaultCommand(relswerve);
+    drivetrain.setDefaultCommand(absswerve);
     // drivetrain.setDefaultCommand(absswerve);
     SwerveOI.selectRelative().onTrue(relswerve);
     SwerveOI.selectAbsolute().onTrue(absswerve);

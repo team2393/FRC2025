@@ -58,7 +58,7 @@ public class AbsoluteSwerveCommand extends Command
     // away from the driver and "right" moves to the right.
     // In simulation GUI select alliance from DS/FMS
     // while Robot State is "Disconnected"
-    if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red)
+    if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue)
     {
       vx = -vx;
       vy = -vy;
