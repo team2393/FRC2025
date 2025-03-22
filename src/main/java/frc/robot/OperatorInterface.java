@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.swervelib.SwerveOI;
@@ -12,14 +13,16 @@ import frc.swervelib.SwerveOI;
 public class OperatorInterface extends SwerveOI
 {
   public static final CommandXboxController joystick = new CommandXboxController(0);
+  //  TODO Add button board
+  // public static final CommandGenericHID buttons = new CommandGenericHID(1);
 
-  /** @return b trigger */
+  /** @return Button B */
   public static Trigger intake()
   {
     return joystick.b();
   }
 
-  /** @return a trigger */
+  /** @return Button A */
   public static Trigger eject()
   {
     return joystick.a();
