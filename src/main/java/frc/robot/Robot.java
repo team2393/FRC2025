@@ -8,6 +8,7 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
 import frc.swervelib.ResetHeadingCommand;
@@ -59,6 +61,11 @@ public class Robot extends CommandRobotBase
     AutoTools.config = new TrajectoryConfig(SwerveOI.MAX_METERS_PER_SEC, SwerveOI.MAX_METERS_PER_SEC);
     SwerveToPositionCommand.MAX_SPEED = SwerveOI.MAX_METERS_PER_SEC;
 
+    PowerDistribution power = new PowerDistribution();
+    power.clearStickyFaults();
+    power.resetTotalEnergy();
+    SmartDashboard.putData("PowerPanel", power);
+
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
     for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
@@ -81,6 +88,7 @@ public class Robot extends CommandRobotBase
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
     // Assert lift is parked to take in
     OperatorInterface.intake().onTrue(new ScheduleCommand(park)
+                             .andThen(new WaitUntilCommand(() -> lift.getHeight() < 0.1))
                              .andThen(new IntakeCommand(intake)));
     
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
@@ -90,7 +98,6 @@ public class Robot extends CommandRobotBase
     // Smart Dashboard for lift
     nt_lift_setpoint = SmartDashboard.getEntry("Lift Setpoint");
     nt_lift_setpoint.setDefaultDouble(0.0);
-
   }
   
   @Override
