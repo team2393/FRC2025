@@ -8,6 +8,7 @@ import static frc.tools.AutoTools.createTrajectory;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -15,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.swervelib.ResetPositionCommand;
 import frc.swervelib.SelectAbsoluteTrajectoryCommand;
 import frc.swervelib.SelectRelativeTrajectoryCommand;
@@ -22,20 +24,60 @@ import frc.swervelib.RotateToHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveToPositionCommand;
 import frc.swervelib.VariableWaitCommand;
+import frc.tools.ApplyAdjustableSettingCommand;
 import frc.tools.AutoTools;
 import frc.tools.SequenceWithStart;
 
 /** Auto-no-mouse routines */
 public class AutoNoMouse
 {
-  /** Create all our auto-no-mouse commands */
-  public static List<Command> createAutoCommands(SwerveDrivetrain drivetrain)
+  /** Create all our auto-no-mouse commands 
+ * @param intake 
+   * @param lift */
+  public static List<Command> createAutoCommands(SwerveDrivetrain drivetrain, AprilTagFieldLayout tags, Intake intake, Lift lift)
   {
     // List of all autonomouse commands
     final List<Command> autos = new ArrayList<>();
 
     // Each auto is created within a { .. block .. } so we get local variables for 'path' and the like.
     // Each auto should start with a VariableWaitCommand to allow coordination with other teams
+
+    { // Drive forward 0.5 m using a (simple) trajectory
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("Forward 0.5m");
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+      Trajectory path = createTrajectory(true, 0, 0, 0,
+                                            0.50, 0, 0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0));
+      autos.add(auto);
+    }
+
+    { // Drive forward 0.5 m, then move to reef and drop
+      SequentialCommandGroup auto = new SequentialCommandGroup();
+      auto.setName("0.5m, aim, drop");
+      auto.addCommands(new VariableWaitCommand());
+      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+      Trajectory path = createTrajectory(true, 0, 0, 0,
+                                            0.50, 0, 0);
+      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
+      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
+      
+      // Wait for camera to acquire position
+      auto.addCommands(new WaitCommand(5));
+
+      GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
+      auto.addCommands(go.createCommand(drivetrain, true));
+
+      Command mid = new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"); 
+      auto.addCommands(mid);
+
+      auto.addCommands(new WaitUntilCommand(lift::isAtHight));
+
+      auto.addCommands(new EjectCommand(intake));
+
+      autos.add(auto);
+    }
 
     { // Drive forward and back 1.5 m using a (simple) trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
@@ -57,17 +99,6 @@ public class AutoNoMouse
       path = createTrajectory(true, 1.50, 0, 180,
                                        0, 0, 180);
       auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
-      autos.add(auto);
-    }
-
-    { // Drive forward 1.5 m using a (simple) trajectory
-      SequentialCommandGroup auto = new SequentialCommandGroup();
-      auto.setName("Forward 1.5m");
-      auto.addCommands(new VariableWaitCommand());
-      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
-      Trajectory path = createTrajectory(true, 0, 0, 0,
-                                            1.50, 0, 0);
-      auto.addCommands(drivetrain.followTrajectory(path, 0));
       autos.add(auto);
     }
 

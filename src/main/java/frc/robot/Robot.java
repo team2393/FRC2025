@@ -66,7 +66,7 @@ public class Robot extends CommandRobotBase
 
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
-    for (Command auto : AutoNoMouse.createAutoCommands(drivetrain))
+    for (Command auto : AutoNoMouse.createAutoCommands(drivetrain, tags, intake, lift))
       autos.addOption(auto.getName(), auto);
     SmartDashboard.putData(autos);
     // Whenever something is selected, show its (optional) start position

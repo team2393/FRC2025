@@ -91,6 +91,7 @@ public class Lift extends SubsystemBase
     nt_kg.setDefaultDouble(0.3);
     nt_ks.setDefaultDouble(0.0);
     pid.setIZone(0.03);
+    pid.setTolerance(0.02);
     SmartDashboard.putData("Lift PID", pid);
   }
 
@@ -187,5 +188,10 @@ public class Lift extends SubsystemBase
     else if (voltage < -VOLTAGE_LIMIT)
       voltage = -VOLTAGE_LIMIT;
     setVoltage(voltage);
+  }
+
+  public boolean isAtHight()
+  {
+    return pid.atGoal();
   }
 }
