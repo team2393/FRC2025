@@ -11,6 +11,7 @@ import java.util.List;
 import edu.wpi.first.apriltag.AprilTagFieldLayout;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
@@ -24,8 +25,7 @@ import frc.swervelib.RotateToHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveToPositionCommand;
 import frc.swervelib.VariableWaitCommand;
-import frc.tools.ApplyAdjustableSettingCommand;
-import frc.tools.AutoTools;
+\import frc.tools.AutoTools;
 import frc.tools.SequenceWithStart;
 
 /** Auto-no-mouse routines */
@@ -53,31 +53,37 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
-    { // Drive forward 0.5 m, then move to reef and drop
-      SequentialCommandGroup auto = new SequentialCommandGroup();
-      auto.setName("0.5m, aim, drop");
-      auto.addCommands(new VariableWaitCommand());
-      auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
-      Trajectory path = createTrajectory(true, 0, 0, 0,
-                                            0.50, 0, 0);
-      auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
-      auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
-      
-      // Wait for camera to acquire position
-      auto.addCommands(new WaitCommand(5));
+    for (String level : List.of("Low", "Mid", "High"))
+      for (boolean right : List.of(false, true))
+      { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
+        SequentialCommandGroup auto = new SequentialCommandGroup();
+        auto.setName("0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
+        auto.addCommands(new VariableWaitCommand());
+        // Move 0.5m
+        auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+        Trajectory path = createTrajectory(true, 0, 0, 0,
+                                              0.50, 0, 0);
+        auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
+        auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
+        
+        // Wait for camera to acquire position
+        auto.addCommands(new WaitCommand(5));
 
-      GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
-      auto.addCommands(go.createCommand(drivetrain, true));
+        auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right));
 
-      Command mid = new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"); 
-      auto.addCommands(mid);
+        auto.addCommands(new InstantCommand(() ->
+        { // Set "Lift Setpoint" to value of "Lift Low/Mid/High Setpoint"
+          double height = SmartDashboard.getNumber("Lift " + level + " Setpoint", 0);
+          SmartDashboard.putNumber("Lift Setpoint", height);
+        }));
+        // Wait for lift to be at commanded height
+        auto.addCommands(new WaitUntilCommand(lift::isAtHight));
 
-      auto.addCommands(new WaitUntilCommand(lift::isAtHight));
+        // Hope this works out...
+        auto.addCommands(new EjectCommand(intake));
 
-      auto.addCommands(new EjectCommand(intake));
-
-      autos.add(auto);
-    }
+        autos.add(auto);
+      }
 
     { // Drive forward and back 1.5 m using a (simple) trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
