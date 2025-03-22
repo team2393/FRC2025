@@ -15,10 +15,10 @@ public class RotateToHeadingCommand extends Command
   public static final double P = 10.0;
 
   /** Max. rotational speed [deg/sec] */
-  public static double MAX_SPEED = 120;
+  public static double MAX_SPEED = 270;
 
   /** Max. acceleration */
-  private static final double ACCEL = 120;
+  private static final double ACCEL = 270;
 
   private final SwerveDrivetrain drivetrain;
   private final double heading;
