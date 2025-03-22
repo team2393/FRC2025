@@ -12,10 +12,8 @@ import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.PrintCommand;
 import edu.wpi.first.wpilibj2.command.ScheduleCommand;
-import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.swervelib.AbsoluteSwerveCommand;
 import frc.swervelib.RelativeSwerveCommand;
@@ -44,7 +42,7 @@ public class Robot extends CommandRobotBase
   // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
-  // TODO List all cameras in correct location
+  // List all cameras in correct location
   private final CameraHelper cameras[] =
   {
     new CameraHelper(tags, "front", "Front Camera", 0.3, -0.09, 0.31, 0.0),
@@ -83,8 +81,7 @@ public class Robot extends CommandRobotBase
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"));
     SmartDashboard.putData(new ApplyAdjustableSettingCommand("Lift High", "Lift High Setpoint", 1.48, "Lift Setpoint"));
 
-    // TODO Bind intake to buttons
-    // TODO onTrue to eject? whileTrue means driver may let go too early and drop gamepiece
+    // onTrue to eject? whileTrue means driver may let go too early and drop gamepiece
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
     // Assert lift is parked to take in
     OperatorInterface.intake().onTrue(new ScheduleCommand(park)

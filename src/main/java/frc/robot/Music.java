@@ -10,7 +10,7 @@ public class Music
     {
         music = new Orchestra("src/deploy/music.chrp");
         
-        // TODO Add motors as "instruments
+        // Add motors as "instruments
         // music.addInstrument(.. some falcon motor from drivetrain, lift, ...);
     }
 

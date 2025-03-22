@@ -45,7 +45,7 @@ public class Arm extends SubsystemBase
     motor.getConfigurator().apply(config);    
     motor.setNeutralMode(NeutralModeValue.Brake);
 
-    // TODO: Better?
+    // Better?
     // encoder.setAssumedFrequency(975.6);
 
     reset();
