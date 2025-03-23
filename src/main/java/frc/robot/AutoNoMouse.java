@@ -25,15 +25,19 @@ import frc.swervelib.RotateToHeadingCommand;
 import frc.swervelib.SwerveDrivetrain;
 import frc.swervelib.SwerveToPositionCommand;
 import frc.swervelib.VariableWaitCommand;
+import frc.swervelib.WaitForStablePosition;
 import frc.tools.AutoTools;
 import frc.tools.SequenceWithStart;
 
 /** Auto-no-mouse routines */
 public class AutoNoMouse
 {
-  /** Create all our auto-no-mouse commands 
- * @param intake 
-   * @param lift */
+  /** Create all our auto-no-mouse commands
+   *  @param drivetrain SwerveDrivetrain
+   *  @param tags AprilTagFieldLayout
+   *  @param intake Intake
+   *  @param lift Lift
+   */
   public static List<Command> createAutoCommands(SwerveDrivetrain drivetrain, AprilTagFieldLayout tags, Intake intake, Lift lift)
   {
     // List of all autonomouse commands
@@ -53,6 +57,7 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
+    // This is a good auto for being prepared to try the "A-Stop" button...
     for (String level : List.of("Low", "Mid", "High"))
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
@@ -65,9 +70,11 @@ public class AutoNoMouse
                                               0.50, 0, 0);
         auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
         auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
-        
+
         // Wait for camera to acquire position
         auto.addCommands(new WaitCommand(5));
+        // TODO Instead of simply waiting 5 seconds, wait for position to be stable (1 sec, less than 1cm change)
+        // auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 1.0, 0.01));
 
         auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right));
 
@@ -223,8 +230,8 @@ public class AutoNoMouse
       path = createTrajectory(true, 11.55,6,0,
                                                 16,7.1, 25);
       auto.addCommands(drivetrain.followTrajectory(path, 25));
-      
-      autos.add(auto); 
+
+      autos.add(auto);
     }
     {
       SequentialCommandGroup auto = new SequenceWithStart("CoralRunCircle", 9.5, 2.9, 0);
