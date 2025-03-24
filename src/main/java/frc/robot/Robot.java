@@ -62,6 +62,8 @@ public class Robot extends CommandRobotBase
     PowerDistribution power = new PowerDistribution();
     power.clearStickyFaults();
     power.resetTotalEnergy();
+    // TODO Display PD on Dashboard?
+    // This results in frequent messages because PD is slow to update
     SmartDashboard.putData("PowerPanel", power);
 
     SwerveOI.reset();
@@ -80,12 +82,12 @@ public class Robot extends CommandRobotBase
     Command lowest = new ApplyAdjustableSettingCommand("Lift Lowest",  "Lift Lowest Setpoint",  0.27, "Lift Setpoint");
     SmartDashboard.putData(lowest);
     OperatorInterface.lowestLift().onTrue(lowest);
-    
+
     Command low = new ApplyAdjustableSettingCommand("Lift Low",  "Lift Low Setpoint",  0.52, "Lift Setpoint");
     SmartDashboard.putData(low);
     OperatorInterface.lowLift().onTrue(low);
 
-    Command mid = new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint"); 
+    Command mid = new ApplyAdjustableSettingCommand("Lift Mid",  "Lift Mid Setpoint",  0.93, "Lift Setpoint");
     SmartDashboard.putData(mid);
     OperatorInterface.middleLift().onTrue(mid);
 
@@ -99,7 +101,7 @@ public class Robot extends CommandRobotBase
     OperatorInterface.intake().onTrue(new ScheduleCommand(park)
                              .andThen(new WaitUntilCommand(() -> lift.getHeight() < 0.1))
                              .andThen(new IntakeCommand(intake)));
-    
+
     GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
     OperatorInterface.auto_position_left().whileTrue(go.createCommand(drivetrain, false));
     OperatorInterface.auto_position_right().whileTrue(go.createCommand(drivetrain, true));
@@ -108,7 +110,7 @@ public class Robot extends CommandRobotBase
     nt_lift_setpoint = SmartDashboard.getEntry("Lift Setpoint");
     nt_lift_setpoint.setDefaultDouble(0.0);
   }
-  
+
   @Override
   public void robotPeriodic()
   {
