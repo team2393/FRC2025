@@ -64,7 +64,7 @@ public class Robot extends CommandRobotBase
     power.resetTotalEnergy();
     // TODO Display PD on Dashboard?
     // This results in frequent messages because PD is slow to update
-    SmartDashboard.putData("PowerPanel", power);
+    // SmartDashboard.putData("PowerPanel", power);
 
     SwerveOI.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));

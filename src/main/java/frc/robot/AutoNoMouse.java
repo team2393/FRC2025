@@ -72,9 +72,9 @@ public class AutoNoMouse
         auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
 
         // Wait for camera to acquire position
-        auto.addCommands(new WaitCommand(5));
+        // auto.addCommands(new WaitCommand(5));
         // TODO Instead of simply waiting 5 seconds, wait for position to be stable (1 sec, less than 1cm change)
-        // auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 1.0, 0.01));
+        auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 1.0, 0.01));
 
         auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right));
 
