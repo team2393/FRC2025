@@ -29,6 +29,8 @@ import frc.tools.CommandRobotBase;
 /** FRC2025 robot */
 public class Robot extends CommandRobotBase
 {
+  private final PowerDistribution power = new PowerDistribution();
+
   private final RobotDrivetrain drivetrain = new RobotDrivetrain();
   private final Command relswerve = new RelativeSwerveCommand(drivetrain);
   private final Command absswerve = new AbsoluteSwerveCommand(drivetrain);
@@ -59,14 +61,13 @@ public class Robot extends CommandRobotBase
     AutoTools.config = new TrajectoryConfig(SwerveOI.MAX_METERS_PER_SEC, SwerveOI.MAX_METERS_PER_SEC);
     SwerveToPositionCommand.MAX_SPEED = SwerveOI.MAX_METERS_PER_SEC;
 
-    PowerDistribution power = new PowerDistribution();
     power.clearStickyFaults();
     power.resetTotalEnergy();
     // TODO Display PD on Dashboard?
     // This results in frequent messages because PD is slow to update
     // SmartDashboard.putData("PowerPanel", power);
 
-    SwerveOI.reset();
+    OperatorInterface.reset();
     autos.setDefaultOption("Nothing", new PrintCommand("Do nothing"));
     for (Command auto : AutoNoMouse.createAutoCommands(drivetrain, tags, intake, lift))
       autos.addOption(auto.getName(), auto);
@@ -124,15 +125,45 @@ public class Robot extends CommandRobotBase
       camera_helper.updatePosition(drivetrain);
   }
 
+  private void updateDriveMode()
+  {
+    // Change default, cancel the 'wrong' mode if it's running,
+    // but otherwise don't schedule abs nor rel because
+    // we might right now be running an auto-position command
+    if (OperatorInterface.absoluteModeSwitch().getAsBoolean())
+    {
+      if (drivetrain.getDefaultCommand() != absswerve)
+      {
+        System.out.println("ABSOLUTE MODE"); 
+        drivetrain.setDefaultCommand(absswerve);
+        if (relswerve.isScheduled())
+          relswerve.cancel();
+      }
+    }
+    else
+      if (drivetrain.getDefaultCommand() != relswerve)
+      {
+        System.out.println("RELATIVE MODE"); 
+        drivetrain.setDefaultCommand(relswerve);
+        if (absswerve.isScheduled())
+          absswerve.cancel();
+      }
+  }
+
   @Override
   public void teleopInit()
   {
+    updateDriveMode();
     // Bind buttons to commands
-    drivetrain.setDefaultCommand(absswerve);
-    // drivetrain.setDefaultCommand(absswerve);
     SwerveOI.selectRelative().onTrue(relswerve);
     SwerveOI.selectAbsolute().onTrue(absswerve);
     SwerveOI.resetDrivetrain().onTrue(new ResetHeadingCommand(drivetrain));
+  }
+
+  @Override
+  public void teleopPeriodic()
+  {
+    updateDriveMode();
   }
 
   @Override

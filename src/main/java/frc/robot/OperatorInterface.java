@@ -15,6 +15,11 @@ public class OperatorInterface extends SwerveOI
   public static final CommandXboxController joystick = new CommandXboxController(0);
   public static final CommandGenericHID buttons = new CommandGenericHID(1);
 
+  public static Trigger absoluteModeSwitch()
+  {
+    return buttons.button(1);
+  }
+
   public static Trigger highLift()
   {
     return buttons.button(8);
