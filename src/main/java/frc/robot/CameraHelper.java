@@ -104,7 +104,7 @@ public class CameraHelper
         
       PhotonTrackedTarget target = info.getBestTarget();
       // How far is the target?
-      if (target.bestCameraToTarget.getTranslation().getNorm() > 2.0)
+      if (target.bestCameraToTarget.getTranslation().getNorm() > 2.6)
         continue;
       // Where is that tag on the field?
       Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);

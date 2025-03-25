@@ -68,7 +68,7 @@ public class AutoNoMouse
         auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
         Trajectory path = createTrajectory(true, 0, 0, 0,
                                               0.50, 0, 0);
-        auto.addCommands(drivetrain.followTrajectory(path, 0).asProxy());
+        auto.addCommands(drivetrain.followTrajectory(path, 0));
         auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
 
         // Wait for camera to acquire position
@@ -76,7 +76,7 @@ public class AutoNoMouse
         // TODO Instead of simply waiting 5 seconds, wait for position to be stable (1 sec, less than 1cm change)
         auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 1.0, 0.01));
 
-        auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right));
+        auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3));
 
         auto.addCommands(new InstantCommand(() ->
         { // Set "Lift Setpoint" to value of "Lift Low/Mid/High Setpoint"

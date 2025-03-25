@@ -95,7 +95,7 @@ public class GoToNearestTagCommandHelper
       
       // .. and move back in X a little to stand in front of the tag.
       // Move a little in Y to select the left or right column of reef branches
-      dest = dest.transformBy(new Transform2d(-0.3,
+      dest = dest.transformBy(new Transform2d(-0.35,
                                               // "pipes ..are .. ~33 cm.. apart (center to center)"
                                               right_column ? -0.35/2-0.08 : +0.35/2-0.08,
                                               Rotation2d.fromDegrees(0)));
@@ -134,20 +134,20 @@ public class GoToNearestTagCommandHelper
     SequentialCommandGroup sequence = new SequentialCommandGroup();
     // Trajectory fails for short distances but is more efficient
     // for long path, so start with that when far away
-    if (distance > 2.0)
-    {
-      try
-      { // Try to create a trajectory
-        Trajectory traj = AutoTools.createTrajectory(true,
-                                                    robot_pose.getX(),  robot_pose.getY(),  heading,
-                                                    destination.getX(), destination.getY(), heading);
-        sequence.addCommands(drivetrain.followTrajectory(traj, destination.getRotation().getDegrees()));
-      }
-      catch (Exception ex)
-      { // For close-in moves this tends to fail...
-        ex.printStackTrace();
-      }
-    }
+    // if (distance > 2.0)
+    // {
+    //   try
+    //   { // Try to create a trajectory
+    //     Trajectory traj = AutoTools.createTrajectory(true,
+    //                                                 robot_pose.getX(),  robot_pose.getY(),  heading,
+    //                                                 destination.getX(), destination.getY(), heading);
+    //     sequence.addCommands(drivetrain.followTrajectory(traj, destination.getRotation().getDegrees()));
+    //   }
+    //   catch (Exception ex)
+    //   { // For close-in moves this tends to fail...
+    //     ex.printStackTrace();
+    //   }
+    // }
     // May have trajectory. Follow up with rotation & swerve to exact destination
     sequence.addCommands(new RotateToHeadingCommand(drivetrain, destination.getRotation().getDegrees()));
     sequence.addCommands(new SwerveToPositionCommand(drivetrain, destination.getX(),

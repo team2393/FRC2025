@@ -390,7 +390,7 @@ abstract public class SwerveDrivetrain extends SubsystemBase
       System.out.println("Position: X=" + pose.getX() + ", Y=" + pose.getY());
     });
     Command do_stop = new InstantCommand(this::stop);
-    return follower.andThen(do_stop)
-                   .andThen(print_last_states);
+    return follower.andThen(do_stop);
+                  //  .andThen(print_last_states);
   }
 }
