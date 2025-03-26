@@ -89,4 +89,4 @@ Settings, Networking
 
 From now on, access camera via http://10.23.93.12:5800
 
-For more, see https://docs.photonvision.org/en/latest/docs/description.html
+For more, see https://docs.photonvision.org/en/latest/docs/description.html, https://docs.limelightvision.io/docs/docs-limelight/getting-started/performing-charuco-camera-calibration
