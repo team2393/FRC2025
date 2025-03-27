@@ -58,7 +58,7 @@ public class AbsoluteSwerveCommand extends Command
     // away from the driver and "right" moves to the right.
     // In simulation GUI select alliance from DS/FMS
     // while Robot State is "Disconnected"
-    if (DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Blue)
+    if (DriverStation.getAlliance().orElse(Alliance.Red) == Alliance.Red)
     {
       vx = -vx;
       vy = -vy;
@@ -66,7 +66,8 @@ public class AbsoluteSwerveCommand extends Command
     // If robot points in the field "x" direction, we could use (vx, vy) as given,
     // but we generally need to rotate (vx, vy) backwards from the current heading
     // of the robot to see how the robot needs to move:
-    double heading = drivetrain.getHeading().getDegrees();
+    // double heading = drivetrain.getHeading().getDegrees();
+    double heading = drivetrain.getPose().getRotation().getDegrees();
     double correction = -heading;
 
     // Correct the correction by fraction of angular speed,
