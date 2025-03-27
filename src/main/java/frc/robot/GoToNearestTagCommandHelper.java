@@ -103,8 +103,8 @@ public class GoToNearestTagCommandHelper
     else
     { // Keep back of robot to loading station, 
       // move in X a little to stand in front & center of the tag.
-      dest = dest.transformBy(new Transform2d(0.5,
-                                              0,
+      dest = dest.transformBy(new Transform2d(0.4,
+                                              0.1,
                                               Rotation2d.fromDegrees(0)));
     }
     System.out.println("Destination: " + dest);
