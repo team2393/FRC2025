@@ -88,6 +88,16 @@ public class GoToNearestTagCommandHelper
   {
     // Destination is fundamentally the tag
     Pose2d dest = target_tag.pose.toPose2d();
+
+    // TODO Do we need to handle some specific reef face differently?
+    // if (target_tag.ID == 20)
+    // {
+    //   dest = dest.rotateAround(dest.getTranslation(), Rotation2d.fromDegrees(180));      
+    //   dest = dest.transformBy(new Transform2d(-0.35,
+    //                                           right_column ? -0.35/2-0.08 : +0.35/2-0.08,
+    //                                           Rotation2d.fromDegrees(0)));
+    // }
+    // else
     // Adjust for reef vs. pickup station
     if (reef_tags.contains(target_tag.ID))
     { // Rotate 180 to face the tag, not point away from the tag
