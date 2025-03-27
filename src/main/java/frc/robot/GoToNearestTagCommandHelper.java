@@ -76,7 +76,7 @@ public class GoToNearestTagCommandHelper
           nearest_tag = tag;
         }
       }
-    System.out.println("Nearest tag: " + nearest_tag);
+    // System.out.println("Nearest tag: " + nearest_tag);
     return nearest_tag;
   }
 
@@ -117,7 +117,7 @@ public class GoToNearestTagCommandHelper
                                               0.1,
                                               Rotation2d.fromDegrees(0)));
     }
-    System.out.println("Destination: " + dest);
+    // System.out.println("Destination: " + dest);
     return dest;
   }
 
