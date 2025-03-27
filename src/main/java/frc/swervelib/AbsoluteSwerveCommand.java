@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** Command for human to drive robot relative to field odometry
- * 
+ *
  *  Assuming correct field odometry, "forward" will drive away from the drive station
  */
 public class AbsoluteSwerveCommand extends Command
@@ -30,7 +30,7 @@ public class AbsoluteSwerveCommand extends Command
   @Override
   public void initialize()
   {
-    last_heading = drivetrain.getHeading().getDegrees();
+    last_heading = drivetrain.getPose().getRotation().getDegrees();
   }
 
   public void execute()
