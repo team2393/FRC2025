@@ -6,14 +6,20 @@ package frc.swervelib;
 
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 /** Command for swerving to a position */
 public class SwerveToPositionCommand extends Command
 {
   /** Proportional gain for distance control */
-  private static final double P = 3.0;
+  private static final NetworkTableEntry nt_stp_P = SmartDashboard.getEntry("SwerveToPos_P");
+  static
+  {
+    nt_stp_P.setDefaultDouble(3.0);
+  }
 
   /** Max. speed */
   public static double MAX_SPEED = 2.0;
@@ -69,13 +75,13 @@ public class SwerveToPositionCommand extends Command
     Pose2d pose = drivetrain.getPose();
     double dx = x - pose.getX();
     double dy = y - pose.getY();
-    
+
     // Distance, angle relative to the current robot heading
     distance = Math.hypot(dx, dy);
     angle = Math.toDegrees(Math.atan2(dy, dx)) - pose.getRotation().getDegrees();
 
     // Proportional control of speed based on distance
-    double speed = Math.min(MAX_SPEED, P*distance);
+    double speed = Math.min(MAX_SPEED, nt_stp_P.getDouble(0)*distance);
 
     // Limit acceleration
     if (speed > last_speed)
@@ -102,8 +108,8 @@ public class SwerveToPositionCommand extends Command
   @Override
   public boolean isFinished()
   {
-    // Within ... cm?
-    return distance < 0.01;
+    // Within 0.5 cm?
+    return distance < 0.005;
   }
 
   @Override
