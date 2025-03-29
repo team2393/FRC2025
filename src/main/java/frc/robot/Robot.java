@@ -96,8 +96,8 @@ public class Robot extends CommandRobotBase
     SmartDashboard.putData(high);
     OperatorInterface.highLift().onTrue(high);
 
-    // onTrue to eject? whileTrue means driver may let go too early and drop gamepiece
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
+    OperatorInterface.reverse().whileTrue(new ReverseCommand(intake));
     // Assert lift is parked to take in
     OperatorInterface.intake().onTrue(new ScheduleCommand(park)
                              .andThen(new WaitUntilCommand(() -> lift.getHeight() < 0.1))
@@ -134,7 +134,7 @@ public class Robot extends CommandRobotBase
     {
       if (drivetrain.getDefaultCommand() != absswerve)
       {
-        System.out.println("ABSOLUTE MODE"); 
+        System.out.println("ABSOLUTE MODE");
         drivetrain.setDefaultCommand(absswerve);
         if (relswerve.isScheduled())
           relswerve.cancel();
@@ -143,7 +143,7 @@ public class Robot extends CommandRobotBase
     else
       if (drivetrain.getDefaultCommand() != relswerve)
       {
-        System.out.println("RELATIVE MODE"); 
+        System.out.println("RELATIVE MODE");
         drivetrain.setDefaultCommand(relswerve);
         if (absswerve.isScheduled())
           absswerve.cancel();

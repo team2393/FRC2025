@@ -57,6 +57,12 @@ public class OperatorInterface extends SwerveOI
     return joystick.a();
   }
 
+  /** @return Button Y */
+  public static Trigger reverse()
+  {
+    return joystick.y();
+  }
+
   /** @return Is left trigger active? */
   public static Trigger auto_position_left()
   {
