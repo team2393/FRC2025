@@ -280,6 +280,58 @@
                 }
               }
             }
+          },
+          "14,3": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/AutoLoadDist",
+              "_title": "AutoLoadDist",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "14,4": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/AutoLoadLeft",
+              "_title": "AutoLoadLeft",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "14,5": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/AutoReefDist",
+              "_title": "AutoReefDist",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "14,6": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///SmartDashboard/AutoReefLeft",
+              "_title": "AutoReefLeft",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
