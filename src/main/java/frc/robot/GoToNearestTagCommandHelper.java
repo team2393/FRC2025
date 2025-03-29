@@ -73,7 +73,7 @@ public class GoToNearestTagCommandHelper
   /** @param robot_pose Current robot position
    *  @return Nearest tag of interest
    */
-  private AprilTag findNearestTag(Pose2d robot_pose)
+  public static AprilTag findNearestTag(AprilTagFieldLayout tags, Pose2d robot_pose)
   {
     double nearest = Double.MAX_VALUE;
     AprilTag nearest_tag = null;
@@ -142,7 +142,7 @@ public class GoToNearestTagCommandHelper
   private Command findTagAndComputeCommands(SwerveDrivetrain drivetrain, boolean right_column)
   {
     Pose2d robot_pose = drivetrain.getPose();
-    AprilTag tag = findNearestTag(robot_pose);
+    AprilTag tag = findNearestTag(tags, robot_pose);
     Pose2d destination = computeDestination(tag, right_column);
 
     SequentialCommandGroup sequence = new SequentialCommandGroup();
@@ -169,8 +169,9 @@ public class GoToNearestTagCommandHelper
     // Near tag 17
     Pose2d robot_pose = new Pose2d(4.07-0.5, 3.31-0.5, Rotation2d.fromDegrees(10));
 
-    GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded));
-    AprilTag tag = go.findNearestTag(robot_pose);
+    AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
+    GoToNearestTagCommandHelper go = new GoToNearestTagCommandHelper(tags);
+    AprilTag tag = GoToNearestTagCommandHelper.findNearestTag(tags, robot_pose);
     go.computeDestination(tag, true);
   }
 }
