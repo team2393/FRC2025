@@ -36,7 +36,7 @@ public class CameraHelper
   private final PhotonPoseEstimator estimator;
   private final NetworkTableEntry nt_flag;
   private int successes = 0;
- 
+
   /** @param tags Field info
    *  @param camera_name Camera name ("front") in photonvision network tablee ntries
    *  @param status_name Name used to show status on dashboard
@@ -69,7 +69,7 @@ public class CameraHelper
 
     // Prepare estimator
     // Which strategy?
-    estimator = new PhotonPoseEstimator(tags, PoseStrategy.CLOSEST_TO_REFERENCE_POSE, robotToCam);
+    estimator = new PhotonPoseEstimator(tags, PoseStrategy.AVERAGE_BEST_TARGETS, robotToCam);
   }
 
   /** Call periodically to update drivetrain with camera info */
@@ -84,19 +84,28 @@ public class CameraHelper
       nt_flag.setBoolean(successes > 0);
       return;
     }
-      
-    estimator.setReferencePose(drivetrain.getPose());
-    
-    // PoseStrategy.CLOSEST_TO_REFERENCE_POSE needs to know where we think we are...
+
+    // TODO Try estimator once more?
+    // // PoseStrategy.CLOSEST_TO_REFERENCE_POSE needs to know where we think we are...
+    // estimator.setReferencePose(drivetrain.getPose());
+    // for (PhotonPipelineResult result : camera.getAllUnreadResults())
+    //   estimator.update(result)
+    //            .ifPresent(estimate ->
+    //   {
+    //     drivetrain.updateLocationFromCamera(estimate.estimatedPose.toPose2d(),
+    //                                         result.getTimestampSeconds());
+    //     successes = 50; // 1 second
+    //   });
+
     double timestamp = 0.0;
     List<PhotonTrackedTarget> targets = new ArrayList<>();
-      for (PhotonPipelineResult result : camera.getAllUnreadResults())
-        if (result.hasTargets())
-        {
-          for (PhotonTrackedTarget target : result.getTargets())
-            targets.add(target);
-          timestamp = result.getTimestampSeconds();
-        }
+    for (PhotonPipelineResult result : camera.getAllUnreadResults())
+      if (result.hasTargets())
+      {
+        for (PhotonTrackedTarget target : result.getTargets())
+          targets.add(target);
+        timestamp = result.getTimestampSeconds();
+      }
     for (PhotonTrackedTarget target : targets)
     {
       // How far is the target?
@@ -106,12 +115,12 @@ public class CameraHelper
         // System.out.println("No best target");
         continue;
       }
-    
+
       // Where is that tag on the field?
       Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
       if (tag_pose.isEmpty())
         continue;
-      
+
       // System.out.println(target.bestCameraToTarget);
       // Transform from tag to camera, then from camera to center of robot
       Pose3d pose = tag_pose.get();
@@ -128,5 +137,5 @@ public class CameraHelper
       successes = 50; // 1 second
     }
     nt_flag.setBoolean(successes > 0);
-  }   
+  }
 }
