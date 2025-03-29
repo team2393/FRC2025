@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 // import org.photonvision.EstimatedRobotPose;
@@ -83,29 +85,28 @@ public class CameraHelper
       return;
     }
       
+    estimator.setReferencePose(drivetrain.getPose());
     
     // PoseStrategy.CLOSEST_TO_REFERENCE_POSE needs to know where we think we are...
-    estimator.setReferencePose(drivetrain.getPose());
-    for (PhotonPipelineResult info : camera.getAllUnreadResults())
+    double timestamp = 0.0;
+    List<PhotonTrackedTarget> targets = new ArrayList<>();
+      for (PhotonPipelineResult result : camera.getAllUnreadResults())
+        if (result.hasTargets())
+        {
+          for (PhotonTrackedTarget target : result.getTargets())
+            targets.add(target);
+          timestamp = result.getTimestampSeconds();
+        }
+    for (PhotonTrackedTarget target : targets)
     {
-      // Option 1: Trust the estimator
-      // Optional<EstimatedRobotPose> estimate = estimator.update(info);
-      // if (estimate.isPresent())`
-      //   drivetrain.updateLocationFromCamera(estimate.get().estimatedPose.toPose2d(),
-      //                                       estimate.get().timestampSeconds);
-      // Option 2: Check the result outself...
-      
-      // Do we have a target?; If you dont have a target and remove this check, driver station will disable tele-op.
-      if (! info.hasTargets())
-      {
-        // System.out.println("No target for " +camera.getName());
-        break;
-      }
-        
-      PhotonTrackedTarget target = info.getBestTarget();
       // How far is the target?
-      if (target.bestCameraToTarget.getTranslation().getNorm() > 2.6)
+      if (target == null  ||
+          target.bestCameraToTarget.getTranslation().getNorm() > 2.6)
+      {
+        // System.out.println("No best target");
         continue;
+      }
+    
       // Where is that tag on the field?
       Optional<Pose3d> tag_pose = tags.getTagPose(target.fiducialId);
       if (tag_pose.isEmpty())
@@ -123,7 +124,7 @@ public class CameraHelper
       // drivetrain.setOdometry(position.getX(), position.getY(), position.getRotation().getDegrees());
 
       // For operation, smoothly update location with camera info
-      drivetrain.updateLocationFromCamera(position, info.getTimestampSeconds());
+      drivetrain.updateLocationFromCamera(position, timestamp);
       successes = 50; // 1 second
     }
     nt_flag.setBoolean(successes > 0);
