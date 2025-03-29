@@ -7,6 +7,7 @@ package frc.swervelib;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Transform2d;
 import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -56,7 +57,10 @@ public class WaitForStablePosition extends Command
 
   @Override
   public boolean isFinished()
-  {
+  { // In simulation, we're fine after min stable secs
+    if (RobotBase.isSimulation())
+      return timer.hasElapsed(min_stable_secs);
+
     Pose2d position = drivetrain.getPose();
 
     if (!camera_status.getBoolean(false))

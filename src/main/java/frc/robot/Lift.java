@@ -18,17 +18,17 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /** Lift that moves up/down
- * 
+ *
  *  When unpowered, lift settles down at bottom because of its weight.
  *  We read that zero position from the encoder when first enabled.
  *  During tests, first enablement is likely teleop.
  *  In competition, first enablement is auto, and by the time
  *  we enable teleop the lift may already have moved up.
  *  Using first enablement after bootup should cover both cases.
- * 
+ *
  *  Move to requested height using feed forward and PID,
  *  except for moving to "zero" which moves to a certain height above zero
- *  and then simply lets lift settle by unpowering the motors. 
+ *  and then simply lets lift settle by unpowering the motors.
  */
 public class Lift extends SubsystemBase
 {
@@ -44,9 +44,9 @@ public class Lift extends SubsystemBase
   private static final double VOLTAGE_LIMIT = 10.0;
 
   /** Motor controller with encoder */
-  
+
   private TalonFX primary_motor = new TalonFX(RobotMap.LIFT1);
-  
+
   /** Other motor */
   private TalonFX secondary_motor = new TalonFX(RobotMap.LIFT2);
 
@@ -64,10 +64,10 @@ public class Lift extends SubsystemBase
   /** PID */
   // private PIDController pid = new PIDController(17, 10, 0);
   private ProfiledPIDController pid = new ProfiledPIDController(17, 10, 0,
-                                            new Constraints(4,4)); 
+                                            new Constraints(4,4));
 
   private double simulated_height = 0.0;
-  
+
   public Lift()
   {
     // Primary motor is the one we control
@@ -76,12 +76,12 @@ public class Lift extends SubsystemBase
     // Restrict ramp to limit acceleration
     TalonFXConfiguration config = new TalonFXConfiguration()
         .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.6));
-    primary_motor.getConfigurator().apply(config);    
+    primary_motor.getConfigurator().apply(config);
     primary_motor.setNeutralMode(NeutralModeValue.Brake);
 
     // Secondary motor is inverted, follows the primary (but invert the direction)
     secondary_motor.clearStickyFaults();
-    secondary_motor.getConfigurator().apply(config);    
+    secondary_motor.getConfigurator().apply(config);
     secondary_motor.setNeutralMode(NeutralModeValue.Brake);
     secondary_motor.setControl(new Follower(primary_motor.getDeviceID(), true));
 
@@ -120,7 +120,7 @@ public class Lift extends SubsystemBase
       System.err.println("Calibrated lift bottom at " + bottom_offset + " revs");
     }
     nt_height.setDouble(getHeight());
-  }  
+  }
 
   /** @return Lift height in meters */
   public double getHeight()
@@ -192,6 +192,6 @@ public class Lift extends SubsystemBase
 
   public boolean isAtHight()
   {
-    return pid.atGoal();
+    return RobotBase.isSimulation()  ||  pid.atGoal();
   }
 }
