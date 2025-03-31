@@ -85,6 +85,8 @@ public class AutoNoMouse
         auto.addCommands(new WaitUntilCommand(lift::isAtHight));
         // Hope this works out...
         auto.addCommands(new EjectCommand(intake));
+        // Instruct lift to move down (don't wait, though)
+        auto.addCommands(new InstantCommand(() -> SmartDashboard.putNumber("Lift Setpoint", 0)));
 
         // At this point, we dropped one piece on the nearest reef.
         // Follow up by going to loading station?
