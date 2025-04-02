@@ -110,7 +110,7 @@ public class CameraHelper
     {
       // How far is the target?
       if (target == null  ||
-          target.bestCameraToTarget.getTranslation().getNorm() > 2.6)
+          target.bestCameraToTarget.getTranslation().getNorm() > 3.0)
       {
         // System.out.println("No best target");
         continue;

@@ -74,7 +74,7 @@ public class AutoNoMouse
                                                                          0.50, 0, 0), 0));
         auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
         // Wait for camera to acquire position
-        auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 1.0, 0.01));
+        // auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 0.2, 0.01));
         // Go to nearest reef
         auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3));
         // Set "Lift Setpoint" to value of "Lift Low/Mid/High Setpoint"
@@ -100,34 +100,34 @@ public class AutoNoMouse
         // What to do if we are at tag 21
         final Command after_21 =
           // Scoot back to known point, no matter if we were in left or right reef column
-          new SwerveToPositionCommand(drivetrain, 6.57, 4.0)
+          new SwerveToPositionCommand(drivetrain, 6.57, 4.0).withTimeout(1.5)
           // From that known point, drive near the loading station
           .andThen(drivetrain.followTrajectory(createTrajectory(true,
                                                                 6.57, 4.0,   -90,
                                                                 5.28, 1.6,  -140,
                                                                 1.59, 1.39, -130), 52))
           // Go to the loading station
-          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3))
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
           .andThen(new IntakeCommand(intake));
           // Could now again drive forward, then nearest reef, and drop, but in simulation time is about up.
           // Still good to already be at loading station
 
         // Commands to run from tag 22 on
         final Command after_22 =
-          new SwerveToPositionCommand(drivetrain, 5.5, 2.1)
+          new SwerveToPositionCommand(drivetrain, 5.5, 2.1).withTimeout(1.5)
           .andThen(drivetrain.followTrajectory(createTrajectory(true,
                                                                 5.5, 2.1,   -160,
                                                                 1.59, 1.39, -130), 52))
-          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3))
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
           .andThen(new IntakeCommand(intake));
 
         // Commands to run from tag 20 on
         final Command after_20 =
-          new SwerveToPositionCommand(drivetrain, 5.7, 5.9)
+          new SwerveToPositionCommand(drivetrain, 5.7, 5.9).withTimeout(1.5)
           .andThen(drivetrain.followTrajectory(createTrajectory(true,
                                                                 5.7, 5.9,   150,
-                                                                1.6, 6.6, 180), -52))
-          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3))
+                                                                1.6, 6.6, 180), -52))                                                      
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
           .andThen(new IntakeCommand(intake));
 
         // Select command will invoke 'nearest' and then pick a matching follow_up.
