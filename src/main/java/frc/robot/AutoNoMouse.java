@@ -61,7 +61,7 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
-    for (String level : List.of("2", "3", "4"))
+    for (String level : List.of("Low", "Mid", "High"))
     {
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
@@ -169,7 +169,7 @@ public class AutoNoMouse
       }
     }
 
-    for (String level : List.of("2", "3", "4"))
+    for (String level : List.of("Low", "Mid", "High"))
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
         SequentialCommandGroup auto = new SequentialCommandGroup();
