@@ -66,7 +66,7 @@ public class AutoNoMouse
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
         SequentialCommandGroup auto = new SequentialCommandGroup();
-        auto.setName("0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
+        auto.setName("station 0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
         auto.addCommands(new VariableWaitCommand());
         // Move 0.5m
         auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
@@ -140,6 +140,33 @@ public class AutoNoMouse
         autos.add(auto);
       }
     }
+
+    for (String level : List.of("Low", "Mid", "High"))
+      for (boolean right : List.of(false, true))
+      { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
+        SequentialCommandGroup auto = new SequentialCommandGroup();
+        auto.setName("0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
+        auto.addCommands(new VariableWaitCommand());
+        // Move 0.5m
+        auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
+        auto.addCommands(drivetrain.followTrajectory(createTrajectory(true, 0, 0, 0,
+                                                                         0.50, 0, 0), 0));
+        auto.addCommands(new SelectAbsoluteTrajectoryCommand(drivetrain));
+        // Wait for camera to acquire position
+        // auto.addCommands(new WaitForStablePosition(drivetrain, "Front Camera", 0.2, 0.01));
+        // Go to nearest reef
+        auto.addCommands(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(3));
+        // Set "Lift Setpoint" to value of "Lift Low/Mid/High Setpoint"
+        auto.addCommands(new InstantCommand(() ->
+          SmartDashboard.putNumber("Lift Setpoint",
+                                   SmartDashboard.getNumber("Lift " + level + " Setpoint", 0))));
+        // Wait for lift to be at commanded height
+        auto.addCommands(new WaitUntilCommand(lift::isAtHight));
+        // Hope this works out...
+        auto.addCommands(new EjectCommand(intake));
+
+        autos.add(auto);
+      }
 
     { // Drive forward and back 1.5 m using a (simple) trajectory
       SequentialCommandGroup auto = new SequentialCommandGroup();
