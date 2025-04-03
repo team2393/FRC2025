@@ -126,15 +126,48 @@ public class AutoNoMouse
           new SwerveToPositionCommand(drivetrain, 5.7, 5.9).withTimeout(1.5)
           .andThen(drivetrain.followTrajectory(createTrajectory(true,
                                                                 5.7, 5.9,   150,
-                                                                1.6, 6.6, 180), -52))                                                      
+                                                                1.6, 6.6, 180), -52))
           .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
           .andThen(new IntakeCommand(intake));
+
+        // Commands to run from tag 10 on
+        double L = tags.getFieldLength(), W = tags.getFieldWidth();
+        final Command after_10 =
+          new SwerveToPositionCommand(drivetrain, L-6.57, 4.0).withTimeout(1.5)
+          .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                                L-6.57, 4.0,  -90,
+                                                                L-5.28, 1.6,  -30,
+                                                                L-1.59, 1.39,   0), 125))
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+          .andThen(new IntakeCommand(intake));
+
+
+        // Commands to run from tag 11 on
+        final Command after_11 =
+        new SwerveToPositionCommand(drivetrain, L-5.7, W-5.9).withTimeout(1.5)
+        .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                              L-5.7, W-5.9, 180+150,
+                                                              L-1.6, W-6.6, 180+180), 180-52))
+        .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+        .andThen(new IntakeCommand(intake));
+
+        // Commands to run from tag 9 on
+        final Command after_9 =
+        new SwerveToPositionCommand(drivetrain, L-5.7, 5.9).withTimeout(1.5)
+        .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                              L-5.7, 5.9, 25,
+                                                              L-1.6, 6.6, 10), -128))
+        .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+        .andThen(new IntakeCommand(intake));
 
         // Select command will invoke 'nearest' and then pick a matching follow_up.
         // For tag that's not listed, it will print some warning
         final Map<Integer, Command> follow_up = Map.of(21, after_21,
                                                        22, after_22,
-                                                       20, after_20);
+                                                       20, after_20,
+                                                       10, after_10,
+                                                       11, after_11,
+                                                        9, after_9);
         auto.addCommands(new SelectCommand<>(follow_up, nearest));
 
         autos.add(auto);
