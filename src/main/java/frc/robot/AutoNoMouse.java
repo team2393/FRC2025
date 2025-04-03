@@ -61,12 +61,12 @@ public class AutoNoMouse
       autos.add(auto);
     }
 
-    for (String level : List.of("Low", "Mid", "High"))
+    for (String level : List.of("2", "3", "4"))
     {
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
         SequentialCommandGroup auto = new SequentialCommandGroup();
-        auto.setName("station 0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
+        auto.setName("station coral " + level + (right ? " right " : " left "));
         auto.addCommands(new VariableWaitCommand());
         // Move 0.5m
         auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
@@ -130,22 +130,50 @@ public class AutoNoMouse
           .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
           .andThen(new IntakeCommand(intake));
 
+        final Command after_10 =
+          new SwerveToPositionCommand(drivetrain, 10.93, 4.0).withTimeout(1.5)
+          .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                                10.93, 4.0,  -90,
+                                                                12.22, 1.6, -40,
+                                                                15.91, 1.39, -50), 126))                                                      
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+          .andThen(new IntakeCommand(intake));
+
+        final Command after_11 =
+          new SwerveToPositionCommand(drivetrain, 12, 2.1).withTimeout(1.5)
+          .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                                12, 2.1,   -20,
+                                                                15.91, 1.39, -50), 126))
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+          .andThen(new IntakeCommand(intake));
+
+        final Command after_9 =
+          new SwerveToPositionCommand(drivetrain, 11.8, 5.9).withTimeout(1.5)
+          .andThen(drivetrain.followTrajectory(createTrajectory(true,
+                                                                11.8, 5.9, 30,
+                                                                15.9, 6.6, 0), -126))                                                      
+          .andThen(new GoToNearestTagCommandHelper(tags).createCommand(drivetrain, right).withTimeout(1.5))
+          .andThen(new IntakeCommand(intake));
+
         // Select command will invoke 'nearest' and then pick a matching follow_up.
         // For tag that's not listed, it will print some warning
         final Map<Integer, Command> follow_up = Map.of(21, after_21,
                                                        22, after_22,
-                                                       20, after_20);
+                                                       20, after_20,
+                                                       10, after_10,
+                                                       11, after_11,
+                                                       9, after_9);
         auto.addCommands(new SelectCommand<>(follow_up, nearest));
 
         autos.add(auto);
       }
     }
 
-    for (String level : List.of("Low", "Mid", "High"))
+    for (String level : List.of("2", "3", "4"))
       for (boolean right : List.of(false, true))
       { // Drive forward 0.5 m, then move to low/mid/high, left/right reef and drop
         SequentialCommandGroup auto = new SequentialCommandGroup();
-        auto.setName("0.5m,aim,drop " + level.toLowerCase() + (right ? " right" : " left"));
+        auto.setName("coral " + level.toLowerCase() + (right ? " right " : " left "));
         auto.addCommands(new VariableWaitCommand());
         // Move 0.5m
         auto.addCommands(new SelectRelativeTrajectoryCommand(drivetrain));
