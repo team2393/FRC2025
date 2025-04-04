@@ -26,7 +26,7 @@ public class Driver extends DriverBase
     super(index, 0.05, 2.35, 2.0, 1.5, 0.001);
     motor = new TalonFX(id);
     TalonFXConfiguration config = new TalonFXConfiguration()
-        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.3));
+        .withOpenLoopRamps(new OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.1));
     motor.getConfigurator().apply(config);    
     motor.clearStickyFaults();
     motor.setNeutralMode(NeutralModeValue.Brake);
