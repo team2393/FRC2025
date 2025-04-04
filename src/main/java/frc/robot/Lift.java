@@ -64,7 +64,7 @@ public class Lift extends SubsystemBase
   /** PID */
   // private PIDController pid = new PIDController(17, 10, 0);
   private ProfiledPIDController pid = new ProfiledPIDController(17, 10, 0,
-                                            new Constraints(4,4));
+                                            new Constraints(5, 5));
 
   private double simulated_height = 0.0;
 
