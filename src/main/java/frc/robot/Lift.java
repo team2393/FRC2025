@@ -41,7 +41,7 @@ public class Lift extends SubsystemBase
   private static final double SETTLE_THRESHOLD = 0.02;
 
   /** Voltage limit to restrict speed */
-  private static final double VOLTAGE_LIMIT = 10.0;
+  private static final double VOLTAGE_LIMIT = 12.0;
 
   /** Motor controller with encoder */
 
@@ -64,7 +64,7 @@ public class Lift extends SubsystemBase
   /** PID */
   // private PIDController pid = new PIDController(17, 10, 0);
   private ProfiledPIDController pid = new ProfiledPIDController(17, 10, 0,
-                                            new Constraints(5, 5));
+                                            new Constraints(5, 8));
 
   private double simulated_height = 0.0;
 
