@@ -58,7 +58,7 @@ public class Robot extends CommandRobotBase
     SwerveOI.forward_slew = new SlewRateLimiter(3.0);
     SwerveOI.side_slew = new SlewRateLimiter(3.0);
     SwerveOI.rotation_slew = new SlewRateLimiter(360);
-    AutoTools.config = new TrajectoryConfig(5, 6);
+    AutoTools.config = new TrajectoryConfig(4, 4);
     SwerveToPositionCommand.MAX_SPEED = 5;
 
     power.clearStickyFaults();

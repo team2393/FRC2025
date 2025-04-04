@@ -340,7 +340,7 @@ abstract public class SwerveDrivetrain extends SubsystemBase
     // Angle controller is 'profiled', allowing up to 90 deg/sec (and 90 deg/sec/sec acceleration) 
     ProfiledPIDController angle_pid = new ProfiledPIDController(
       nt_angle_p.getDouble(0), 0, 0,
-      new TrapezoidProfile.Constraints(Math.toRadians(90), Math.toRadians(90)));
+      new TrapezoidProfile.Constraints(Math.toRadians(180), Math.toRadians(180)));
     // ..and 'continuous' because angle wraps around
     angle_pid.enableContinuousInput(-Math.PI, Math.PI);
 
