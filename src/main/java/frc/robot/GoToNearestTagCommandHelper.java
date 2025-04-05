@@ -58,7 +58,7 @@ public class GoToNearestTagCommandHelper
     nt_load_distance.setDefaultDouble(0);
     nt_load_left.setDefaultDouble(0);
     nt_reef_distance.setDefaultDouble(-0.1);
-    nt_reef_left.setDefaultDouble(0);
+    nt_reef_left.setDefaultDouble(0.03);
   }
 
   // Info about all the tags on the field
