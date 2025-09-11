@@ -39,7 +39,10 @@ public class RobotMap
   public static final int INTAKE = 11;
 
   // Arm?
-  public static final int ARM = 12;
+  public static final int ARM = -1;
+
+  // Holder
+  public static final int HOLDER = 12;
 
   // DIGITAL IO
   public static final int INTAKE_SENSOR = 0;

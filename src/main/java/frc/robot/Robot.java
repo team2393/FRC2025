@@ -41,6 +41,8 @@ public class Robot extends CommandRobotBase
 
   private final Intake intake = new Intake();
 
+  private final Holder holder = new Holder();
+
   // TODO pick correct field: k2025ReefscapeWelded, k2025ReefscapeAndyMark
   private final AprilTagFieldLayout tags = AprilTagFieldLayout.loadField(AprilTagFields.k2025ReefscapeWelded);
 
@@ -98,6 +100,8 @@ public class Robot extends CommandRobotBase
 
     OperatorInterface.eject().whileTrue(new EjectCommand(intake));
     OperatorInterface.reverse().whileTrue(new ReverseCommand(intake));
+    OperatorInterface.holder_in().whileTrue(new HolderCommand(holder, true));
+    OperatorInterface.holder_out().whileTrue(new HolderCommand(holder, false));
     // Assert lift is parked to take in
     OperatorInterface.intake().onTrue(new ScheduleCommand(park)
                              .andThen(new WaitUntilCommand(() -> lift.getHeight() < 0.1))

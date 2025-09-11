@@ -277,6 +277,13 @@
                   "_title": "Lift Park",
                   "_glyph": 148,
                   "_showGlyph": false
+                },
+                "1,5": {
+                  "_type": "Text View",
+                  "_source0": "network_table:///SmartDashboard/Holder Voltage",
+                  "_title": "/SmartDashboard/Holder Voltage",
+                  "_glyph": 148,
+                  "_showGlyph": false
                 }
               }
             }
@@ -609,9 +616,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -4.800000190734863,
-    "y": 136.8000030517578,
-    "width": 1159.199951171875,
-    "height": 691.2000122070312
+    "x": -2.4000000953674316,
+    "y": 128.8000030517578,
+    "width": 1138.4000244140625,
+    "height": 690.4000244140625
   }
 }

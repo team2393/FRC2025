@@ -74,4 +74,16 @@ public class OperatorInterface extends SwerveOI
   {
     return joystick.rightTrigger();
   }
+
+  /** @return Is left button active? */
+  public static Trigger holder_in()
+  {
+    return joystick.leftBumper();
+  }
+
+  /** @return Is right button active? */
+  public static Trigger holder_out()
+  {
+    return joystick.rightBumper();
+  }
 }
