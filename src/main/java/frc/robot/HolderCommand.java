@@ -10,21 +10,13 @@ public class HolderCommand extends Command
     private final Holder holder;
     private final boolean goingIn;
     private final NetworkTableEntry holder_voltage;
-    private final Timer timer;
 
     public HolderCommand(Holder holder, boolean goingIn)
     {
         this.holder = holder;
         this.goingIn = goingIn;
         holder_voltage = SmartDashboard.getEntry("Holder Voltage");
-        this.timer = new Timer();
         addRequirements(holder);
-    }
-
-    @Override
-    public void initialize()
-    {
-        timer.restart();
     }
 
     @Override
